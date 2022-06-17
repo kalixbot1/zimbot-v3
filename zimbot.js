@@ -150,7 +150,7 @@ module.exports = AlphaBotInc = async (AlphaBotInc, m, chatUpdate, store) => {
          
 //zim bot inc
 
-const timuu = moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')
+const timuu = moment.tz('Asia/Colombo').format('HH:mm:ss')
 const hariRaya = new Date('Apr 02, 2022 01:45:00')
 const sekarang = new Date().getTime();
 const Selisih = hariRaya - sekarang;
@@ -255,7 +255,7 @@ switch(hari) {
     if (isCmd) msgFilter.addFilter(from)
     
 // TIME 
-const time2 = moment().tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')
+const time2 = moment().tz('Asia/Colombo').format('HH:mm:ss')
 if(time2 < "23:59:00"){
 var ucapannya2 = `Good Night 🌒`
 }
@@ -480,7 +480,7 @@ randek = jsonDrips[randIndex];
     }, 
     {
       scheduled: true,
-      timezone: 'Sri Jayawardenepura Kotte/Sri Lanka'
+      timezone: 'Asia/Colombo'
      }
     )
 //thum
@@ -2584,7 +2584,7 @@ case 'bcvid': case 'bcvideo': {
                  let teks = `⬣ *LIST GROUP CHAT*\n\nTotal Group : ${anu.length} Group\n\n`
                  for (let i of anu) {
                      let metadata = await AlphaBotInc.groupMetadata(i)
-                     teks += `⬡ *NAME :* ${metadata.subject}\n⬡ *OWNER :* @${metadata.owner.split('@')[0]}\n⬡ *ID :* ${metadata.id}\n⬡ *CREATED :* ${moment(metadata.creation * 1000).tz('Sri Jayawardenepura Kotte/Sri Lanka').format('DD/MM/YYYY HH:mm:ss')}\n⬡ *MEMBER :* ${metadata.participants.length}\n\n━━━━━━━━━━━━━━━━━━━━━━━━\n\n`
+                     teks += `⬡ *NAME :* ${metadata.subject}\n⬡ *OWNER :* @${metadata.owner.split('@')[0]}\n⬡ *ID :* ${metadata.id}\n⬡ *CREATED :* ${moment(metadata.creation * 1000).tz('Asia/Colombo').format('DD/MM/YYYY HH:mm:ss')}\n⬡ *MEMBER :* ${metadata.participants.length}\n\n━━━━━━━━━━━━━━━━━━━━━━━━\n\n`
                  }
                  AlphaBotInc.sendTextWithMentions(m.chat, teks, m)
              }
@@ -6673,7 +6673,7 @@ case 'listmenu': case 'list': {
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -6713,7 +6713,7 @@ anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -7450,7 +7450,7 @@ AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id 
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -7554,7 +7554,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -7599,7 +7599,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -7653,7 +7653,7 @@ function _0x3217(_0x37715e,_0x2f6592){const _0xa94637=_0xa946();return _0x3217=f
                 ┃ *✧ʀᴏʟᴇ: ${role}*
                 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
                 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-                ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+                ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
                 ┃ 
                 ┃      ↣𝐘𝐨𝐮𝐭𝐮𝐛𝐞↢ 
                 ┃https://tinyurl.com/2bghgjfx
@@ -7698,7 +7698,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -7768,7 +7768,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -7844,7 +7844,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -7910,7 +7910,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -7984,7 +7984,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8087,7 +8087,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8133,7 +8133,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8175,7 +8175,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8220,7 +8220,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8268,7 +8268,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8318,7 +8318,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8382,7 +8382,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8439,7 +8439,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8481,7 +8481,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8556,7 +8556,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8595,7 +8595,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8638,7 +8638,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8705,7 +8705,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8751,7 +8751,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8802,7 +8802,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
@@ -8838,7 +8838,7 @@ let hao = randomNomor(200)
 ┃ *✧ʀᴏʟᴇ: ${role}*
 ┃ *✧ʟᴇᴠᴇʟ:* ${Levele2} 
 ┃ *✧ᴄᴀʟᴇɴᴅᴀʀ:* *${thisDay}*, *${day}* 
-┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Sri Jayawardenepura Kotte/Sri Lanka').format('HH:mm:ss')}*
+┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
