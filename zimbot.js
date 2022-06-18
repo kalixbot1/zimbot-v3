@@ -502,7 +502,7 @@ console.log(e)
 }
 
 const reply = (teks) => {
-            ZimBotInc.sendMessage(m.chat, { text: teks, contextInfo:{"externalAdReply": {"title": ` ${global.botname}`,"body": `SUBSCRIBE DRIPSOFC`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": fs.readFileSync(`./Zimbot/drips.jpg`),"sourceUrl": `https://www.youtube.com/c/DRIPSOFC`}}}, { quoted: m})
+            ZimBotInc.sendMessage(m.chat, { text: teks, contextInfo:{"externalAdReply": {"title": ` ALPHA BOT SERVERS`,"body": `SUBSCRIBE DRIPSOFC`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": fs.readFileSync(`./Zimbot/drips.jpg`),"sourceUrl": `https://www.youtube.com/c/DRIPSOFC`}}}, { quoted: m})
         }
 //dokumen random
 let doku = [f1,f2,f3,f4,f5,f6]
@@ -2028,7 +2028,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await ZimBotInc.sendButtonText(m.chat, buttons, `*▊▊▊ANTILINK BADWORDS▊▊▊*\n\n.`, `${global.botname}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttons, `*▊▊▊ANTILINK BADWORDS▊▊▊*\n\n.`, `ALPHA BOT SERVERS`, m)
                }
                }
                break
@@ -2104,7 +2104,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `ALPHA BOT SERVERS`, m)
                }
                }
                break
@@ -2134,7 +2134,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `ALPHA BOT SERVERS`, m)
                }
                }
                break
@@ -2164,7 +2164,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `ALPHA BOT SERVERS`, m)
                }
                }
                break
@@ -2194,7 +2194,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `ALPHA BOT SERVERS`, m)
                }
                }
                break
@@ -2224,7 +2224,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `ALPHA BOT SERVERS`, m)
                }
                }
                break
@@ -2244,7 +2244,7 @@ if (isBan) throw mess.ban
   { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
   { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
   ]
-  await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK VIEW▊▊▊*`, `${global.botname}`, m)
+  await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK VIEW▊▊▊*`, `ALPHA BOT SERVERS`, m)
   }
   break
                          case 'antitiktok': case 'adripsantitik': {
@@ -2273,7 +2273,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `ALPHA BOT SERVERS`, m)
                }
                }
                break
@@ -2303,7 +2303,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `ALPHA BOT SERVERS`, m)
                }
                }
                break
@@ -2334,7 +2334,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `ALPHA BOT SERVERS`, m)
                }
                }
               
@@ -2493,7 +2493,7 @@ case 'bcimage': case 'bcvideo': case 'bcaudio': {
                     ZimBotInc.sendMessage(i, { sticker: { url: media } }, { quoted: ftroli })
                     } else if (/image/.test(mime)) {
                     let junn = `*_BROADCAST IMAGE_*${text ? '\n\n' + text : ''}`
-                    ZimBotInc.send5ButImg(i, junn, `${global.botname}`, buffer, butoon)
+                    ZimBotInc.send5ButImg(i, junn, `ALPHA BOT SERVERS`, buffer, butoon)
                     } else if (/video/.test(mime)) {
                     let junn = `*_BROADCAST VIDIO_*${text ? '\n\n' + text : ''}`
                     ZimBotInc.sendMessage(i, {video: buffer, caption: `${junn}`}, { quoted: ftroli })
@@ -6664,7 +6664,7 @@ case 'listmenu': case 'list': {
        text: `
 *✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -6704,7 +6704,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7306,7 +7306,7 @@ templateMessage: {
 hydratedTemplate: {
 imageMessage: message.imageMessage,
 hydratedContentText: anu,
-hydratedFooterText: `${global.botname}`,
+hydratedFooterText: `ALPHA BOT SERVERS`,
 hydratedButtons: [{
 urlButton: {
 displayText: 'MAIN GROUP',
@@ -7441,7 +7441,7 @@ ZimBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
        text: `
 *✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7499,7 +7499,7 @@ ZimBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
 //hydratedTemplate: {
 //imageMessage: message.imageMessage,
 //hydratedContentText: anu,
-//hydratedFooterText: `${global.botname}`,
+//hydratedFooterText: `ALPHA BOT SERVERS`,
 //hydratedButtons: [{
 //urlButton: {
 //displayText: 'SUBSCRIBE',
@@ -7545,7 +7545,7 @@ let hao = randomNomor(200)
 
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7590,7 +7590,7 @@ let hao = randomNomor(200)
 
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7644,7 +7644,7 @@ function _0x3217(_0x37715e,_0x2f6592){const _0xa94637=_0xa946();return _0x3217=f
                 
                                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
                 ╭━━━━━━━━━━━━━━━━━━╮
-                ┃         ${global.botname}
+                ┃         ALPHA BOT SERVERS
                 ┃━━━━━━━━━━━━━━━━━━┃
                 ┃
                 ┃ *${ucapannya2}*, *${pushname}*
@@ -7686,7 +7686,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7756,7 +7756,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7832,7 +7832,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7898,7 +7898,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7972,7 +7972,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8075,7 +8075,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8121,7 +8121,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8163,7 +8163,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8208,7 +8208,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8256,7 +8256,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8306,7 +8306,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8370,7 +8370,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8427,7 +8427,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8469,7 +8469,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8544,7 +8544,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8583,7 +8583,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8626,7 +8626,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8664,7 +8664,7 @@ templateMessage: {
 hydratedTemplate: {
 imageMessage: message.imageMessage,
 hydratedContentText: anu,
-hydratedFooterText: `${global.botname}`,
+hydratedFooterText: `ALPHA BOT SERVERS`,
 hydratedButtons: [{        
     "urlButton": {
         "displayText": "MAIN GROUP",
@@ -8693,7 +8693,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8739,7 +8739,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8790,7 +8790,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8826,7 +8826,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${global.botname}
+┃         ALPHA BOT SERVERS
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
