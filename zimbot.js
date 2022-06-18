@@ -104,7 +104,7 @@ const  autoblock = JSON.parse(fs.readFileSync('./database/autoblock.json'))
 
 //////created by zim-bot-inc
 
-module.exports = AlphaBotInc = async (AlphaBotInc, m, chatUpdate, store) => {
+module.exports = ZimBotInc = async (ZimBotInc, m, chatUpdate, store) => {
     try {
         var body = (m.mtype === 'conversation') ? m.message.conversation : (m.mtype == 'imageMessage') ? m.message.imageMessage.caption : (m.mtype == 'videoMessage') ? m.message.videoMessage.caption : (m.mtype == 'extendedTextMessage') ? m.message.extendedTextMessage.text : (m.mtype == 'buttonsResponseMessage') ? m.message.buttonsResponseMessage.selectedButtonId : (m.mtype == 'listResponseMessage') ? m.message.listResponseMessage.singleSelectReply.selectedRowId : (m.mtype == 'templateButtonReplyMessage') ? m.message.templateButtonReplyMessage.selectedId : (m.mtype === 'messageContextInfo') ? (m.message.buttonsResponseMessage?.selectedButtonId || m.message.listResponseMessage?.singleSelectReply.selectedRowId || m.text) : ''
         var budy = (typeof m.text == 'string' ? m.text : '')
@@ -113,7 +113,7 @@ module.exports = AlphaBotInc = async (AlphaBotInc, m, chatUpdate, store) => {
         const command = body.replace(prefix, '').trim().split(/ +/).shift().toLowerCase()
         const args = body.trim().split(/ +/).slice(1)
         const pushname = m.pushName || "No Name"
-        const botNumber = await AlphaBotInc.decodeJid(AlphaBotInc.user.id)
+        const botNumber = await ZimBotInc.decodeJid(ZimBotInc.user.id)
         const isCreator = [botNumber, ...global.owner].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
         const itsMe = m.sender == botNumber ? true : false
         const text = q = args.join(" ")
@@ -126,7 +126,7 @@ module.exports = AlphaBotInc = async (AlphaBotInc, m, chatUpdate, store) => {
         const isAutoblock =  autoblock.includes('@s.whatsapp.net') 
 	
         //GROUP METADATA
-        const groupMetadata = m.isGroup ? await AlphaBotInc.groupMetadata(m.chat).catch(e => {}) : ''
+        const groupMetadata = m.isGroup ? await ZimBotInc.groupMetadata(m.chat).catch(e => {}) : ''
         const groupName = m.isGroup ? groupMetadata.subject : ''
         const participants = m.isGroup ? await groupMetadata.participants : ''
         const groupAdmins = m.isGroup ? await participants.filter(v => v.admin !== null).map(v => v.id) : ''
@@ -138,7 +138,7 @@ module.exports = AlphaBotInc = async (AlphaBotInc, m, chatUpdate, store) => {
         const isAntilinkyt = m.isGroup ? antilinkyt.includes(m.chat) : false
         const isAntibule = m.isGroup ? antibule.includes(m.chat) : false
         const antiToxic = m.isGroup ? dripsanti.includes(from) : false
-        const AlphaBotIncv3 = body.slice(0).trim().split(/ +/).shift().toLowerCase()
+        const zimbotincv3 = body.slice(0).trim().split(/ +/).shift().toLowerCase()
         const isAntiLinkYoutubeChannel = m.isGroup ? dripsantiyt.includes(m.chat) : false
         const isAntiLinkInstagram = m.isGroup ? dripsantiig.includes(m.chat) : false
         const isAntiLinkFacebook = m.isGroup ? dripsantifb.includes(m.chat) : false
@@ -446,7 +446,7 @@ randek = jsonDrips[randIndex];
         }
 	    
         //public or self
-        if (!AlphaBotInc.public) {
+        if (!ZimBotInc.public) {
             if (!m.key.fromMe) return
         }
     
@@ -456,16 +456,16 @@ randek = jsonDrips[randIndex];
         }
 	
               if (global.dripsreadgroup) {
-              if (m.isGroup) { AlphaBotInc.sendReadReceipt(m.chat, m.sender, [m.key.id]) }
+              if (m.isGroup) { ZimBotInc.sendReadReceipt(m.chat, m.sender, [m.key.id]) }
               }
-              if (global.dripsreadall) { if (m.message) { AlphaBotInc.sendReadReceipt(m.chat, m.sender, [m.key.id]) }
+              if (global.dripsreadall) { if (m.message) { ZimBotInc.sendReadReceipt(m.chat, m.sender, [m.key.id]) }
               }
-                if (global.dripsrecord) { if (m.chat) { AlphaBotInc.sendPresenceUpdate('recording', m.chat) }
+                if (global.dripsrecord) { if (m.chat) { ZimBotInc.sendPresenceUpdate('recording', m.chat) }
             }
             
-              if (global.dripstyping) { if (m.chat) { AlphaBotInc.sendPresenceUpdate('composing', m.chat) }
+              if (global.dripstyping) { if (m.chat) { ZimBotInc.sendPresenceUpdate('composing', m.chat) }
             }
-              if (global.available) { if (m.chat) { AlphaBotInc.sendPresenceUpdate('available', m.chat) }
+              if (global.available) { if (m.chat) { ZimBotInc.sendPresenceUpdate('available', m.chat) }
               }
 	//Auto reset
   //Jika bot on di jam 24.00 maka limit dan darah bakal reset
@@ -489,10 +489,10 @@ vide = await getBuffer(global.vid)
 //downloader
 const sendFile = async(link, type, options) => {
 hasil = await getBuffer(link)
-AlphaBotInc.sendMessage(from, hasil, type, options).catch(e => {
+ZimBotInc.sendMessage(from, hasil, type, options).catch(e => {
 fetch(link).then((hasil) => {
-AlphaBotInc.sendMessage(from, hasil, type, options).catch(e => {
-AlphaBotInc.sendMessage(from, { url : link }, type, options).catch(e => {
+ZimBotInc.sendMessage(from, hasil, type, options).catch(e => {
+ZimBotInc.sendMessage(from, { url : link }, type, options).catch(e => {
 m.reply('ERROR [ ! ]')
 console.log(e)
 })
@@ -502,7 +502,7 @@ console.log(e)
 }
 
 const reply = (teks) => {
-            AlphaBotInc.sendMessage(m.chat, { text: teks, contextInfo:{"externalAdReply": {"title": ` ${ALEXICA}`,"body": `MAIN GROUP DRIPSOFC`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": fs.readFileSync(`./Zimbot/drips.jpg`),"sourceUrl": `https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s`}}}, { quoted: m})
+            ZimBotInc.sendMessage(m.chat, { text: teks, contextInfo:{"externalAdReply": {"title": ` ${global.botname}`,"body": `SUBSCRIBE DRIPSOFC`, "previewType": "PHOTO","thumbnailUrl": ``,"thumbnail": fs.readFileSync(`./Zimbot/drips.jpg`),"sourceUrl": `https://www.youtube.com/c/DRIPSOFC`}}}, { quoted: m})
         }
 //dokumen random
 let doku = [f1,f2,f3,f4,f5,f6]
@@ -525,7 +525,7 @@ return '```' + abantyulidab+ '```'
 
 
 if (m.chat.startsWith("212")) {
-AlphaBotInc.updateBlockStatus(m.sender,'block')
+ZimBotInc.updateBlockStatus(m.sender,'block')
             
             }
 
@@ -606,26 +606,26 @@ const levelRole = level.getLevelingLevel(m.sender, _level)
 for (let drips of zimbot){
     if (budy === drips){
             result = fs.readFileSync(`./bgm/${drips}.mp3`)
-AlphaBotInc.sendMessage(m.chat, { audio: result, mimetype: 'audio/mp4' , ptt: true }, { quoted: m})
+ZimBotInc.sendMessage(m.chat, { audio: result, mimetype: 'audio/mp4' , ptt: true }, { quoted: m})
 }
 }   
 
 //BY DRIPS ZIM BOT INC   
-function _0x3c50(_0x1b7fa7,_0x819da0){var _0x5f3986=_0x5f39();return _0x3c50=function(_0x3c50ed,_0x52aa64){_0x3c50ed=_0x3c50ed-0x155;var _0x5e1fc2=_0x5f3986[_0x3c50ed];return _0x5e1fc2;},_0x3c50(_0x1b7fa7,_0x819da0);}var _0x1db488=_0x3c50;(function(_0x53ddab,_0x1ade86){var _0x3c5de1=_0x3c50,_0xb4e197=_0x53ddab();while(!![]){try{var _0x391d33=-parseInt(_0x3c5de1(0x15b))/0x1+-parseInt(_0x3c5de1(0x157))/0x2*(parseInt(_0x3c5de1(0x167))/0x3)+parseInt(_0x3c5de1(0x159))/0x4*(-parseInt(_0x3c5de1(0x158))/0x5)+-parseInt(_0x3c5de1(0x160))/0x6*(parseInt(_0x3c5de1(0x162))/0x7)+-parseInt(_0x3c5de1(0x161))/0x8*(parseInt(_0x3c5de1(0x15c))/0x9)+-parseInt(_0x3c5de1(0x166))/0xa*(-parseInt(_0x3c5de1(0x164))/0xb)+parseInt(_0x3c5de1(0x165))/0xc*(parseInt(_0x3c5de1(0x15d))/0xd);if(_0x391d33===_0x1ade86)break;else _0xb4e197['push'](_0xb4e197['shift']());}catch(_0x54c331){_0xb4e197['push'](_0xb4e197['shift']());}}}(_0x5f39,0x37fc9));if(isAutoblock){if(m[_0x1db488(0x155)][_0x1db488(0x156)](_0x1db488(0x163))){if(isCreator)block=m[_0x1db488(0x15e)];await AlphaBotInc['sendMessage'](from,{'text':_0x1db488(0x15a)+global['group1']+'\x0a\x0a'+global['group2']+'}','m':m}),AlphaBotInc[_0x1db488(0x168)](m['sender'],_0x1db488(0x15f));}}function _0x5f39(){var _0x2ab19d=['includes','332338wdkppl','5XIpiYR','130028lmzYtu','*▊▊▊AUTO\x20BLOCK▊▊▊*\x0a\x0a*today\x20I\x27m\x20blocking\x20dumps\x20bye\x20you\x20are\x20_blocked_*\x20*if\x20you\x20want\x20to\x20use\x20bot\x20join\x20this\x20group*\x20','411550EgdCqN','9VxrBNs','2938iAoKIx','sender','block','2386404jfIGtx','1320496dhHLcZ','7Mtwctp','@s.whatsapp.net','245729PPwscf','51924IZVYju','190zTvaKV','3FvSOAe','updateBlockStatus','chat'];_0x5f39=function(){return _0x2ab19d;};return _0x5f39();}           
+function _0x3c50(_0x1b7fa7,_0x819da0){var _0x5f3986=_0x5f39();return _0x3c50=function(_0x3c50ed,_0x52aa64){_0x3c50ed=_0x3c50ed-0x155;var _0x5e1fc2=_0x5f3986[_0x3c50ed];return _0x5e1fc2;},_0x3c50(_0x1b7fa7,_0x819da0);}var _0x1db488=_0x3c50;(function(_0x53ddab,_0x1ade86){var _0x3c5de1=_0x3c50,_0xb4e197=_0x53ddab();while(!![]){try{var _0x391d33=-parseInt(_0x3c5de1(0x15b))/0x1+-parseInt(_0x3c5de1(0x157))/0x2*(parseInt(_0x3c5de1(0x167))/0x3)+parseInt(_0x3c5de1(0x159))/0x4*(-parseInt(_0x3c5de1(0x158))/0x5)+-parseInt(_0x3c5de1(0x160))/0x6*(parseInt(_0x3c5de1(0x162))/0x7)+-parseInt(_0x3c5de1(0x161))/0x8*(parseInt(_0x3c5de1(0x15c))/0x9)+-parseInt(_0x3c5de1(0x166))/0xa*(-parseInt(_0x3c5de1(0x164))/0xb)+parseInt(_0x3c5de1(0x165))/0xc*(parseInt(_0x3c5de1(0x15d))/0xd);if(_0x391d33===_0x1ade86)break;else _0xb4e197['push'](_0xb4e197['shift']());}catch(_0x54c331){_0xb4e197['push'](_0xb4e197['shift']());}}}(_0x5f39,0x37fc9));if(isAutoblock){if(m[_0x1db488(0x155)][_0x1db488(0x156)](_0x1db488(0x163))){if(isCreator)block=m[_0x1db488(0x15e)];await ZimBotInc['sendMessage'](from,{'text':_0x1db488(0x15a)+global['group1']+'\x0a\x0a'+global['group2']+'}','m':m}),ZimBotInc[_0x1db488(0x168)](m['sender'],_0x1db488(0x15f));}}function _0x5f39(){var _0x2ab19d=['includes','332338wdkppl','5XIpiYR','130028lmzYtu','*▊▊▊AUTO\x20BLOCK▊▊▊*\x0a\x0a*today\x20I\x27m\x20blocking\x20dumps\x20bye\x20you\x20are\x20_blocked_*\x20*if\x20you\x20want\x20to\x20use\x20bot\x20join\x20this\x20group*\x20','411550EgdCqN','9VxrBNs','2938iAoKIx','sender','block','2386404jfIGtx','1320496dhHLcZ','7Mtwctp','@s.whatsapp.net','245729PPwscf','51924IZVYju','190zTvaKV','3FvSOAe','updateBlockStatus','chat'];_0x5f39=function(){return _0x2ab19d;};return _0x5f39();}           
                 
 	// auto set bio
 	if (db.data.settings[botNumber].autobio) {
 	    let setting = global.db.data.settings[botNumber]
 	    if (new Date() * 1 - setting.status > 1000) {
 		let uptime = await runtime(process.uptime())
-		await AlphaBotInc.setStatus(`ZIM-BOT-INC| BOT ONLINE: ${runtime(uptime)}`)
+		await ZimBotInc.setStatus(`ZIM-BOT-INC| BOT ONLINE: ${runtime(uptime)}`)
 		setting.status = new Date() * 1
 	    }
 	}
 
 const listmsg = (from, title, desc, list) => { // ngeread nya pake rowsId, jadi command nya ga keliatan
-            let po = AlphaBotInc.prepareMessageFromContent(from, {"listMessage": {"title": title,"description": desc,"buttonText": "Pilih Disini","footerText": "𝐻𝑒𝑟𝑚𝑎𝑛 𝐶ℎ𝑎𝑛𝑒𝑙᭄𓅂","listType": "SINGLE_SELECT","sections": list, quoted:mek}}, {})
-            return AlphaBotInc.relayWAMessage(po, {waitForAck: true, quoted:mek})
+            let po = ZimBotInc.prepareMessageFromContent(from, {"listMessage": {"title": title,"description": desc,"buttonText": "Pilih Disini","footerText": "𝐻𝑒𝑟𝑚𝑎𝑛 𝐶ℎ𝑎𝑛𝑒𝑙᭄𓅂","listType": "SINGLE_SELECT","sections": list, quoted:mek}}, {})
+            return ZimBotInc.relayWAMessage(po, {waitForAck: true, quoted:mek})
         }
 	    
 	  // Anti Link
@@ -641,10 +641,10 @@ const listmsg = (from, title, desc, list) => { // ngeread nya pake rowsId, jadi 
         let hash = global.db.data.sticker[m.msg.fileSha256.toString('base64')]
         let { text, mentionedJid } = hash
         let messages = await generateWAMessage(m.chat, { text: text, mentions: mentionedJid }, {
-            userJid: AlphaBotInc.user.id,
+            userJid: ZimBotInc.user.id,
             quoted: m.quoted && m.quoted.fakeObj
         })
-        messages.key.fromMe = areJidsSameUser(m.sender, AlphaBotInc.user.id)
+        messages.key.fromMe = areJidsSameUser(m.sender, ZimBotInc.user.id)
         messages.key.id = m.key.id
         messages.pushName = m.pushName
         if (m.isGroup) messages.participant = m.sender
@@ -653,7 +653,7 @@ const listmsg = (from, title, desc, list) => { // ngeread nya pake rowsId, jadi 
             messages: [proto.WebMessageInfo.fromObject(messages)],
             type: 'append'
         }
-        AlphaBotInc.ev.emit('messages.upsert', msg)
+        ZimBotInc.ev.emit('messages.upsert', msg)
         }
 	    
 	if (('family100'+m.chat in _family100) && isCmd) {
@@ -674,7 +674,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
         return isSurender || room.terjawab[index] ? `(${index + 1}) ${jawaban} ${room.terjawab[index] ? '@' + room.terjawab[index].split('@')[0] : ''}`.trim() : false
     }).filter(v => v).join('\n')}
     ${isSurender ? '' : `Perfect Player`}`.trim()
-            AlphaBotInc.sendText(m.chat, caption, m, { contextInfo: { mentionedJid: parseMention(caption) }}).then(mes => { return _family100['family100'+m.chat].pesan = mesg }).catch(_ => _)
+            ZimBotInc.sendText(m.chat, caption, m, { contextInfo: { mentionedJid: parseMention(caption) }}).then(mes => { return _family100['family100'+m.chat].pesan = mesg }).catch(_ => _)
             if (isWin || isSurender) delete _family100['family100'+m.chat]
         }
 
@@ -682,7 +682,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
             kuis = true
             jawaban = tebaklagu[m.sender.split('@')[0]]
             if (budy.toLowerCase() == jawaban) {
-                await AlphaBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak lagu', buttonText: { displayText: 'guess the song' }, type: 1 }], `🎮 Guess the Song 🎮\n\n*Correct answer Bonus +500 money🎉*\n\n*Want to play again? press the button below*`, AlphaBotInc.user.name, m)
+                await ZimBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak lagu', buttonText: { displayText: 'guess the song' }, type: 1 }], `🎮 Guess the Song 🎮\n\n*Correct answer Bonus +500 money🎉*\n\n*Want to play again? press the button below*`, ZimBotInc.user.name, m)
                 delete tebaklagu[m.sender.split('@')[0]]
             } else m.reply('*Wrong answer!*')
         }
@@ -700,7 +700,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
             kuis = true
             jawaban = tebakgambar[m.sender.split('@')[0]]
             if (budy.toLowerCase() == jawaban) {
-                await AlphaBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak gambar', buttonText: { displayText: 'Guess the picture' }, type: 1 }], `🎮 Tebak Gambar 🎮\n\n*Correct answer +500 money🎉*\n\n*Want to play again? press the button below*`, AlphaBotInc.user.name, m)
+                await ZimBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak gambar', buttonText: { displayText: 'Guess the picture' }, type: 1 }], `🎮 Tebak Gambar 🎮\n\n*Correct answer +500 money🎉*\n\n*Want to play again? press the button below*`, ZimBotInc.user.name, m)
                 delete tebakgambar[m.sender.split('@')[0]]
             } else m.reply('*Wrong answer!*')
         }
@@ -709,7 +709,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
             kuis = true
             jawaban = tebakkata[m.sender.split('@')[0]]
             if (budy.toLowerCase() == jawaban) {
-                await AlphaBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak kata', buttonText: { displayText: 'Tebak Kata' }, type: 1 }], `🎮 Tebak Kata 🎮\n\nCorrect Answer +500 money🎉\n\n*Want to play again? press the button below*`, AlphaBotInc.user.name, m)
+                await ZimBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak kata', buttonText: { displayText: 'Tebak Kata' }, type: 1 }], `🎮 Tebak Kata 🎮\n\nCorrect Answer +500 money🎉\n\n*Want to play again? press the button below*`, ZimBotInc.user.name, m)
                 delete tebakkata[m.sender.split('@')[0]]
             } else m.reply('*Wrong answer!*')
         }
@@ -719,7 +719,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
             jawaban = caklontong[m.sender.split('@')[0]]
 	    deskripsi = caklontong_desk[m.sender.split('@')[0]]
             if (budy.toLowerCase() == jawaban) {
-                await AlphaBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak lontong', buttonText: { displayText: 'Tebak Lontong' }, type: 1 }], `🎮 Cak Lontong 🎮\n\nCorrect Answer +500 money🎉\n*${deskripsi}*\n\n*Want to play again? press the button below*`, AlphaBotInc.user.name, m)
+                await ZimBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak lontong', buttonText: { displayText: 'Tebak Lontong' }, type: 1 }], `🎮 Cak Lontong 🎮\n\nCorrect Answer +500 money🎉\n*${deskripsi}*\n\n*Want to play again? press the button below*`, ZimBotInc.user.name, m)
                 delete caklontong[m.sender.split('@')[0]]
 		delete caklontong_desk[m.sender.split('@')[0]]
             } else m.reply('*Wrong answer!*')
@@ -729,7 +729,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
             kuis = true
             jawaban = tebakkalimat[m.sender.split('@')[0]]
             if (budy.toLowerCase() == jawaban) {
-                await AlphaBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak kalimat', buttonText: { displayText: 'Tebak Kalimat' }, type: 1 }], `🎮 Tebak Kalimat 🎮\n\nCorrect Answer +500 money🎉\n\n*Want to play again? press the button below*`, AlphaBotInc.user.name, m)
+                await ZimBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak kalimat', buttonText: { displayText: 'Tebak Kalimat' }, type: 1 }], `🎮 Tebak Kalimat 🎮\n\nCorrect Answer +500 money🎉\n\n*Want to play again? press the button below*`, ZimBotInc.user.name, m)
                 delete tebakkalimat[m.sender.split('@')[0]]
             } else m.reply('*Wrong answer!*')
         }
@@ -738,7 +738,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
             kuis = true
             jawaban = tebaklirik[m.sender.split('@')[0]]
             if (budy.toLowerCase() == jawaban) {
-                await AlphaBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak lirik', buttonText: { displayText: 'Tebak Lirik' }, type: 1 }], `🎮 Tebak Lirik 🎮\n\nCorrect Answer +500 money🎉\n\n*Want to play again? press the button below*`, AlphaBotInc.user.name, m)
+                await ZimBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak lirik', buttonText: { displayText: 'Tebak Lirik' }, type: 1 }], `🎮 Tebak Lirik 🎮\n\nCorrect Answer +500 money🎉\n\n*Want to play again? press the button below*`, ZimBotInc.user.name, m)
                 delete tebaklirik[m.sender.split('@')[0]]
             } else m.reply('*Wrong answer!*')
         }
@@ -747,7 +747,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
             kuis = true
             jawaban = tebaktebakan[m.sender.split('@')[0]]
             if (budy.toLowerCase() == jawaban) {
-                await AlphaBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak tebakan', buttonText: { displayText: 'Tebak Tebakan' }, type: 1 }], `🎮 Tebak Tebakan 🎮\n\nCorrect Answer +500 money🎉\n\n*Want to play again? press the button below*`, AlphaBotInc.user.name, m)
+                await ZimBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak tebakan', buttonText: { displayText: 'Tebak Tebakan' }, type: 1 }], `🎮 Tebak Tebakan 🎮\n\nCorrect Answer +500 money🎉\n\n*Want to play again? press the button below*`, ZimBotInc.user.name, m)
                 delete tebaktebakan[m.sender.split('@')[0]]
             } else m.reply('*Wrong answer!*')
         }
@@ -810,8 +810,8 @@ ${isWin ? `@${winner.split('@')[0]} Win!` : isTie ? `Game berakhir` : `Giliran $
 Type *give up* to give up and admit defeat`
 	    if ((room.game._currentTurn ^ isSurrender ? room.x : room.o) !== m.chat)
 	    room[room.game._currentTurn ^ isSurrender ? 'x' : 'o'] = m.chat
-	    if (room.x !== room.o) await AlphaBotInc.sendText(room.x, str, m, { mentions: parseMention(str) } )
-	    await AlphaBotInc.sendText(room.o, str, m, { mentions: parseMention(str) } )
+	    if (room.x !== room.o) await ZimBotInc.sendText(room.x, str, m, { mentions: parseMention(str) } )
+	    await ZimBotInc.sendText(room.o, str, m, { mentions: parseMention(str) } )
 	    if (isTie || isWin) {
 	    delete this.game[room.id]
 	    }
@@ -825,7 +825,7 @@ Type *give up* to give up and admit defeat`
 	    let tie = false
 	    if (m.sender == roof.p2 && /^(acc(ept)?|terima|gas|oke?|tolak|gamau|nanti|ga(k.)?bisa|y)/i.test(m.text) && m.isGroup && roof.status == 'wait') {
 	    if (/^(tolak|gamau|nanti|n|ga(k.)?bisa)/i.test(m.text)) {
-	    AlphaBotInc.sendTextWithMentions(m.chat, `@${roof.p2.split`@`[0]} reject the suit, the suit is canceled`, m)
+	    ZimBotInc.sendTextWithMentions(m.chat, `@${roof.p2.split`@`[0]} reject the suit, the suit is canceled`, m)
 	    delete this.suit[roof.id]
 	    return !0
 	    }
@@ -833,20 +833,20 @@ Type *give up* to give up and admit defeat`
 	    roof.asal = m.chat
 	    clearTimeout(roof.waktu)
 	    //delete roof[roof.id].waktu
-	    AlphaBotInc.sendText(m.chat, `Suit has been sent to chat
+	    ZimBotInc.sendText(m.chat, `Suit has been sent to chat
 
 @${roof.p.split`@`[0]} dan 
 @${roof.p2.split`@`[0]}
 
 Please choose a suit in the respective chat"
 Click https://wa.me/${botNumber.split`@`[0]}`, m, { mentions: [roof.p, roof.p2] })
-	    if (!roof.pilih) AlphaBotInc.sendText(roof.p, `Please select \n\nRock🗿\nPaper📄\nScissors✂️`, m)
-	    if (!roof.pilih2) AlphaBotInc.sendText(roof.p2, `Please select \n\nRock🗿\nPaper📄\nScissors✂️`, m)
+	    if (!roof.pilih) ZimBotInc.sendText(roof.p, `Please select \n\nRock🗿\nPaper📄\nScissors✂️`, m)
+	    if (!roof.pilih2) ZimBotInc.sendText(roof.p2, `Please select \n\nRock🗿\nPaper📄\nScissors✂️`, m)
 	    roof.waktu_milih = setTimeout(() => {
-	    if (!roof.pilih && !roof.pilih2) AlphaBotInc.sendText(m.chat, `*Neither player intends to play,\nSuit cancelled*`)
+	    if (!roof.pilih && !roof.pilih2) ZimBotInc.sendText(m.chat, `*Neither player intends to play,\nSuit cancelled*`)
 	    else if (!roof.pilih || !roof.pilih2) {
 	    win = !roof.pilih ? roof.p2 : roof.p
-	    AlphaBotInc.sendTextWithMentions(m.chat, `@${(roof.pilih ? roof.p2 : roof.p).split`@`[0]} *don't choose suit, game over*`, m)
+	    ZimBotInc.sendTextWithMentions(m.chat, `@${(roof.pilih ? roof.p2 : roof.p).split`@`[0]} *don't choose suit, game over*`, m)
 	    }
 	    delete this.suit[roof.id]
 	    return !0
@@ -862,13 +862,13 @@ Click https://wa.me/${botNumber.split`@`[0]}`, m, { mentions: [roof.p, roof.p2] 
 	    roof.pilih = reg.exec(m.text.toLowerCase())[0]
 	    roof.text = m.text
 	    m.reply(`*You have chosen* ${m.text} ${!roof.pilih2 ? `\n\n*Waiting for the opponent to choose*` : ''}`)
-	    if (!roof.pilih2) AlphaBotInc.sendText(roof.p2, '*_Your opponent has chosen_\nNow its your turn*', 0)
+	    if (!roof.pilih2) ZimBotInc.sendText(roof.p2, '*_Your opponent has chosen_\nNow its your turn*', 0)
 	    }
 	    if (jwb2 && reg.test(m.text) && !roof.pilih2 && !m.isGroup) {
 	    roof.pilih2 = reg.exec(m.text.toLowerCase())[0]
 	    roof.text2 = m.text
 	    m.reply(`*You have chosen*${m.text} ${!roof.pilih ? `\n\n*Waiting for the opponent to choose*` : ''}`)
-	    if (!roof.pilih) AlphaBotInc.sendText(roof.p, '*_Your opponent has chosen_\nNow its your turn*', 0)
+	    if (!roof.pilih) ZimBotInc.sendText(roof.p, '*_Your opponent has chosen_\nNow its your turn*', 0)
 	    }
 	    let stage = roof.pilih
 	    let stage2 = roof.pilih2
@@ -881,7 +881,7 @@ Click https://wa.me/${botNumber.split`@`[0]}`, m, { mentions: [roof.p, roof.p2] 
 	    else if (k.test(stage) && b.test(stage2)) win = roof.p
 	    else if (k.test(stage) && g.test(stage2)) win = roof.p2
 	    else if (stage == stage2) tie = true
-	    AlphaBotInc.sendText(roof.asal, `_*Hasil Suit*_${tie ? '\nSERI' : ''}
+	    ZimBotInc.sendText(roof.asal, `_*Hasil Suit*_${tie ? '\nSERI' : ''}
 
 @${roof.p.split`@`[0]} (${roof.text}) ${tie ? '' : roof.p == win ? ` Menang \n` : ` Kalah \n`}
 @${roof.p2.split`@`[0]} (${roof.text2}) ${tie ? '' : roof.p2 == win ? ` Menang \n` : ` Kalah \n`}
@@ -958,8 +958,8 @@ ${arr.slice(6).join('')}
 *Wait* @${room.game.currentTurn.split('@')[0]}
 
 Type *give up* to give up and admit defeat`
-            if (room.x !== room.o) await AlphaBotInc.sendText(room.x, str, m, { mentions: parseMention(str) } )
-            await AlphaBotInc.sendText(room.o, str, m, { mentions: parseMention(str) } )
+            if (room.x !== room.o) await ZimBotInc.sendText(room.x, str, m, { mentions: parseMention(str) } )
+            await ZimBotInc.sendText(room.o, str, m, { mentions: parseMention(str) } )
             } else {
             room = {
             id: 'tictactoe-' + (+new Date),
@@ -979,7 +979,7 @@ Type *give up* to give up and admit defeat`
             try {
             if (this.game) {
             delete this.game
-            AlphaBotInc.sendText(m.chat, `*Successfully delete the TicTacToe session*`, m)
+            ZimBotInc.sendText(m.chat, `*Successfully delete the TicTacToe session*`, m)
             } else if (!this.game) {
             m.reply(`*Session TicTacToe🎮 does not exist*`)
             } else throw '?'
@@ -1005,13 +1005,13 @@ Type *give up* to give up and admit defeat`
 
 Please @${m.mentionedJid[0].split`@`[0]}  *type accept/reject*`
             this.suit[id] = {
-            chat: await AlphaBotInc.sendText(m.chat, caption, m, { mentions: parseMention(caption) }),
+            chat: await ZimBotInc.sendText(m.chat, caption, m, { mentions: parseMention(caption) }),
             id: id,
             p: m.sender,
             p2: m.mentionedJid[0],
             status: 'wait',
             waktu: setTimeout(() => {
-            if (this.suit[id]) AlphaBotInc.sendText(m.chat, `*_suit time out_*`, m)
+            if (this.suit[id]) ZimBotInc.sendText(m.chat, `*_suit time out_*`, m)
             delete this.suit[id]
             }, 60000), poin, poin_lose, timeout
             }
@@ -1080,7 +1080,7 @@ Please @${m.mentionedJid[0].split`@`[0]}  *type accept/reject*`
                          buttons: buttons,
                          headerType: 4
                         }
-                        AlphaBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
+                        ZimBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
                  
                 
                          
@@ -1203,7 +1203,7 @@ case 'limituser':
      for (let i of _limit){
      txt += `⬤ *ID :* @${i.id.split("@")[0]}\n⬤ *Limit* : ${i.limit}\n`
      }
-    AlphaBotInc.sendTextWithMentions(m.chat, txt, m)      
+    ZimBotInc.sendTextWithMentions(m.chat, txt, m)      
   }
  break
 case 'leaderboard':
@@ -1218,7 +1218,7 @@ case 'leaderboard':
      txt += `*COW* : ${i.sapi}\n`
      txt += `*ELEPHANT* : ${i.gajah}\n\n`
      }
-    AlphaBotInc.sendTextWithMentions(m.chat, txt, m)       
+    ZimBotInc.sendTextWithMentions(m.chat, txt, m)       
   }
  break
 case 'mining': case 'mine':{
@@ -1248,13 +1248,13 @@ if (q.includes('--help')) return m.reply(examkosong)
       buttons: buttons,
       headerType: 4
      }
-     AlphaBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
+     ZimBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
    
    }, 7000)  
   setTimeout( () => {
   lah = `@${m.sender.split("@")[0]} *Start mining🎣*`
   kic = m.sender 
-  AlphaBotInc.sendMessage(m.chat, {text:`${lah}`, contextInfo:{mentionedJid:[kic]}}, {quoted:m})
+  ZimBotInc.sendMessage(m.chat, {text:`${lah}`, contextInfo:{mentionedJid:[kic]}}, {quoted:m})
   }, 1500)
   kurangDarah(m.sender, 10)
   addBesi(m.sender, besinya)
@@ -1292,26 +1292,26 @@ case 'restart': {
 break
 	    case 'donasi': case 'sewabot': case 'sewa': case 'buypremium': case 'donate': {
 	    if (isBan) throw mess.ban
-                AlphaBotInc.sendMessage(m.chat, { image: { url: 'https://telegra.ph/file/4e12bdfc0fbcbe7d14930.jpg' }, caption: `*Hi Chomie ${m.pushName}*\n\n *Thanks for your support we appreciate you we dont need your money, support us by subscribing to our youtube channel* *DRIPS OFC:* https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s ` }, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { image: { url: 'https://telegra.ph/file/4e12bdfc0fbcbe7d14930.jpg' }, caption: `*Hi Chomie ${m.pushName}*\n\n *Thanks for your support we appreciate you we dont need your money, support us by subscribing to our youtube channel* *DRIPS OFC:* https://www.youtube.com/c/DRIPSOFC ` }, { quoted: m })
             }
             break            
             case 'chat': {
                 if (!isCreator) throw mess.owner
                 if (!q) throw 'Option : 1. mute\n2. unmute\n3. archive\n4. unarchive\n5. read\n6. unread\n7. delete'
                 if (args[0] === 'mute') {
-                    AlphaBotInc.chatModify({ mute: 'Infinity' }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+                    ZimBotInc.chatModify({ mute: 'Infinity' }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
                 } else if (args[0] === 'unmute') {
-                    AlphaBotInc.chatModify({ mute: null }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+                    ZimBotInc.chatModify({ mute: null }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
                 } else if (args[0] === 'archive') {
-                    AlphaBotInc.chatModify({  archive: true }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+                    ZimBotInc.chatModify({  archive: true }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
                 } else if (args[0] === 'unarchive') {
-                    AlphaBotInc.chatModify({ archive: false }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+                    ZimBotInc.chatModify({ archive: false }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
                 } else if (args[0] === 'read') {
-                    AlphaBotInc.chatModify({ markRead: true }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+                    ZimBotInc.chatModify({ markRead: true }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
                 } else if (args[0] === 'unread') {
-                    AlphaBotInc.chatModify({ markRead: false }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+                    ZimBotInc.chatModify({ markRead: false }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
                 } else if (args[0] === 'delete') {
-                    AlphaBotInc.chatModify({ clear: { message: { id: m.quoted.id, fromMe: true }} }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+                    ZimBotInc.chatModify({ clear: { message: { id: m.quoted.id, fromMe: true }} }, m.chat, []).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
                 }
             }
             break
@@ -1321,12 +1321,12 @@ break
                     m.reply('*There Are Still Unfinished Sessions!*')
                     throw false
                 }
-                let anu = await fetchJson('https://raw.DISCUSSION GROUPusercontent.com/BochilTeam/database/master/games/family100.json')
+                let anu = await fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/family100.json')
                 let random = anu[Math.floor(Math.random() * anu.length)]
                 let hasil = `*Answer the following questions :*\n${random.soal}\n\nThere is *${random.jawaban.length}* Answer ${random.jawaban.find(v => v.includes(' ')) ? `(some answers have spaces)` : ''}`.trim()
                 _family100['family100'+m.chat] = {
                     id: 'family100'+m.chat,
-                    pesan: await AlphaBotInc.sendText(m.chat, hasil, m),
+                    pesan: await ZimBotInc.sendText(m.chat, hasil, m),
                     ...random,
                     terjawab: Array.from(random.jawaban, () => false),
                     hadiah: 6,
@@ -1350,21 +1350,21 @@ break
                 if (!text) throw `Example : ${prefix + command} lagu\n\nOption : \n1. lagu\n2. gambar\n3. kata\n4. kalimat\n5. lirik\n6.lontong`
                 if (args[0] === "lagu") {
                     if (tebaklagu.hasOwnProperty(m.sender.split('@')[0])) throw "*There Are Still Unfinished Sessions!*"
-                    let anu = await fetchJson('https://fatiharridho.DISCUSSION GROUP.io/tebaklagu.json')
+                    let anu = await fetchJson('https://fatiharridho.github.io/tebaklagu.json')
                     let result = anu[Math.floor(Math.random() * anu.length)]
-                    let msg = await AlphaBotInc.sendMessage(m.chat, { audio: { url: result.link_song }, mimetype: 'audio/mpeg' }, { quoted: m })
-                    AlphaBotInc.sendText(m.chat, `*The song is a song from?*\n\nArtist : ${result.artist}\nTime : 60s`, msg).then(() => {
+                    let msg = await ZimBotInc.sendMessage(m.chat, { audio: { url: result.link_song }, mimetype: 'audio/mpeg' }, { quoted: m })
+                    ZimBotInc.sendText(m.chat, `*The song is a song from?*\n\nArtist : ${result.artist}\nTime : 60s`, msg).then(() => {
                     tebaklagu[m.sender.split('@')[0]] = result.jawaban.toLowerCase()
                     })
                     await sleep(60000)
                     if (tebaklagu.hasOwnProperty(m.sender.split('@')[0])) {
                     console.log("Answer: " + result.jawaban)
-                    AlphaBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak lagu', buttonText: { displayText: 'Guess the Song' }, type: 1 }], `Time Out\nAnswer:  ${tebaklagu[m.sender.split('@')[0]]}\n\n*Want to play? press the button below*`, AlphaBotInc.user.name, m)
+                    ZimBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak lagu', buttonText: { displayText: 'Guess the Song' }, type: 1 }], `Time Out\nAnswer:  ${tebaklagu[m.sender.split('@')[0]]}\n\n*Want to play? press the button below*`, ZimBotInc.user.name, m)
                     delete tebaklagu[m.sender.split('@')[0]]
                     }
                 } else if (args[0] === 'gambar') {
                     if (tebakgambar.hasOwnProperty(m.sender.split('@')[0])) throw "*There Are Still Unfinished Sessions!*"
-                    let anu = await fetchJson('https://raw.DISCUSSION GROUPusercontent.com/BochilTeam/database/master/games/tebakgambar.json')
+                    let anu = await fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/tebakgambar.json')
                     let result = anu[Math.floor(Math.random() * anu.length)]
                     let jawaban = result.jawaban
                     let kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '-')
@@ -1381,82 +1381,82 @@ break
                     buttons: buttons,
                     headerType: 4
                 }
-                AlphaBotInc.sendMessage(m.chat, buttonMessage, { quoted: m }).then(() => {
+                ZimBotInc.sendMessage(m.chat, buttonMessage, { quoted: m }).then(() => {
                     tebakgambar[m.sender.split('@')[0]] = result.jawaban.toLowerCase()
                     })
                     await sleep(60000)
                     if (tebakgambar.hasOwnProperty(m.sender.split('@')[0])) {
                     console.log("Jawaban: " + result.jawaban)
-                    AlphaBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak gambar', buttonText: { displayText: 'Tebak Gambar' }, type: 1 }], `Time Out\nAnswer:  ${tebakgambar[m.sender.split('@')[0]]}\n\n*Want to play? press the button below*`, AlphaBotInc.user.name, m)
+                    ZimBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak gambar', buttonText: { displayText: 'Tebak Gambar' }, type: 1 }], `Time Out\nAnswer:  ${tebakgambar[m.sender.split('@')[0]]}\n\n*Want to play? press the button below*`, ZimBotInc.user.name, m)
                     delete tebakgambar[m.sender.split('@')[0]]
                     }
                 } else if (args[0] === 'kata') {
                     if (tebakkata.hasOwnProperty(m.sender.split('@')[0])) throw "*There Are Still Unfinished Sessions!*"
-                    let anu = await fetchJson('https://raw.DISCUSSION GROUPusercontent.com/BochilTeam/database/master/games/tebakkata.json')
+                    let anu = await fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/tebakkata.json')
                     let result = anu[Math.floor(Math.random() * anu.length)]
                     let jawaban = result.jawaban
                     let kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '-')
                     var capti = `${result.soal}\n\n*Time : 60. seconds*\nType ${prefix}help for help\nBonus: 500 money`
                     var button = [{ buttonId: `${prefix}bantuan ${kisi_kisi}`, buttonText: { displayText: `Bantuan` }, type: 1 }]
-                    AlphaBotInc.sendMessage(m.chat, { caption: `${capti}`, location: { jpegThumbnail: await getBuffer(picak+'tebak kata') }, buttons: button, footer: '*Click the button below for help*', mentions: [m.sender] }).then(() => {
+                    ZimBotInc.sendMessage(m.chat, { caption: `${capti}`, location: { jpegThumbnail: await getBuffer(picak+'tebak kata') }, buttons: button, footer: '*Click the button below for help*', mentions: [m.sender] }).then(() => {
                     tebakkata[m.sender.split('@')[0]] = result.jawaban.toLowerCase()
                     })
                     await sleep(60000)
                     if (tebakkata.hasOwnProperty(m.sender.split('@')[0])) {
                     console.log("Jawaban: " + result.jawaban)
-                    AlphaBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak kata', buttonText: { displayText: 'Tebak Kata' }, type: 1 }], `Time Out\nAnswer:  ${tebakkata[m.sender.split('@')[0]]}\n\n*Want to play? press the button below*`, AlphaBotInc.user.name, m)
+                    ZimBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak kata', buttonText: { displayText: 'Tebak Kata' }, type: 1 }], `Time Out\nAnswer:  ${tebakkata[m.sender.split('@')[0]]}\n\n*Want to play? press the button below*`, ZimBotInc.user.name, m)
                     delete tebakkata[m.sender.split('@')[0]]
                     }
                 } else if (args[0] === 'kalimat') {
                     if (tebakkalimat.hasOwnProperty(m.sender.split('@')[0])) throw "*There Are Still Unfinished Sessions!*"
-                    let anu = await fetchJson('https://raw.DISCUSSION GROUPusercontent.com/BochilTeam/database/master/games/tebakkalimat.json')
+                    let anu = await fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/tebakkalimat.json')
                     let result = anu[Math.floor(Math.random() * anu.length)]
                     let jawaban = result.jawaban
                     let kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '-')
                     var capti = `${result.soal}\n\n*Time : 60. seconds*\nType ${prefix}help for help\nBonus: 500 money`
                     var button = [{ buttonId: `${prefix}bantuan ${kisi_kisi}`, buttonText: { displayText: `Bantuan` }, type: 1 }]
-                    AlphaBotInc.sendMessage(m.chat, { caption: `${capti}`, location: { jpegThumbnail: await getBuffer(picak+'tebak kalimat') }, buttons: button, footer: '*Click the button below for help*', mentions: [m.sender] }).then(() => {
+                    ZimBotInc.sendMessage(m.chat, { caption: `${capti}`, location: { jpegThumbnail: await getBuffer(picak+'tebak kalimat') }, buttons: button, footer: '*Click the button below for help*', mentions: [m.sender] }).then(() => {
                     tebakkalimat[m.sender.split('@')[0]] = result.jawaban.toLowerCase()
                     })
                     await sleep(60000)
                     if (tebakkalimat.hasOwnProperty(m.sender.split('@')[0])) {
                     console.log("Jawaban: " + result.jawaban)
-                    AlphaBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak kalimat', buttonText: { displayText: 'Tebak Kalimat' }, type: 1 }], `Time Out\nAnswer:  ${tebakkalimat[m.sender.split('@')[0]]}\n\n*Want to play? press the button below*`, AlphaBotInc.user.name, m)
+                    ZimBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak kalimat', buttonText: { displayText: 'Tebak Kalimat' }, type: 1 }], `Time Out\nAnswer:  ${tebakkalimat[m.sender.split('@')[0]]}\n\n*Want to play? press the button below*`, ZimBotInc.user.name, m)
                     delete tebakkalimat[m.sender.split('@')[0]]
                     }
                 } else if (args[0] === 'lirik') {
                     if (tebaklirik.hasOwnProperty(m.sender.split('@')[0])) throw "*There Are Still Unfinished Sessions!*"
-                    let anu = await fetchJson('https://raw.DISCUSSION GROUPusercontent.com/BochilTeam/database/master/games/tebaklirik.json')
+                    let anu = await fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/tebaklirik.json')
                     let result = anu[Math.floor(Math.random() * anu.length)]
                     let jawaban = result.jawaban
                     let kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '-')
                     var capti = `${result.soal}?\n\n*Time : 60. seconds*\nType ${prefix}help for help\nBonus: 500 money`
                     var button = [{ buttonId: `${prefix}bantuan ${kisi_kisi}`, buttonText: { displayText: `Bantuan` }, type: 1 }]
-                    AlphaBotInc.sendMessage(m.chat, { caption: `${capti}`, location: { jpegThumbnail: await getBuffer(picak+'tebak lirik') }, buttons: button, footer: '*Click the button below for help*', mentions: [m.sender] }).then(() => {
+                    ZimBotInc.sendMessage(m.chat, { caption: `${capti}`, location: { jpegThumbnail: await getBuffer(picak+'tebak lirik') }, buttons: button, footer: '*Click the button below for help*', mentions: [m.sender] }).then(() => {
                     tebaklirik[m.sender.split('@')[0]] = result.jawaban.toLowerCase()
                     })
                     await sleep(60000)
                     if (tebaklirik.hasOwnProperty(m.sender.split('@')[0])) {
                     console.log("Jawaban: " + result.jawaban)
-                    AlphaBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak lirik', buttonText: { displayText: 'Tebak Lirik' }, type: 1 }], `Time Out\nAnswer:  ${tebaklirik[m.sender.split('@')[0]]}\n\n*Want to play? press the button below*`, AlphaBotInc.user.name, m)
+                    ZimBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak lirik', buttonText: { displayText: 'Tebak Lirik' }, type: 1 }], `Time Out\nAnswer:  ${tebaklirik[m.sender.split('@')[0]]}\n\n*Want to play? press the button below*`, ZimBotInc.user.name, m)
                     delete tebaklirik[m.sender.split('@')[0]]
                     }
                 } else if (args[0] === 'lontong') {
                     if (caklontong.hasOwnProperty(m.sender.split('@')[0])) throw "*There Are Still Unfinished Sessions!*"
-                    let anu = await fetchJson('https://raw.DISCUSSION GROUPusercontent.com/BochilTeam/database/master/games/caklontong.json')
+                    let anu = await fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/caklontong.json')
                     let result = anu[Math.floor(Math.random() * anu.length)]
                     let jawaban = result.jawaban
                     let kisi_kisi = jawaban.replace(/[b|c|d|f|g|h|j|k|l|m|n|p|q|r|s|t|v|w|x|y|z]/gi, '-')
                     var capti = `${result.soal}\n\n*Time : 60. seconds*\nType ${prefix}help for help\nBonus: 500 money`
                     var button = [{ buttonId: `${prefix}bantuan ${kisi_kisi}`, buttonText: { displayText: `Bantuan` }, type: 1 }]
-                    AlphaBotInc.sendMessage(m.chat, { caption: `${capti}`, location: { jpegThumbnail: await getBuffer(picak+'cak lontong') }, buttons: button, footer: '*Click the button below for help*', mentions: [m.sender] }).then(() => {
+                    ZimBotInc.sendMessage(m.chat, { caption: `${capti}`, location: { jpegThumbnail: await getBuffer(picak+'cak lontong') }, buttons: button, footer: '*Click the button below for help*', mentions: [m.sender] }).then(() => {
                     caklontong[m.sender.split('@')[0]] = result.jawaban.toLowerCase()
 		    caklontong_desk[m.sender.split('@')[0]] = result.deskripsi
                     })
                     await sleep(60000)
                     if (caklontong.hasOwnProperty(m.sender.split('@')[0])) {
                     console.log("Jawaban: " + result.jawaban)
-                    AlphaBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak lontong', buttonText: { displayText: 'Tebak Lontong' }, type: 1 }], `Time Out\nAnswer:  ${caklontong[m.sender.split('@')[0]]}\nDescription : ${caklontong_desk[m.sender.split('@')[0]]}\n\n*Want to play? press the button below*`, AlphaBotInc.user.name, m)
+                    ZimBotInc.sendButtonText(m.chat, [{ buttonId: 'tebak lontong', buttonText: { displayText: 'Tebak Lontong' }, type: 1 }], `Time Out\nAnswer:  ${caklontong[m.sender.split('@')[0]]}\nDescription : ${caklontong_desk[m.sender.split('@')[0]]}\n\n*Want to play? press the button below*`, ZimBotInc.user.name, m)
                     delete caklontong[m.sender.split('@')[0]]
 		    delete caklontong_desk[m.sender.split('@')[0]]
                     }
@@ -1470,7 +1470,7 @@ break
                 let { genMath, modes } = require('./src/math')
                 if (!text) throw `Mode: ${Object.keys(modes).join(' | ')}\nUsage examples: ${prefix}math medium`
                 let result = await genMath(text.toLowerCase())
-                AlphaBotInc.sendText(m.chat, `*What is the result of: ${result.soal.toLowerCase()}*?\n\nTime: ${(result.waktu / 1000).toFixed(2)} second`, m).then(() => {
+                ZimBotInc.sendText(m.chat, `*What is the result of: ${result.soal.toLowerCase()}*?\n\nTime: ${(result.waktu / 1000).toFixed(2)} second`, m).then(() => {
                     kuismath[m.sender.split('@')[0]] = result.jawaban
                 })
                 await sleep(result.waktu)
@@ -1495,7 +1495,7 @@ break
             let buttons = [
                         { buttonId: '', buttonText: { displayText: 'SOULMATE❤️' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(m.chat, buttons, jawab, AlphaBotInc.user.name, m, {mentions: ments})
+                    await ZimBotInc.sendButtonText(m.chat, buttons, jawab, ZimBotInc.user.name, m, {mentions: ments})
             }
             break
             case 'couple': {
@@ -1512,7 +1512,7 @@ break
             let buttons = [
                         { buttonId: '', buttonText: { displayText: 'CHEERS TO THAT❤️' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(m.chat, buttons, jawab, AlphaBotInc.user.name, m, {mentions: menst})
+                    await ZimBotInc.sendButtonText(m.chat, buttons, jawab, ZimBotInc.user.name, m, {mentions: menst})
             }
             break
             case 'react': {
@@ -1523,7 +1523,7 @@ break
                         key: { remoteJid: m.chat, fromMe: true, id: quoted.id }
                     }
                 }
-                AlphaBotInc.sendMessage(m.chat, reactionMessage)
+                ZimBotInc.sendMessage(m.chat, reactionMessage)
             }
             break  
             case 'join': {
@@ -1532,12 +1532,12 @@ break
                 if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) throw 'Link Invalid!'
                 m.reply(mess.wait)
                 let result = args[0].split('https://chat.whatsapp.com/')[1]
-                await AlphaBotInc.groupAcceptInvite(result).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+                await ZimBotInc.groupAcceptInvite(result).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
             }
             break
             case 'leave': {
                 if (!isCreator) throw mess.owner
-                await AlphaBotInc.groupLeave(m.chat).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+                await ZimBotInc.groupLeave(m.chat).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
             }
             break
             case 'setexif': {
@@ -1554,7 +1554,7 @@ break
                         if (!isBotAdmins) throw mess.botAdmin
                         if (!isAdmins) throw mess.admin
                 let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-                await AlphaBotInc.groupParticipantsUpdate(m.chat, [users], 'remove').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+                await ZimBotInc.groupParticipantsUpdate(m.chat, [users], 'remove').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
 	case 'add': {
@@ -1568,7 +1568,7 @@ break
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 		let users = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-		await AlphaBotInc.groupParticipantsUpdate(m.chat, [users], 'add').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+		await ZimBotInc.groupParticipantsUpdate(m.chat, [users], 'add').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
 	case 'promote': {
@@ -1582,7 +1582,7 @@ break
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-		await AlphaBotInc.groupParticipantsUpdate(m.chat, [users], 'promote').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+		await ZimBotInc.groupParticipantsUpdate(m.chat, [users], 'promote').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
 	case 'demote': {
@@ -1596,7 +1596,7 @@ break
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-		await AlphaBotInc.groupParticipantsUpdate(m.chat, [users], 'demote').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+		await ZimBotInc.groupParticipantsUpdate(m.chat, [users], 'demote').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
 	case 'ban': case 'banned': {
@@ -1625,13 +1625,13 @@ break
         case 'block': {
 		if (!isCreator) throw mess.owner
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-		await AlphaBotInc.updateBlockStatus(users, 'block').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+		await ZimBotInc.updateBlockStatus(users, 'block').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
         case 'unblock': {
 		if (!isCreator) throw mess.owner
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
-		await AlphaBotInc.updateBlockStatus(users, 'unblock').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+		await ZimBotInc.updateBlockStatus(users, 'unblock').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 	}
 	break
 	    case 'setname': case 'setsubject': {
@@ -1645,7 +1645,7 @@ break
             if (isLimit < 1) return m.reply(mess.endLimit)
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
-                await AlphaBotInc.groupUpdateSubject(m.chat, text).then((res) => m.reply(mess.success)).catch((err) => m.reply(jsonformat(err)))
+                await ZimBotInc.groupUpdateSubject(m.chat, text).then((res) => m.reply(mess.success)).catch((err) => m.reply(jsonformat(err)))
             }
             break
           case 'setdesc': case 'setdesk': {
@@ -1655,7 +1655,7 @@ break
                 if (!isBotAdmins) throw mess.botAdmin
                 if (!isAdmins) throw mess.admin
                 if (!text) throw 'Text ?'
-                await AlphaBotInc.groupUpdateDescription(m.chat, text).then((res) => m.reply(mess.success)).catch((err) => m.reply(jsonformat(err)))
+                await ZimBotInc.groupUpdateDescription(m.chat, text).then((res) => m.reply(mess.success)).catch((err) => m.reply(jsonformat(err)))
             }
             break
           case 'setppbot': {
@@ -1664,8 +1664,8 @@ break
                 if (!quoted) throw `*Send/Reply Image With Caption* ${prefix + command}`
                 if (!/image/.test(mime)) throw `*Send/Reply Image With Caption* ${prefix + command}`
                 if (/webp/.test(mime)) throw `*Send/Reply Image With Caption* ${prefix + command}`
-                let media = await AlphaBotInc.downloadAndSaveMediaMessage(quoted)
-                await AlphaBotInc.updateProfilePicture(botNumber, { url: media }).catch((err) => fs.unlinkSync(media))
+                let media = await ZimBotInc.downloadAndSaveMediaMessage(quoted)
+                await ZimBotInc.updateProfilePicture(botNumber, { url: media }).catch((err) => fs.unlinkSync(media))
                 m.reply(mess.success)
                 }
                 break
@@ -1680,8 +1680,8 @@ break
             if (isLimit < 1) return m.reply(mess.endLimit)
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
-                let media = await AlphaBotInc.downloadAndSaveMediaMessage(quoted)
-                await AlphaBotInc.updateProfilePicture(m.chat, { url: media }).catch((err) => fs.unlinkSync(media))
+                let media = await ZimBotInc.downloadAndSaveMediaMessage(quoted)
+                await ZimBotInc.updateProfilePicture(m.chat, { url: media }).catch((err) => fs.unlinkSync(media))
                 m.reply(mess.success)
                 }
                 break
@@ -1699,13 +1699,13 @@ break
      for (let mem of participants) {
                     teks += `🎪 @${mem.id.split('@')[0]}\n`
                     }
-                    AlphaBotInc.sendMessage(m.chat, { text: teks, mentions: participants.map(a => a.id) }, { quoted: m })
+                    ZimBotInc.sendMessage(m.chat, { text: teks, mentions: participants.map(a => a.id) }, { quoted: m })
                     }
                     break
                     case 'hidetag': {
                 if (!m.isGroup) throw mess.group
                 if (!isAdmins) throw mess.admin
-                AlphaBotInc.sendMessage(m.chat, { text : q ? q : '' , mentions: participants.map(a => a.id)}, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { text : q ? q : '' , mentions: participants.map(a => a.id)}, { quoted: m })
                 }
                 break
             case 'style': case 'styletext': {
@@ -1762,11 +1762,11 @@ let buttonsVote = [
 
             let buttonMessageVote = {
                 text: teks_vote,
-                footer: AlphaBotInc.user.name,
+                footer: ZimBotInc.user.name,
                 buttons: buttonsVote,
                 headerType: 1
             }
-            AlphaBotInc.sendMessage(m.chat, buttonMessageVote)
+            ZimBotInc.sendMessage(m.chat, buttonMessageVote)
 	    }
             break
                case 'upvote': {
@@ -1805,12 +1805,12 @@ ${vote[m.chat][2].map((v, i) => `┃ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
 
             let buttonMessageUpvote = {
                 text: teks_vote,
-                footer: AlphaBotInc.user.name,
+                footer: ZimBotInc.user.name,
                 buttons: buttonsUpvote,
                 headerType: 1,
                 mentions: menvote
              }
-            AlphaBotInc.sendMessage(m.chat, buttonMessageUpvote)
+            ZimBotInc.sendMessage(m.chat, buttonMessageUpvote)
 	    }
              break
                 case 'devote': {
@@ -1848,12 +1848,12 @@ ${vote[m.chat][2].map((v, i) => `┃ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
 
             let buttonMessageDevote = {
                 text: teks_vote,
-                footer: AlphaBotInc.user.name,
+                footer: ZimBotInc.user.name,
                 buttons: buttonsDevote,
                 headerType: 1,
                 mentions: menvote
             }
-            AlphaBotInc.sendMessage(m.chat, buttonMessageDevote)
+            ZimBotInc.sendMessage(m.chat, buttonMessageDevote)
 	}
             break
                  
@@ -1882,9 +1882,9 @@ ${vote[m.chat][2].map((v, i) => `┃ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
 *${prefix}deletevote* - to delete vote
 
 
-©${AlphaBotInc.user.id}
+©${ZimBotInc.user.id}
 `
-AlphaBotInc.sendTextWithMentions(m.chat, teks_vote, m)
+ZimBotInc.sendTextWithMentions(m.chat, teks_vote, m)
 break
 		case 'deletevote': case'delvote': case 'hapusvote': {
 		if (isBan) throw mess.ban
@@ -1902,15 +1902,15 @@ break
                 if (!isBotAdmins) throw mess.botAdmin
                 if (!isAdmins) throw mess.admin
                 if (args[0] === 'close'){
-                    await AlphaBotInc.groupSettingUpdate(m.chat, 'announcement').then((res) => m.reply(`*Successfully closing group*`)).catch((err) => m.reply(jsonformat(err)))
+                    await ZimBotInc.groupSettingUpdate(m.chat, 'announcement').then((res) => m.reply(`*Successfully closing group*`)).catch((err) => m.reply(jsonformat(err)))
                 } else if (args[0] === 'open'){
-                    await AlphaBotInc.groupSettingUpdate(m.chat, 'not_announcement').then((res) => m.reply(`*Successfully opening the group*`)).catch((err) => m.reply(jsonformat(err)))
+                    await ZimBotInc.groupSettingUpdate(m.chat, 'not_announcement').then((res) => m.reply(`*Successfully opening the group*`)).catch((err) => m.reply(jsonformat(err)))
                 } else {
                 let buttons = [
                         { buttonId: 'group open', buttonText: { displayText: 'OPEN' }, type: 1 },
                         { buttonId: 'group close', buttonText: { displayText: 'CLOSE' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(m.chat, buttons, `*MODE GROUP*`, AlphaBotInc.user.name, m)
+                    await ZimBotInc.sendButtonText(m.chat, buttons, `*MODE GROUP*`, ZimBotInc.user.name, m)
 
              }
             }
@@ -1922,15 +1922,15 @@ break
                 if (!isBotAdmins) throw mess.botAdmin
                 if (!isAdmins) throw mess.admin
              if (args[0] === 'open'){
-                await AlphaBotInc.groupSettingUpdate(m.chat, 'unlocked').then((res) => m.reply(`*Successfully opened edit group info*`)).catch((err) => m.reply(jsonformat(err)))
+                await ZimBotInc.groupSettingUpdate(m.chat, 'unlocked').then((res) => m.reply(`*Successfully opened edit group info*`)).catch((err) => m.reply(jsonformat(err)))
              } else if (args[0] === 'close'){
-                await AlphaBotInc.groupSettingUpdate(m.chat, 'locked').then((res) => m.reply(`*Successfully close edit group info*`)).catch((err) => m.reply(jsonformat(err)))
+                await ZimBotInc.groupSettingUpdate(m.chat, 'locked').then((res) => m.reply(`*Successfully close edit group info*`)).catch((err) => m.reply(jsonformat(err)))
              } else {
              let buttons = [
                         { buttonId: 'editinfo open', buttonText: { displayText: 'OPEN' }, type: 1 },
                         { buttonId: 'editinfo close', buttonText: { displayText: 'CLOSE' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(m.chat, buttons, `Mode Edit Info`, AlphaBotInc.user.name, m)
+                    await ZimBotInc.sendButtonText(m.chat, buttons, `Mode Edit Info`, ZimBotInc.user.name, m)
 
             }
             }
@@ -1954,7 +1954,7 @@ if (isBan) throw mess.ban
                         { buttonId: 'antibule on', buttonText: { displayText: 'ON' }, type: 1 },
                         { buttonId: 'antibule off', buttonText: { displayText: 'OFF' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(m.chat, buttons, `*▊▊▊ANTILINK MODE▊▊▊*`, botname, m)
+                    await ZimBotInc.sendButtonText(m.chat, buttons, `*▊▊▊ANTILINK MODE▊▊▊*`, botname, m)
                 }
              }
              break
@@ -1977,7 +1977,7 @@ if (isBan) throw mess.ban
                         { buttonId: 'antiwame on', buttonText: { displayText: 'ON' }, type: 1 },
                         { buttonId: 'antiwame off', buttonText: { displayText: 'OFF' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(m.chat, buttons, ` *▊▊▊ANTILINK MODE▊▊▊*`, botname, m)
+                    await ZimBotInc.sendButtonText(m.chat, buttons, ` *▊▊▊ANTILINK MODE▊▊▊*`, botname, m)
                 }
              }
              break
@@ -1998,7 +1998,7 @@ if (isBan) throw mess.ban
                             { buttonId: 'autoblock on', buttonText: { displayText: 'ON' }, type: 1 },
                             { buttonId: 'autoblock off', buttonText: { displayText: 'OFF' }, type: 1 }
                         ]
-                        await AlphaBotInc.sendButtonText(m.chat, buttons, ` *▊▊▊AUTOBLOCK MODE▊▊▊*`, botname, m)
+                        await ZimBotInc.sendButtonText(m.chat, buttons, ` *▊▊▊AUTOBLOCK MODE▊▊▊*`, botname, m)
                     }
                  }
                  break
@@ -2011,13 +2011,13 @@ if (isBan) throw mess.ban
              if (antiToxic) return m.reply('*Already activated*')
              dripsanti.push(from)
              m.reply('*Success turning on anti rude in this group*')
-             var groupe = await AlphaBotInc.groupMetadata(from)
+             var groupe = await ZimBotInc.groupMetadata(from)
              var members = groupe['participants']
              var mems = []
              members.map(async adm => {
              mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
              })
-             AlphaBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK RUDE▊▊▊*\n\n*no hate speech anymore, watch space im going to kick dumps*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+             ZimBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK RUDE▊▊▊*\n\n*no hate speech anymore, watch space im going to kick dumps*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
              } else if (args[0] === "off") {
              if (!antiToxic) return m.reply('*Already deactivated*')
              let off = dripsanti.indexOf(from)
@@ -2028,7 +2028,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await AlphaBotInc.sendButtonText(m.chat, buttons, `*▊▊▊ANTILINK BADWORDS▊▊▊*\n\n.`, `${ALEXICA}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttons, `*▊▊▊ANTILINK BADWORDS▊▊▊*\n\n.`, `${global.botname}`, m)
                }
                }
                break
@@ -2051,7 +2051,7 @@ if (isBan) throw mess.ban
                         { buttonId: 'antilinkyt on', buttonText: { displayText: 'ON' }, type: 1 },
                         { buttonId: 'antilinkyt off', buttonText: { displayText: 'OFF' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(m.chat, buttons, `**▊▊▊ANTILINK MODE▊▊▊**`, botname, m)
+                    await ZimBotInc.sendButtonText(m.chat, buttons, `**▊▊▊ANTILINK MODE▊▊▊**`, botname, m)
                 }
              }
              break
@@ -2074,7 +2074,7 @@ if (isBan) throw mess.ban
                         { buttonId: 'antilink on', buttonText: { displayText: 'ON' }, type: 1 },
                         { buttonId: 'antilink off', buttonText: { displayText: 'OFF' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(m.chat, buttons, `*▊▊▊ANTILINK MODE▊▊▊*`, AlphaBotInc.user.name, m)
+                    await ZimBotInc.sendButtonText(m.chat, buttons, `*▊▊▊ANTILINK MODE▊▊▊*`, ZimBotInc.user.name, m)
                 }
              }
              break
@@ -2087,13 +2087,13 @@ if (isBan) throw mess.ban
              if (dripsantivid) return m.reply('**Already activated**')
              ntilinkytvid.push(from)
              m.reply('*Success in turning on youtube video antilink in this group*')
-             var groupe = await AlphaBotInc.groupMetadata(from)
+             var groupe = await ZimBotInc.groupMetadata(from)
              var members = groupe['participants']
              var mems = []
              members.map(async adm => {
              mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
              })
-             AlphaBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK MODE▊▊▊*\n*dont play with links*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+             ZimBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK MODE▊▊▊*\n*dont play with links*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
              } else if (args[0] === "off") {
              if (!dripsantivid) return m.reply('*Already deactivated*')
              let off = ntilinkytvid.indexOf(from)
@@ -2104,7 +2104,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await AlphaBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${ALEXICA}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
                }
                }
                break
@@ -2117,13 +2117,13 @@ if (isBan) throw mess.ban
              if (isAntiLinkYoutubeChannel) return m.reply('**Already activated**')
              dripsantiyt.push(from)
              m.reply('*Success in turning on youtube channel antilink in this group*')
-             var groupe = await AlphaBotInc.groupMetadata(from)
+             var groupe = await ZimBotInc.groupMetadata(from)
              var members = groupe['participants']
              var mems = []
              members.map(async adm => {
              mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
              })
-             AlphaBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK MODE▊▊▊*\n*dont play with links*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+             ZimBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK MODE▊▊▊*\n*dont play with links*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
              } else if (args[0] === "off") {
              if (!isAntiLinkYoutubeChannel) return m.reply('**Already deactivated**')
              let off = dripsantiyt.indexOf(from)
@@ -2134,7 +2134,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await AlphaBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${ALEXICA}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
                }
                }
                break
@@ -2147,13 +2147,13 @@ if (isBan) throw mess.ban
              if (isAntiLinkInstagram) return m.reply('*Already activated*')
              dripsantiig.push(from)
              m.reply('*Success in turning on instagram antilink in this group*')
-             var groupe = await AlphaBotInc.groupMetadata(from)
+             var groupe = await ZimBotInc.groupMetadata(from)
              var members = groupe['participants']
              var mems = []
              members.map(async adm => {
              mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
              })
-             AlphaBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK MODE▊▊▊*\n*dont play with links okay*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+             ZimBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK MODE▊▊▊*\n*dont play with links okay*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
              } else if (args[0] === "off") {
              if (!isAntiLinkInstagram) return m.reply('*Already deactivated*')
              let off = dripsantiig.indexOf(from)
@@ -2164,7 +2164,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await AlphaBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${ALEXICA}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
                }
                }
                break
@@ -2177,13 +2177,13 @@ if (isBan) throw mess.ban
              if (isAntiLinkFacebook) return m.reply('*Already activated*')
              dripsantifb.push(from)
              m.reply('*Success in turning on facebook antilink in this group*')
-             var groupe = await AlphaBotInc.groupMetadata(from)
+             var groupe = await ZimBotInc.groupMetadata(from)
              var members = groupe['participants']
              var mems = []
              members.map(async adm => {
              mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
              })
-             AlphaBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK MODE▊▊▊*dont play with links okay*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+             ZimBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK MODE▊▊▊*dont play with links okay*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
              } else if (args[0] === "off") {
              if (!isAntiLinkFacebook) return m.reply('*Already deactivated*')
              let off = dripsantifb.indexOf(from)
@@ -2194,7 +2194,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await AlphaBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${ALEXICA}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
                }
                }
                break
@@ -2207,13 +2207,13 @@ if (isBan) throw mess.ban
              if (isAntiLinkTelegram) return m.reply('*Already activated*')
              dripsantitele.push(from)
              m.reply('*Success in turning on telegram antilink in this group*')
-             var groupe = await AlphaBotInc.groupMetadata(from)
+             var groupe = await ZimBotInc.groupMetadata(from)
              var members = groupe['participants']
              var mems = []
              members.map(async adm => {
              mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
              })
-             AlphaBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK MODE▊▊▊*\n*DONT PLAY WITH LINKS OKAY*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+             ZimBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK MODE▊▊▊*\n*DONT PLAY WITH LINKS OKAY*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
              } else if (args[0] === "off") {
              if (!isAntiLinkTelegram) return m.reply('*Already deactivated*')
              let off = dripsantiig.indexOf(from)
@@ -2224,7 +2224,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await AlphaBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${ALEXICA}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
                }
                }
                break
@@ -2244,7 +2244,7 @@ if (isBan) throw mess.ban
   { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
   { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
   ]
-  await AlphaBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK VIEW▊▊▊*`, `${ALEXICA}`, m)
+  await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK VIEW▊▊▊*`, `${global.botname}`, m)
   }
   break
                          case 'antitiktok': case 'adripsantitik': {
@@ -2256,13 +2256,13 @@ if (isBan) throw mess.ban
              if (isAntiLinkTiktok) return m.reply('**Already activated**')
              dripsantitik.push(from)
              m.reply('*Success in turning on tiktok antilink in this group*')
-             var groupe = await AlphaBotInc.groupMetadata(from)
+             var groupe = await ZimBotInc.groupMetadata(from)
              var members = groupe['participants']
              var mems = []
              members.map(async adm => {
              mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
              })
-             AlphaBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK MODE▊▊▊*\n*dont play with links*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+             ZimBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK MODE▊▊▊*\n*dont play with links*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
              } else if (args[0] === "off") {
              if (!isAntiLinkTiktok) return m.reply('*Already deactivated*')
              let off = dripsantitik.indexOf(from)
@@ -2273,7 +2273,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await AlphaBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${ALEXICA}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
                }
                }
                break
@@ -2286,13 +2286,13 @@ if (isBan) throw mess.ban
              if (isAntiLinkTwitter) return m.reply('*Already activated*')
              dripsantitwt.push(from)
             m.reply('*Success in turning on twitter antilink in this group*')
-             var groupe = await AlphaBotInc.groupMetadata(from)
+             var groupe = await ZimBotInc.groupMetadata(from)
              var members = groupe['participants']
              var mems = []
              members.map(async adm => {
              mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
              })
-             AlphaBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK MODE▊▊▊*\n*dont play with links*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+             ZimBotInc.sendMessage(from, {text: `*▊▊▊ANTILINK MODE▊▊▊*\n*dont play with links*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
              } else if (args[0] === "off") {
              if (!isAntiLinkTwitter) return m.reply('**Already deactivated**')
              let off = dripsantitwt.indexOf(from)
@@ -2303,7 +2303,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await AlphaBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${ALEXICA}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
                }
                }
                break
@@ -2317,13 +2317,13 @@ if (isBan) throw mess.ban
              antilinkall.push(m.chat)
              fs.writeFileSync('./database/antilinkall.json', JSON.stringify(antilinkall))
              m.reply('*Success  turning on all antilink in this group*')
-             var groupe = await AlphaBotInc.groupMetadata(from)
+             var groupe = await ZimBotInc.groupMetadata(from)
              var members = groupe['participants']
              var mems = []
              members.map(async adm => {
              mems.push(adm.id.replace('c.us', 's.whatsapp.net'))
              })
-             AlphaBotInc.sendMessage(m.chat, {text: `*▊▊▊ANTILINK ALL▊▊▊*\n*turned on dont play with links*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
+             ZimBotInc.sendMessage(m.chat, {text: `*▊▊▊ANTILINK ALL▊▊▊*\n*turned on dont play with links*`, contextInfo: { mentionedJid : mems }}, {quoted:m})
              } else if (args[0] === "off") {
              if (!isAntiLinkAll) return m.reply('**Already deactivated**')
              let off = antilinkall.indexOf(m.chat)
@@ -2334,7 +2334,7 @@ if (isBan) throw mess.ban
                { buttonId: `${command} on`, buttonText: { displayText: 'ON' }, type: 1 },
                { buttonId: `${command} off`, buttonText: { displayText: 'OFF' }, type: 1 }
                ]
-               await AlphaBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${ALEXICA}`, m)
+               await ZimBotInc.sendButtonText(m.chat, buttonsntilink, `*▊▊▊ANTILINK MODE▊▊▊*`, `${global.botname}`, m)
                }
                }
               
@@ -2369,17 +2369,17 @@ if (isBan) throw mess.ban
                 if (args[0] === "on") {
                 if (db.data.chats[m.chat].mute) return m.reply(`*Already on okay*`)
                 db.data.chats[m.chat].mute = true
-                m.reply(`${AlphaBotInc.user.name} *has been muted in this group!*`)
+                m.reply(`${ZimBotInc.user.name} *has been muted in this group!*`)
                 } else if (args[0] === "off") {
                 if (!db.data.chats[m.chat].mute) return m.reply(`*Already off okay*`)
                 db.data.chats[m.chat].mute = false
-                m.reply(`${AlphaBotInc.user.name} *has been unmuted in this group!*`)
+                m.reply(`${ZimBotInc.user.name} *has been unmuted in this group!*`)
                 } else {
                  let buttons = [
                         { buttonId: 'mute on', buttonText: { displayText: 'ON' }, type: 1 },
                         { buttonId: 'mute off', buttonText: { displayText: 'OFF' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(m.chat, buttons, `Mute Bot`, AlphaBotInc.user.name, m)
+                    await ZimBotInc.sendButtonText(m.chat, buttons, `Mute Bot`, ZimBotInc.user.name, m)
                 }
              }
              break
@@ -2387,8 +2387,8 @@ if (isBan) throw mess.ban
             if (isBan) throw mess.ban
             //if (isLimit(m.sender, isPremium, isCreator, limitCount, limit)) return m.reply(mess.endLimit)
                 if (!m.isGroup) throw mess.group
-                let response = await AlphaBotInc.groupInviteCode(m.chat)
-                AlphaBotInc.sendText(m.chat, `https://chat.whatsapp.com/${response}\n\n*Link Group* : ${groupMetadata.subject}`, m, { detectLink: true })
+                let response = await ZimBotInc.groupInviteCode(m.chat)
+                ZimBotInc.sendText(m.chat, `https://chat.whatsapp.com/${response}\n\n*Link Group* : ${groupMetadata.subject}`, m, { detectLink: true })
             }
             break
             case 'ephemeral': {
@@ -2399,9 +2399,9 @@ if (isBan) throw mess.ban
                 if (!isAdmins) throw mess.admin
                 if (!text) throw '*Enter the enable/disable value*'
                 if (args[0] === 'enable') {
-                    await AlphaBotInc.sendMessage(m.chat, { disappearingMessagesInChat: WA_DEFAULT_EPHEMERAL }).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+                    await ZimBotInc.sendMessage(m.chat, { disappearingMessagesInChat: WA_DEFAULT_EPHEMERAL }).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
                 } else if (args[0] === 'disable') {
-                    await AlphaBotInc.sendMessage(m.chat, { disappearingMessagesInChat: false }).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
+                    await ZimBotInc.sendMessage(m.chat, { disappearingMessagesInChat: false }).then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
                 }
             }
             break
@@ -2411,13 +2411,13 @@ if (isBan) throw mess.ban
                 if (!m.quoted) throw false
                 let { chat, fromMe, id, isBaileys } = m.quoted
                 if (!isBaileys) throw '*The message was not sent by a bot!*'
-                AlphaBotInc.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: true, id: m.quoted.id, participant: m.quoted.sender } })
+                ZimBotInc.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: true, id: m.quoted.id, participant: m.quoted.sender } })
             }
             break
             case 'bcgc': case 'bcgroup': {
                 if (!isCreator) throw mess.owner
                 if (!text) throw `*Type some text*\n\nExample : ${prefix + command} ZIM-BOT-INC`
-                let getGroups = await AlphaBotInc.groupFetchAllParticipating()
+                let getGroups = await ZimBotInc.groupFetchAllParticipating()
                 let groups = Object.entries(getGroups).slice(0).map(entry => entry[1])
                 let anu = groups.map(v => v.id)
                 m.reply(`*Send Broadcast To* ${anu.length} *Group Chat, Time ${anu.length * 1.5} second*`)
@@ -2425,12 +2425,12 @@ if (isBan) throw mess.ban
                     await sleep(1500)
 		            let btn = [{
                                 urlButton: {
-                                    displayText: 'DISCUSSION GROUP',
-                                    url: 'https://DISCUSSION GROUP.com/zim-bot/zimbot-v3'
+                                    displayText: 'GITHUB',
+                                    url: 'https://github.com/zim-bot/zimbot-v3'
                                 }
                             }]
                       let txt = `「 *ZIMBOT BROADCAST* 」\n\n${text}`
-                      AlphaBotInc.send5ButImg(i, txt, botname, global.bc, btn)
+                      ZimBotInc.send5ButImg(i, txt, botname, global.bc, btn)
                     }
                 m.reply(` *Send Broadcast To* ${anu.length} *Group*`)
             }
@@ -2444,12 +2444,12 @@ if (isBan) throw mess.ban
 		    await sleep(1500)
 		    let btn = [{
                                 urlButton: {
-                                    displayText: 'DISCUSSION GROUP',
-                                    url: 'https://DISCUSSION GROUP.com/zim-bot/zimbot-v3'
+                                    displayText: 'GITHUB',
+                                    url: 'https://github.com/zim-bot/zimbot-v3'
                                 }
                             }]
                       let txt = `「 *ZIMBOT BROADCAST* 」\n\n${text}`
-                      AlphaBotInc.send5ButImg(yoi, txt, botname, global.bc, btn)
+                      ZimBotInc.send5ButImg(yoi, txt, botname, global.bc, btn)
 		}
 		m.reply('*Success Broadcast*')
             }
@@ -2463,7 +2463,7 @@ case 'bc2': case 'bcloc': {
 	     	for (let yoi of anu) {
 	     	await sleep(1500)
 		    var button = [{ buttonId: `${prefix}ho`, buttonText: { displayText: `${melo2}` }, type: 1 }]              
-            AlphaBotInc.sendMessage(yoi, { caption: `${melo}`, location: { jpegThumbnail: await getBuffer(picak+'Brodcast') }, buttons: button, footer: `${botname}`, mentions: [m.sender] })
+            ZimBotInc.sendMessage(yoi, { caption: `${melo}`, location: { jpegThumbnail: await getBuffer(picak+'Brodcast') }, buttons: button, footer: `${botname}`, mentions: [m.sender] })
 		}		
             }
             break
@@ -2477,8 +2477,8 @@ case 'bcimage': case 'bcvideo': case 'bcaudio': {
                     await sleep(1500)
                     let butoon = [{
                                 urlButton: {
-                                    displayText: `DISCUSSION GROUP`,
-                                    url: 'https://DISCUSSION GROUP.com/zim-bot/zimbot-v3'
+                                    displayText: `GITHUB`,
+                                    url: 'https://github.com/zim-bot/zimbot-v3'
                                 }
                             },
                             {
@@ -2487,18 +2487,18 @@ case 'bcimage': case 'bcvideo': case 'bcaudio': {
                                     id: 'menu'
                                 }
                             }]
-                    let media = await AlphaBotInc.downloadAndSaveMediaMessage(quoted)
+                    let media = await ZimBotInc.downloadAndSaveMediaMessage(quoted)
                     let buffer = fs.readFileSync(media)
                     if (/webp/.test(mime)) {
-                    AlphaBotInc.sendMessage(i, { sticker: { url: media } }, { quoted: ftroli })
+                    ZimBotInc.sendMessage(i, { sticker: { url: media } }, { quoted: ftroli })
                     } else if (/image/.test(mime)) {
                     let junn = `*_BROADCAST IMAGE_*${text ? '\n\n' + text : ''}`
-                    AlphaBotInc.send5ButImg(i, junn, `${ALEXICA}`, buffer, butoon)
+                    ZimBotInc.send5ButImg(i, junn, `${global.botname}`, buffer, butoon)
                     } else if (/video/.test(mime)) {
                     let junn = `*_BROADCAST VIDIO_*${text ? '\n\n' + text : ''}`
-                    AlphaBotInc.sendMessage(i, {video: buffer, caption: `${junn}`}, { quoted: ftroli })
+                    ZimBotInc.sendMessage(i, {video: buffer, caption: `${junn}`}, { quoted: ftroli })
                     } else if (/audio/.test(mime)) {
-                    AlphaBotInc.sendMessage(i, {audio: buffer, mimetype: 'audio/mpeg'}, { quoted : ftroli })
+                    ZimBotInc.sendMessage(i, {audio: buffer, mimetype: 'audio/mpeg'}, { quoted : ftroli })
                     } else {
                     m.reply(`*Send/Reply Video/Audio/Image You Want to Broadcast With Caption* ${prefix + command}`)
                     }
@@ -2511,12 +2511,12 @@ case 'bctext': {
                 if (!isCreator) throw mess.owner
                 if (!text) throw `*Type some text*\n\nExample : ${prefix + command} zim-ot`
                 //let ftroli ={key: {fromMe: false,"participant":"0@s.whatsapp.net", "remoteJid": "6289523258649-1604595598@g.us"}, "message": {orderMessage: {itemCount: 666666666,status: 200, thumbnail: await getBuffer(picak+'Brodcast'), surface: 200, message: `© ${botname}`, orderTitle: 'memek', sellerJid: '0@s.whatsapp.net'}}, contextInfo: {"forwardingScore":999,"isForwarded":true},sendEphemeral: true}
-                let ftroli = {key: {participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: `6283136505591-1614953337@g.us` } : {}) }, message: { 'contactMessage': { 'displayName': `© ${botname}`, 'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:XL;${AlphaBotInc.user.name},;;;\nFN:${botname},\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`, 'jpegThumbnail': await getBuffer(picak+'Brodcast'), thumbnail: await getBuffer(picak+'Brodcast'),sendEphemeral: true}}}
+                let ftroli = {key: {participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: `6283136505591-1614953337@g.us` } : {}) }, message: { 'contactMessage': { 'displayName': `© ${botname}`, 'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:XL;${ZimBotInc.user.name},;;;\nFN:${botname},\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`, 'jpegThumbnail': await getBuffer(picak+'Brodcast'), thumbnail: await getBuffer(picak+'Brodcast'),sendEphemeral: true}}}
                 let anu = await store.chats.all().map(v => v.id)
                 m.reply(`*Send Broadcast To* ${anu.length} Chat\n*Time ${anu.length * 1.5} seconds*`)
 		for (let yoi of anu) {
 		    await sleep(1500)
-		    AlphaBotInc.sendMessage(yoi, {text:`${text}`}, {quoted:ftroli})
+		    ZimBotInc.sendMessage(yoi, {text:`${text}`}, {quoted:ftroli})
 		}
 		m.reply('*Success Broadcast*')
             }
@@ -2530,7 +2530,7 @@ case 'bcvid': case 'bcvideo': {
                 m.reply(`*Send Broadcast To* ${anu.length} Chat\n*Time ${anu.length * 1.5} minute*`)
 		    for (let yoi of anu) {
 		    await sleep(1500)		    
-		    AlphaBotInc.sendMessage(yoi, { video: await getBuffer(buf), jpegThumbnail: await getBuffer(picak+'Brodcast'), caption: `${text}` }, { quoted: ftroli}).catch ((err) => m.reply('*Sorry, failed to send the video*'))
+		    ZimBotInc.sendMessage(yoi, { video: await getBuffer(buf), jpegThumbnail: await getBuffer(picak+'Brodcast'), caption: `${text}` }, { quoted: ftroli}).catch ((err) => m.reply('*Sorry, failed to send the video*'))
 		}
 		m.reply('*Sucecess Broadcast*')
             }
@@ -2549,7 +2549,7 @@ case 'bcvid': case 'bcvideo': {
                     teks += `> @${i.userJid.split('@')[0]}\n`
                     teks += ` ┗━> *TIME :* ${moment(waktu * 1000).format('DD/MM/YY HH:mm:ss')} > *STATUS :* ${read ? 'READ' : 'SENT'}\n\n`
                 }
-                AlphaBotInc.sendTextWithMentions(m.chat, teks, m)
+                ZimBotInc.sendTextWithMentions(m.chat, teks, m)
             }
             break
             case 'q': case 'quoted': {
@@ -2560,7 +2560,7 @@ case 'bcvid': case 'bcvideo': {
             if (isLimit < 1) return m.reply(mess.endLimit)
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
-		let wokwol = await AlphaBotInc.serializeM(await m.getQuotedObj())
+		let wokwol = await ZimBotInc.serializeM(await m.getQuotedObj())
 		if (!wokwol.quoted) return m.reply('*The message you replied to does not contain a reply*')
 		await wokwol.quoted.copyNForward(m.chat, true)
             }
@@ -2574,7 +2574,7 @@ case 'bcvid': case 'bcvideo': {
                      let nama = store.messages[i].array[0].pushName
                      teks += `⬡ *NAME :* ${nama}\n⬡ *USER :* @${i.split('@')[0]}\n⬡ *CHAT :* https://wa.me/${i.split('@')[0]}\n\n━━━━━━━━━━━━━━━━━━━━━━━━\n\n`
                  }
-                 AlphaBotInc.sendTextWithMentions(m.chat, teks, m)
+                 ZimBotInc.sendTextWithMentions(m.chat, teks, m)
              }
              break
                 case 'listgc': {
@@ -2583,10 +2583,10 @@ case 'bcvid': case 'bcvideo': {
                  let anu = await store.chats.all().filter(v => v.id.endsWith('@g.us')).map(v => v.id)
                  let teks = `⬣ *LIST GROUP CHAT*\n\nTotal Group : ${anu.length} Group\n\n`
                  for (let i of anu) {
-                     let metadata = await AlphaBotInc.groupMetadata(i)
+                     let metadata = await ZimBotInc.groupMetadata(i)
                      teks += `⬡ *NAME :* ${metadata.subject}\n⬡ *OWNER :* @${metadata.owner.split('@')[0]}\n⬡ *ID :* ${metadata.id}\n⬡ *CREATED :* ${moment(metadata.creation * 1000).tz('Asia/Colombo').format('DD/MM/YYYY HH:mm:ss')}\n⬡ *MEMBER :* ${metadata.participants.length}\n\n━━━━━━━━━━━━━━━━━━━━━━━━\n\n`
                  }
-                 AlphaBotInc.sendTextWithMentions(m.chat, teks, m)
+                 ZimBotInc.sendTextWithMentions(m.chat, teks, m)
              }
              break
              case 'listonline': case 'liston': {
@@ -2594,7 +2594,7 @@ case 'bcvid': case 'bcvideo': {
              //if (isLimit(m.sender, isPremium, isCreator, limitCount, limit)) return m.reply(mess.endLimit)
                     let id = args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : m.chat
                     let online = [...Object.keys(store.presences[id]), botNumber]
-                    AlphaBotInc.sendText(m.chat, '*LIST ONLINE*:\n\n' + online.map(v => '> @' + v.replace(/@.+/, '')).join`\n`, m, { mentions: online })
+                    ZimBotInc.sendText(m.chat, '*LIST ONLINE*:\n\n' + online.map(v => '> @' + v.replace(/@.+/, '')).join`\n`, m, { mentions: online })
              }
             break
             case 'stickerly': {
@@ -2619,12 +2619,12 @@ if (isBan) throw mess.ban
              if (!quoted) throw `*Reply Video/Image With Caption* ${prefix + command}`
                 if (/image/.test(mime)) {
                 let media = await quoted.download()
-                let encmedia = await AlphaBotInc.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
+                let encmedia = await ZimBotInc.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
                 await fs.unlinkSync(encmedia)
             } else if (/video/.test(mime)) {
                 if ((quoted.msg || quoted).seconds > 11) return m.reply('*Maximum 10 seconds!*')
                 let media = await quoted.download()
-                let encmedia = await AlphaBotInc.sendVideoAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
+                let encmedia = await ZimBotInc.sendVideoAsSticker(m.chat, media, m, { packname: global.packname, author: global.author })
                 await fs.unlinkSync(encmedia)
             } else {
                 throw `*Send Image/Video With Caption ${prefix + command}\nDuration 1-9 Seconds*`
@@ -2644,16 +2644,16 @@ const pcknm = swn.split("|")[0];
 const atnm = swn.split("|")[1];
 if (!/webp/.test(mime)) throw `*reply sticker with caption* *${prefix + command}*`
 if (m.quoted.isAnimated === true) {
-AlphaBotInc.downloadAndSaveMediaMessage(quoted, "gifee")
-AlphaBotInc.sendMessage(m.chat, {sticker:fs.readFileSync("gifee.webp")},{quoted:m})
+ZimBotInc.downloadAndSaveMediaMessage(quoted, "gifee")
+ZimBotInc.sendMessage(m.chat, {sticker:fs.readFileSync("gifee.webp")},{quoted:m})
 } else if (/image/.test(mime)) {
 let media = await quoted.download()
-let encmedia = await AlphaBotInc.sendImageAsSticker(m.chat, media, m, { packname: pcknm, author: atnm })
+let encmedia = await ZimBotInc.sendImageAsSticker(m.chat, media, m, { packname: pcknm, author: atnm })
 await fs.unlinkSync(encmedia)
 } else if (/video/.test(mime)) {
 if ((quoted.msg || quoted).seconds > 11) return m.reply('Maksimal 10 detik!')
 let media = await quoted.download()
-let encmedia = await AlphaBotInc.sendVideoAsSticker(m.chat, media, m, { packname: pcknm, author: atnm })
+let encmedia = await ZimBotInc.sendVideoAsSticker(m.chat, media, m, { packname: pcknm, author: atnm })
 await fs.unlinkSync(encmedia)
 } else {
 m.reply(`*Send Image/Video With Caption* ${prefix + command}\n*Duration Video 1-9 seconds*`)
@@ -2667,7 +2667,7 @@ if (isBan) throw mess.ban
             if (isLimit < 1) return m.reply(mess.endLimit)
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
-           await AlphaBotInc.sendMedia(m.chat, `https://cililitan.herokuapp.com/api/attp?teks=${text}`, 'ZIM', 'BOT M D', m, {asSticker: true}).catch((err) => m.reply('*error while sending sticker*'))
+           await ZimBotInc.sendMedia(m.chat, `https://cililitan.herokuapp.com/api/attp?teks=${text}`, 'ZIM', 'BOT M D', m, {asSticker: true}).catch((err) => m.reply('*error while sending sticker*'))
          }
          break
 case 'attp4': {
@@ -2677,7 +2677,7 @@ if (isBan) throw mess.ban
            if (isLimit < 1) return m.reply(mess.endLimit)
            kurangLimit(m.sender, 1)
            m.reply(`*1 limit used*`)
-           await AlphaBotInc.sendMedia(m.chat, `https://api.xteam.xyz/attp?file&teks=${text}`, 'ZIM', 'BOT M D', m, {asSticker: true}).catch((err) => m.reply('*error while sending sticker*'))
+           await ZimBotInc.sendMedia(m.chat, `https://api.xteam.xyz/attp?file&teks=${text}`, 'ZIM', 'BOT M D', m, {asSticker: true}).catch((err) => m.reply('*error while sending sticker*'))
                      }
                      break
 case 'ttp1': {
@@ -2687,13 +2687,13 @@ if (!isInventoryLimit){ addInventoriLimit(m.sender) }
             if (isLimit < 1) return m.reply(mess.endLimit)
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
-AlphaBotInc.sendMessage(m.chat, { sticker : { url : `https://cililitan.herokuapp.com/api/texttopng?teks=${text}`}, quoted: m }).catch((err) => m.reply('*error while sending sticker*'))
+ZimBotInc.sendMessage(m.chat, { sticker : { url : `https://cililitan.herokuapp.com/api/texttopng?teks=${text}`}, quoted: m }).catch((err) => m.reply('*error while sending sticker*'))
 } 
 break
 case 'ttp2': {
 if (isBan) throw mess.ban
            if (!text) throw `Example : ${prefix + command} text`
-           await AlphaBotInc.sendMedia(m.chat, `https://cililitan.herokuapp.com/api/texttopng2?teks=${text}`, 'A L Y A', 'B O T M D', m, {asSticker: true})
+           await ZimBotInc.sendMedia(m.chat, `https://cililitan.herokuapp.com/api/texttopng2?teks=${text}`, 'A L Y A', 'B O T M D', m, {asSticker: true})
          }
 break
 
@@ -2727,7 +2727,7 @@ break
 		let [emoji1, emoji2] = text.split`+`
 		let anu = await fetchJson(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(emoji1)}_${encodeURIComponent(emoji2)}`)
 		for (let res of anu.results) {
-		    let encmedia = await AlphaBotInc.sendImageAsSticker(m.chat, res.url, m, { packname: global.packname, author: global.author, categories: res.tags })
+		    let encmedia = await ZimBotInc.sendImageAsSticker(m.chat, res.url, m, { packname: global.packname, author: global.author, categories: res.tags })
 		    await fs.unlinkSync(encmedia)
 		}
 	    }
@@ -2737,7 +2737,7 @@ break
 	    if (!text) throw `Example : ${prefix + command} 😅`
 		let anu = await fetchJson(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(text)}`)
 		for (let res of anu.results) {
-		    let encmedia = await AlphaBotInc.sendImageAsSticker(m.chat, res.url, m, { packname: global.packname, author: global.author, categories: res.tags })
+		    let encmedia = await ZimBotInc.sendImageAsSticker(m.chat, res.url, m, { packname: global.packname, author: global.author, categories: res.tags })
 		    await fs.unlinkSync(encmedia)
 		}
 	    }
@@ -2751,7 +2751,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)   
                 anu = await fetchJson(`https://api.lolhuman.xyz/api/smoji3/${encodeURIComponent(text)}?apikey=${setting.lolkey}`)                
-                AlphaBotInc.sendImageAsSticker(m.chat, anu.result.emoji.whatsapp, m, { packname: global.packname, author: global.author }).catch((err) => m.reply(jsonformat('*Sorry there was an error*')))               
+                ZimBotInc.sendImageAsSticker(m.chat, anu.result.emoji.whatsapp, m, { packname: global.packname, author: global.author }).catch((err) => m.reply(jsonformat('*Sorry there was an error*')))               
                       }
                   break
 	       case 'smeme': case 'stickmeme': case 'stikmeme': case 'stickermeme': case 'stikermeme': {
@@ -2770,7 +2770,7 @@ if (isBan) throw mess.ban
 	        let { floNime } = require('./lib/uploader')
 	        let fatGans = await floNime(dwnld)
 	        let smeme = `https://api.memegen.link/images/custom/${encodeURIComponent(atas)}/${encodeURIComponent(bawah)}.png?background=${fatGans.result.url}`
-	        let FaTiH = await AlphaBotInc.sendImageAsSticker(m.chat, smeme, m, { packname: global.packname, author: global.auhor })
+	        let FaTiH = await ZimBotInc.sendImageAsSticker(m.chat, smeme, m, { packname: global.packname, author: global.auhor })
 	        await fs.unlinkSync(FaTiH)
             }
 	       break     
@@ -2780,13 +2780,13 @@ if (isBan) throw mess.ban
                 if (!quoted) throw 'Reply Image'
                 if (!/webp/.test(mime)) throw `*reply sticker with caption* *${prefix + command}*`
                 m.reply(mess.wait)
-                let media = await AlphaBotInc.downloadAndSaveMediaMessage(quoted)
+                let media = await ZimBotInc.downloadAndSaveMediaMessage(quoted)
                 let ran = await getRandom('.png')
                 exec(`ffmpeg -i ${media} ${ran}`, (err) => {
                     fs.unlinkSync(media)
                     if (err) throw err
                     let buffer = fs.readFileSync(ran)                    
-                    AlphaBotInc.sendMessage(m.chat, { image: buffer, jpegThumbnail:buffer, caption: `*Sticker Toimg By ${botname}*` }, { quoted: m }).catch((err) => m.reply('*Sorry An error occurred*'))
+                    ZimBotInc.sendMessage(m.chat, { image: buffer, jpegThumbnail:buffer, caption: `*Sticker Toimg By ${botname}*` }, { quoted: m }).catch((err) => m.reply('*Sorry An error occurred*'))
                     fs.unlinkSync(ran)
                 })
             }
@@ -2801,7 +2801,7 @@ if (isBan) throw mess.ban
             m.reply(`*1 limit used*`)  
             anu = await fetchJson(`https://shot.screenshotapi.net/screenshot?&url=${text}`)                 
             buf = await getBuffer(anu.screenshot)   
-                AlphaBotInc.sendMessage(m.chat, { image: { url: anu.screenshot }, jpegThumbnail:buf, caption: `*${command} From ${text}*` }, { quoted: m }).catch((err) => m.reply(jsonformat('*error*')))
+                ZimBotInc.sendMessage(m.chat, { image: { url: anu.screenshot }, jpegThumbnail:buf, caption: `*${command} From ${text}*` }, { quoted: m }).catch((err) => m.reply(jsonformat('*error*')))
             }
             break
 case 'simisimi': case 'simi': {
@@ -2822,9 +2822,9 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)               
 		let { webp2mp4File } = require('./lib/uploader')
-                let media = await AlphaBotInc.downloadAndSaveMediaMessage(quoted)
+                let media = await ZimBotInc.downloadAndSaveMediaMessage(quoted)
                 let webpToMp4 = await webp2mp4File(media)
-                await AlphaBotInc.sendMessage(m.chat, { video: { url: webpToMp4.result, caption: 'Convert Webp To Video' } }, { quoted: m })
+                await ZimBotInc.sendMessage(m.chat, { video: { url: webpToMp4.result, caption: 'Convert Webp To Video' } }, { quoted: m })
                 await fs.unlinkSync(media)
             }
             break
@@ -2840,7 +2840,7 @@ if (isBan) throw mess.ban
             let media = await quoted.download()
             let { toAudio } = require('./lib/converter')
             let audio = await toAudio(media, 'mp4')
-            AlphaBotInc.sendMessage(m.chat, {audio: audio, mimetype: 'audio/mpeg'}, { quoted : m })
+            ZimBotInc.sendMessage(m.chat, {audio: audio, mimetype: 'audio/mpeg'}, { quoted : m })
             }
             break
             case 'tomp3': {
@@ -2856,7 +2856,7 @@ if (isBan) throw mess.ban
             let media = await quoted.download()
             let { toAudio } = require('./lib/converter')
             let audio = await toAudio(media, 'mp4')
-            AlphaBotInc.sendMessage(m.chat, {document: audio, mimetype: 'audio/mpeg', fileName: `Convert By ${AlphaBotInc.user.name}.mp3`}, { quoted : m })
+            ZimBotInc.sendMessage(m.chat, {document: audio, mimetype: 'audio/mpeg', fileName: `Convert By ${ZimBotInc.user.name}.mp3`}, { quoted : m })
             }
             break
             case 'tovn': case 'toptt': {
@@ -2868,7 +2868,7 @@ if (isBan) throw mess.ban
             let media = await quoted.download()
             let { toPTT } = require('./lib/converter')
             let audio = await toPTT(media, 'mp4')
-            AlphaBotInc.sendMessage(m.chat, {audio: audio, mimetype:'audio/mpeg', ptt:true }, {quoted:m})
+            ZimBotInc.sendMessage(m.chat, {audio: audio, mimetype:'audio/mpeg', ptt:true }, {quoted:m})
             }
             break
             case 'togif': {
@@ -2881,9 +2881,9 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 		   let { webp2mp4File } = require('./lib/uploader')
-                let media = await AlphaBotInc.downloadAndSaveMediaMessage(quoted)
+                let media = await ZimBotInc.downloadAndSaveMediaMessage(quoted)
                 let webpToMp4 = await webp2mp4File(media)
-                await AlphaBotInc.sendMessage(m.chat, { video: { url: webpToMp4.result, caption: 'Convert Webp To Video' }, gifPlayback: true }, { quoted: m })
+                await ZimBotInc.sendMessage(m.chat, { video: { url: webpToMp4.result, caption: 'Convert Webp To Video' }, gifPlayback: true }, { quoted: m })
                 await fs.unlinkSync(media)
             }
             break
@@ -2893,7 +2893,7 @@ if (isBan) throw mess.ban
 	        if (!/image/.test(mime) && !/video/.test(mime)) throw `*Send/Reply Image/video With Caption* ${prefix + command}`                
 	    	let { UploadFileUgu, webp2mp4File, floNime, TelegraPh } = require('./lib/uploader')
 	     	m.reply(mess.wait)
-                let media = await AlphaBotInc.downloadAndSaveMediaMessage(quoted)
+                let media = await ZimBotInc.downloadAndSaveMediaMessage(quoted)
                 if (/image/.test(mime)) {
                     let anu = await TelegraPh(media)
                     m.reply(util.format(anu))
@@ -2918,7 +2918,7 @@ if (isBan) throw mess.ban
 	    let apirnobg = ['q61faXzzR5zNU6cvcrwtUkRU','S258diZhcuFJooAtHTaPEn4T','5LjfCVAp4vVNYiTjq9mXJWHF','aT7ibfUsGSwFyjaPZ9eoJc61','BY63t7Vx2tS68YZFY6AJ4HHF','5Gdq1sSWSeyZzPMHqz7ENfi8','86h6d6u4AXrst4BVMD9dzdGZ','xp8pSDavAgfE5XScqXo9UKHF','dWbCoCb3TacCP93imNEcPxcL']
 	    let apinobg = apirnobg[Math.floor(Math.random() * apirnobg.length)]
 	    hmm = await './src/remobg-'+getRandom('')
-	    localFile = await AlphaBotInc.downloadAndSaveMediaMessage(quoted, hmm)
+	    localFile = await ZimBotInc.downloadAndSaveMediaMessage(quoted, hmm)
 	    outputFile = await './src/hremo-'+getRandom('.png')
 	    remobg.removeBackgroundFromImageFile({
 	      path: localFile,
@@ -2928,7 +2928,7 @@ if (isBan) throw mess.ban
 	      scale: "100%",
 	      outputFile 
 	    }).then(async result => {
-	    AlphaBotInc.sendMessage(m.chat, {image: fs.readFileSync(outputFile), caption: mess.success}, { quoted : m })
+	    ZimBotInc.sendMessage(m.chat, {image: fs.readFileSync(outputFile), caption: mess.success}, { quoted : m })
 	    await fs.unlinkSync(localFile)
 	    await fs.unlinkSync(outputFile)
 	    })
@@ -2947,7 +2947,7 @@ if (!isInventoryLimit){ addInventoriLimit(m.sender) }
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 yah = await getBuffer(`https://xteam.xyz/magernulis3?text=${text}&APIKEY=${setting.riy}`)
-AlphaBotInc.sendMessage(m.chat, { image: yah }, { quoted: m }).catch((err) => m.reply('*Failed in writing*'))
+ZimBotInc.sendMessage(m.chat, { image: yah }, { quoted: m }).catch((err) => m.reply('*Failed in writing*'))
 }
 break
 case 'magernulis': {            
@@ -2959,7 +2959,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 		buf = await getBuffer(`https://xteam.xyz/magernulis?nama=${tes1}&kelas=${tes2}&text=${text}&APIKEY=${setting.riy}`)
-		AlphaBotInc.sendMessage(m.chat, { image: buf, jpegThumbnail:buf, caption: `ZIM BOT INC` }, { quoted: m }).catch((err) => m.reply('*Sorry Failed In Writing*')) 
+		ZimBotInc.sendMessage(m.chat, { image: buf, jpegThumbnail:buf, caption: `ZIM BOT INC` }, { quoted: m }).catch((err) => m.reply('*Sorry Failed In Writing*')) 
 	    }
 	    break
 case 'magernulis2': {            
@@ -2971,7 +2971,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 		buf = await getBuffer(`https://xteam.xyz/magernulis2?text=${text}&APIKEY=${setting.riy}`)
-		AlphaBotInc.sendMessage(m.chat, { image: buf, jpegThumbnail:buf, caption: `ZIM BOT INC` }, { quoted: m }).catch((err) => m.reply('Sorry Failed In Writing*')) 
+		ZimBotInc.sendMessage(m.chat, { image: buf, jpegThumbnail:buf, caption: `ZIM BOT INC` }, { quoted: m }).catch((err) => m.reply('Sorry Failed In Writing*')) 
 	    }
 	    break
 case 'magernulis3': {            
@@ -2983,7 +2983,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 		buf = await getBuffer(`https://xteam.xyz/magernulis3?text=${text}&APIKEY=${setting.riy}`)
-		AlphaBotInc.sendMessage(m.chat, { image: buf, jpegThumbnail:buf, caption: `ZIM BOT INC` }, { quoted: m }).catch((err) => m.reply('Sorry Failed In Writing*')) 
+		ZimBotInc.sendMessage(m.chat, { image: buf, jpegThumbnail:buf, caption: `ZIM BOT INC` }, { quoted: m }).catch((err) => m.reply('Sorry Failed In Writing*')) 
 	    }
 	    break
 case 'magernulis4': {            
@@ -2995,7 +2995,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 		buf = await getBuffer(`https://xteam.xyz/magernulis4?text=${text}&APIKEY=${setting.riy}`)
-		AlphaBotInc.sendMessage(m.chat, { image: buf, jpegThumbnail:buf, caption: `ZIM BOT INC` }, { quoted: m }).catch((err) => m.reply('Sorry Failed In Writing*')) 
+		ZimBotInc.sendMessage(m.chat, { image: buf, jpegThumbnail:buf, caption: `ZIM BOT INC` }, { quoted: m }).catch((err) => m.reply('Sorry Failed In Writing*')) 
 	    }
 	    break
 case 'magernulis5': {            
@@ -3007,7 +3007,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 		buf = await getBuffer(`https://xteam.xyz/magernulis5?text=${text}&APIKEY=${setting.riy}`)
-		AlphaBotInc.sendMessage(m.chat, { image: buf, jpegThumbnail:buf, caption: `ZIM BOT INC` }, { quoted: m }).catch((err) => m.reply('Sorry Failed In Writing*')) 
+		ZimBotInc.sendMessage(m.chat, { image: buf, jpegThumbnail:buf, caption: `ZIM BOT INC` }, { quoted: m }).catch((err) => m.reply('Sorry Failed In Writing*')) 
 	    }
 	    break
 case 'magernulis6': {            
@@ -3019,20 +3019,20 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 		buf = await getBuffer(`https://xteam.xyz/magernulis6?text=${text}&APIKEY=${setting.riy}`)
-		AlphaBotInc.sendMessage(m.chat, { image: buf, jpegThumbnail:buf, caption: `ZIM BOT INC` }, { quoted: m }).catch((err) => m.reply('Sorry Failed In Writing*')) 
+		ZimBotInc.sendMessage(m.chat, { image: buf, jpegThumbnail:buf, caption: `ZIM BOT INC` }, { quoted: m }).catch((err) => m.reply('Sorry Failed In Writing*')) 
 	    }
 	    break
 
 //search cmds by zimbot
 
-case 'yts': case 'ytsearch': case 'youtubesearch': const _0x244632=_0x2493;(function(_0x42e7e3,_0x26c668){const _0x3abfea=_0x2493,_0x4da3ee=_0x42e7e3();while(!![]){try{const _0xec78a2=-parseInt(_0x3abfea(0x17b))/0x1+-parseInt(_0x3abfea(0x180))/0x2*(-parseInt(_0x3abfea(0x17f))/0x3)+-parseInt(_0x3abfea(0x18b))/0x4*(-parseInt(_0x3abfea(0x165))/0x5)+parseInt(_0x3abfea(0x173))/0x6+-parseInt(_0x3abfea(0x171))/0x7+parseInt(_0x3abfea(0x166))/0x8*(-parseInt(_0x3abfea(0x16f))/0x9)+parseInt(_0x3abfea(0x17d))/0xa*(-parseInt(_0x3abfea(0x178))/0xb);if(_0xec78a2===_0x26c668)break;else _0x4da3ee['push'](_0x4da3ee['shift']());}catch(_0x4ab77b){_0x4da3ee['push'](_0x4da3ee['shift']());}}}(_0x56cc,0x7bb74));function _0x56cc(){const _0x124eb9=['description','36Wlgwfz','122788qdRqlm','\x0a*UPLOAD:*\x20','timestamp','\x20The\x20title\x20of\x20the\x20song\x20you\x20are\x20looking\x20for*','ytmp4\x20','yt-search','▊▊▊YT\x20SEARCH▊▊▊','result:\x20url\x20','\x0a*LINK:*\x20','\x0a*DURATION*\x20','ban','4436uTnxYb','*Example\x20:\x20','mimetype:\x20video/mp4\x20','title','push','3850jVGKsb','8OlfmOa','linkok\x20','sendMessage','VIDEO\x20MP4⬤:','mimetype:\x20audio/mp3\x20','url','\x0a*CHANNEL:*\x20','ytmp3\x20','ago','3680244YcUhko','author','961709ryZPhz','chat','553926TdzmkP','SONG\x20MP3⬤:','all','\x20You\x20can\x20select\x20audio\x20and\x20video\x20media\x20below*','YOUTUBE\x20SEARCH\x20RESULTS','5834103hwgrIN','\x0a*VIEWS:*\x20','views','99563UadJLi','name','10LXMluy'];_0x56cc=function(){return _0x124eb9;};return _0x56cc();}function _0x2493(_0x75d29c,_0x82bebc){const _0x56cc0e=_0x56cc();return _0x2493=function(_0x2493d3,_0xf39622){_0x2493d3=_0x2493d3-0x165;let _0x1347bc=_0x56cc0e[_0x2493d3];return _0x1347bc;},_0x2493(_0x75d29c,_0x82bebc);}{if(isBan)throw mess[_0x244632(0x18a)];if(!text)throw _0x244632(0x18c)+(prefix+command)+_0x244632(0x183);let yts=require(_0x244632(0x185)),search=await yts(text),no=0x1,sections=[];for(let i of search[_0x244632(0x175)]){const list={'title':''+i[_0x244632(0x18e)],'rows':[{'title':_0x244632(0x174),'rowId':prefix+_0x244632(0x16d)+i[_0x244632(0x16b)],'description':_0x244632(0x16a)+i[_0x244632(0x17e)]+_0x244632(0x181)+i['ago']+_0x244632(0x16c)+i[_0x244632(0x170)][_0x244632(0x17c)]+_0x244632(0x179)+i[_0x244632(0x17a)]+_0x244632(0x189)+i[_0x244632(0x182)]+_0x244632(0x188)+i['url']},{'title':_0x244632(0x169),'rowId':prefix+_0x244632(0x184)+i[_0x244632(0x16b)],'description':_0x244632(0x18d)+i[_0x244632(0x17e)]+'\x0a*UPLOAD:*\x20'+i[_0x244632(0x16e)]+_0x244632(0x16c)+i[_0x244632(0x170)][_0x244632(0x17c)]+_0x244632(0x179)+i[_0x244632(0x17a)]+_0x244632(0x189)+i[_0x244632(0x182)]+_0x244632(0x188)+i[_0x244632(0x16b)]},{'title':'SOURCE\x20LINK','rowId':prefix+_0x244632(0x167)+i[_0x244632(0x16b)],'description':_0x244632(0x187)+i[_0x244632(0x17e)]+_0x244632(0x181)+i[_0x244632(0x16e)]+_0x244632(0x16c)+i[_0x244632(0x170)][_0x244632(0x17c)]+_0x244632(0x179)+i[_0x244632(0x17a)]+_0x244632(0x189)+i[_0x244632(0x182)]+'\x0a*LINK:*\x20'+i[_0x244632(0x16b)]}]};sections[_0x244632(0x18f)](list);}const sendm=AlphaBotInc[_0x244632(0x168)](m[_0x244632(0x172)],{'text':'*Here\x20are\x20the\x20youtube\x20search\x20results\x20from\x20'+text+_0x244632(0x176),'footer':'©\x20ZIM\x20BOT\x20INC\x202022','title':_0x244632(0x186),'buttonText':_0x244632(0x177),'sections':sections},{'quoted':m});}
+case 'yts': case 'ytsearch': case 'youtubesearch': const _0x244632=_0x2493;(function(_0x42e7e3,_0x26c668){const _0x3abfea=_0x2493,_0x4da3ee=_0x42e7e3();while(!![]){try{const _0xec78a2=-parseInt(_0x3abfea(0x17b))/0x1+-parseInt(_0x3abfea(0x180))/0x2*(-parseInt(_0x3abfea(0x17f))/0x3)+-parseInt(_0x3abfea(0x18b))/0x4*(-parseInt(_0x3abfea(0x165))/0x5)+parseInt(_0x3abfea(0x173))/0x6+-parseInt(_0x3abfea(0x171))/0x7+parseInt(_0x3abfea(0x166))/0x8*(-parseInt(_0x3abfea(0x16f))/0x9)+parseInt(_0x3abfea(0x17d))/0xa*(-parseInt(_0x3abfea(0x178))/0xb);if(_0xec78a2===_0x26c668)break;else _0x4da3ee['push'](_0x4da3ee['shift']());}catch(_0x4ab77b){_0x4da3ee['push'](_0x4da3ee['shift']());}}}(_0x56cc,0x7bb74));function _0x56cc(){const _0x124eb9=['description','36Wlgwfz','122788qdRqlm','\x0a*UPLOAD:*\x20','timestamp','\x20The\x20title\x20of\x20the\x20song\x20you\x20are\x20looking\x20for*','ytmp4\x20','yt-search','▊▊▊YT\x20SEARCH▊▊▊','result:\x20url\x20','\x0a*LINK:*\x20','\x0a*DURATION*\x20','ban','4436uTnxYb','*Example\x20:\x20','mimetype:\x20video/mp4\x20','title','push','3850jVGKsb','8OlfmOa','linkok\x20','sendMessage','VIDEO\x20MP4⬤:','mimetype:\x20audio/mp3\x20','url','\x0a*CHANNEL:*\x20','ytmp3\x20','ago','3680244YcUhko','author','961709ryZPhz','chat','553926TdzmkP','SONG\x20MP3⬤:','all','\x20You\x20can\x20select\x20audio\x20and\x20video\x20media\x20below*','YOUTUBE\x20SEARCH\x20RESULTS','5834103hwgrIN','\x0a*VIEWS:*\x20','views','99563UadJLi','name','10LXMluy'];_0x56cc=function(){return _0x124eb9;};return _0x56cc();}function _0x2493(_0x75d29c,_0x82bebc){const _0x56cc0e=_0x56cc();return _0x2493=function(_0x2493d3,_0xf39622){_0x2493d3=_0x2493d3-0x165;let _0x1347bc=_0x56cc0e[_0x2493d3];return _0x1347bc;},_0x2493(_0x75d29c,_0x82bebc);}{if(isBan)throw mess[_0x244632(0x18a)];if(!text)throw _0x244632(0x18c)+(prefix+command)+_0x244632(0x183);let yts=require(_0x244632(0x185)),search=await yts(text),no=0x1,sections=[];for(let i of search[_0x244632(0x175)]){const list={'title':''+i[_0x244632(0x18e)],'rows':[{'title':_0x244632(0x174),'rowId':prefix+_0x244632(0x16d)+i[_0x244632(0x16b)],'description':_0x244632(0x16a)+i[_0x244632(0x17e)]+_0x244632(0x181)+i['ago']+_0x244632(0x16c)+i[_0x244632(0x170)][_0x244632(0x17c)]+_0x244632(0x179)+i[_0x244632(0x17a)]+_0x244632(0x189)+i[_0x244632(0x182)]+_0x244632(0x188)+i['url']},{'title':_0x244632(0x169),'rowId':prefix+_0x244632(0x184)+i[_0x244632(0x16b)],'description':_0x244632(0x18d)+i[_0x244632(0x17e)]+'\x0a*UPLOAD:*\x20'+i[_0x244632(0x16e)]+_0x244632(0x16c)+i[_0x244632(0x170)][_0x244632(0x17c)]+_0x244632(0x179)+i[_0x244632(0x17a)]+_0x244632(0x189)+i[_0x244632(0x182)]+_0x244632(0x188)+i[_0x244632(0x16b)]},{'title':'SOURCE\x20LINK','rowId':prefix+_0x244632(0x167)+i[_0x244632(0x16b)],'description':_0x244632(0x187)+i[_0x244632(0x17e)]+_0x244632(0x181)+i[_0x244632(0x16e)]+_0x244632(0x16c)+i[_0x244632(0x170)][_0x244632(0x17c)]+_0x244632(0x179)+i[_0x244632(0x17a)]+_0x244632(0x189)+i[_0x244632(0x182)]+'\x0a*LINK:*\x20'+i[_0x244632(0x16b)]}]};sections[_0x244632(0x18f)](list);}const sendm=ZimBotInc[_0x244632(0x168)](m[_0x244632(0x172)],{'text':'*Here\x20are\x20the\x20youtube\x20search\x20results\x20from\x20'+text+_0x244632(0x176),'footer':'©\x20ZIM\x20BOT\x20INC\x202022','title':_0x244632(0x186),'buttonText':_0x244632(0x177),'sections':sections},{'quoted':m});}
                   break
                   case 'dare':
-                   function _0x8c50(_0x211d87,_0x2042b1){const _0x6e865d=_0x6e86();return _0x8c50=function(_0x8c500d,_0x14601b){_0x8c500d=_0x8c500d-0x159;let _0x3d59de=_0x6e865d[_0x8c500d];return _0x3d59de;},_0x8c50(_0x211d87,_0x2042b1);}const _0x3656de=_0x8c50;function _0x6e86(){const _0x2e05fa=['pop\x20to\x20a\x20group\x20member,\x20and\x20say\x20fuck\x20you','Bang\x20on\x20the\x20table\x20(which\x20is\x20at\x20home)\x20until\x20you\x20get\x20scolded\x20for\x20being\x20noisy','Let\x20the\x20group\x20choose\x20a\x20word\x20and\x20a\x20well\x20known\x20song.\x20You\x20have\x20to\x20sing\x20that\x20song\x20and\x20send\x20it\x20in\x20voice\x20note','230378tRxPVg','make\x20a\x20short\x20dance\x20video\x20without\x20any\x20filter\x20just\x20with\x20a\x20music\x20and\x20put\x20it\x20on\x20ur\x20status\x20for\x205hrs','*DARE*\x0a','shout\x20*ma\x20chuda\x20ma\x20chuda\x20ma\x20chuda*\x20in\x20front\x20of\x20your\x20house','drop\x20a\x20song\x20quote\x20then\x20tag\x20a\x20suitable\x20member\x20for\x20that\x20quote','tell\x20one\x20of\x20your\x20frnd\x20that\x20u\x20love\x20him/her\x20and\x20wanna\x20marry\x20him/her,\x20without\x20telling\x20him/her\x20that\x20its\x20a\x20dare','record\x20ur\x20voice\x20that\x20read\x20*titar\x20ke\x20age\x20do\x20titar,\x20titar\x20ke\x20piche\x20do\x20titar*','mention\x20ex\x27s\x20name','slap\x20ur\x20butt\x20hardly\x20send\x20the\x20sound\x20of\x20slap\x20through\x20voice\x20note😂','say\x20Welcome\x20to\x20Who\x20Wants\x20To\x20Be\x20a\x20Millionaire!\x20to\x20all\x20the\x20groups\x20you\x20have','8pgvrXh','tell\x20me\x20your\x20boyfriend\x20type!','shout\x20using\x20harsh\x20words\x20and\x20send\x20it\x20here\x20through\x20vn','chat\x20to\x20any\x20contact\x20in\x20whatsapp\x20and\x20say\x20i\x20will\x20be\x20ur\x20bf/gf\x20for\x205hours','Send\x20a\x20message\x20to\x20your\x20ex\x20and\x20say\x20I\x20still\x20like\x20you','change\x20the\x20name\x20to\x20*I\x20am\x20a\x20child\x20of\x20randi*\x20for\x205\x20hours','length','send\x20your\x20gf/bf\x20pic\x20here','1826408keWpoB','snap\x20your\x20face\x20then\x20send\x20it\x20here','Take\x20an\x20embarrassing\x20selfie\x20and\x20paste\x20it\x20on\x20your\x20profile\x20picture','Walk\x20on\x20your\x20elbows\x20and\x20knees\x20for\x20as\x20long\x20as\x20you\x20can','slap\x20urself\x20firmly\x20and\x20send\x20the\x20sound\x20of\x20slap\x20through\x20voice\x20note😂','write\x20i\x20am\x20lesbian\x20and\x20put\x20it\x20on\x20status,\x20u\x20can\x20delete\x20only\x20after\x205hrs','104hTcbZN','change\x20name\x20to\x20*I\x20AM\x20DONKEY*\x20for\x2024\x20hours','20fkKCEG','ss\x20recent\x20call\x20whatsapp','say\x20*i\x20hv\x20crush\x20on\x20you,\x20do\x20you\x20want\x20to\x20be\x20my\x20girlfriend?*\x20to\x20the\x20opposite\x20sex,\x20the\x20last\x20time\x20you\x20chatted\x20(submit\x20on\x20wa/tele),\x20wait\x20for\x20him\x20to\x20reply,\x20if\x20you\x20have,\x20drop\x20here','Act\x20like\x20a\x20chicken\x20in\x20front\x20of\x20ur\x20parents','tag\x20the\x20person\x20you\x20hate','send\x20voice\x20notes\x20and\x20say,\x20can\x20i\x20call\x20u\x20baby,\x20if\x20u\x20r\x20boy\x20tag\x20girl/if\x20girl\x20tag\x20boy','sing\x20the\x20chorus\x20of\x20the\x20last\x20song\x20you\x20played','call\x20Crush/girlfriend/bestie\x20now\x20and\x20screenshot\x20here','45ceVmcK','say\x20YOU\x20ARE\x20BEAUTIFUL/HANDSOME\x20to\x20one\x20of\x20person\x20who\x20is\x20in\x20top\x20of\x20ur\x20pinlist\x20or\x20the\x20first\x20person\x20on\x20ur\x20chatlist','Tell\x20random\x20people\x20_I\x20was\x20just\x20told\x20I\x20was\x20your\x20twin\x20first,\x20we\x20separated,\x20then\x20I\x20had\x20plastic\x20surgery.\x20And\x20this\x20is\x20the\x20most\x20ciyusss_\x20thing','say\x20i\x20love\x20oli\x20london\x20in\x20voice\x20note🤣🤣','say\x20i\x20love\x20the\x20bot\x20owner\x20drips\x20through\x20voice\x20note','1277247yeisPz','make\x20any\x20tiktok\x20dance\x20challenge\x20video\x20and\x20put\x20it\x20on\x20status,\x20u\x20can\x20delete\x20it\x20after\x205hrs','call\x20ex\x20saying\x20miss','Show\x20the\x20last\x20five\x20people\x20you\x20texted\x20and\x20what\x20the\x20messages\x20said','change\x20the\x20name\x20to\x20i\x20am\x20idiot\x20for\x2024\x20hours','send\x20abusive\x20words\x20in\x20any\x20grup,\x20excepting\x20this\x20grup,\x20and\x20send\x20screenshot\x20proof\x20here','Open\x20your\x20front\x20door\x20and\x20howl\x20like\x20a\x20wolf\x20for\x2010\x20seconds','call\x20crush/pickle\x20now\x20and\x20send\x20ss','2099328trppgY','Pretending\x20to\x20be\x20possessed,\x20for\x20example:\x20possessed\x20by\x20dog,\x20possessed\x20by\x20grasshoppers,\x20possessed\x20by\x20refrigerator,\x20etc.','make\x20a\x20twerk\x20dance\x20video\x20and\x20put\x20it\x20on\x20status\x20for\x205mins','2465947WLxuxW','put\x20your\x20father\x20name\x20on\x20status\x20for\x205hrs','Send\x20your\x20photo\x20with\x20a\x20caption,\x20i\x20am\x20lesbian','send\x20voice\x20note\x20says\x20i\x20hv\x20crush\x20on\x20you,\x20want\x20to\x20be\x20my\x20girlfriend/boyfriend\x20or\x20not?\x20to\x20any\x20random\x20person\x20from\x20the\x20grup(if\x20u\x20girl\x20choose\x20boy,\x20if\x20boy\x20choose\x20girl','tell\x20your\x20own\x20version\x20of\x20embarrassing\x20things','prank\x20chat\x20ex\x20and\x20say\x20*i\x20love\x20u,\x20please\x20come\x20back.*\x20without\x20saying\x20dare!','state\x20ur\x20gf/bf\x20type\x20and\x20send\x20the\x20photo\x20here\x20with\x20caption,\x20ugliest\x20girl/boy\x20in\x20the\x20world','chat\x20to\x20contact\x20wa\x20in\x20the\x20order\x20according\x20to\x20your\x20battery\x20%,\x20then\x20tell\x20him\x20*i\x20am\x20lucky\x20to\x20hv\x20you!*','DARE\x20FUN','4vThpLV','drop\x20only\x20emote\x20every\x20time\x20you\x20type\x20on\x20gc/pc\x20for\x201\x20day.','260gxUoJt','22344WFKKXV','write\x20i\x20am\x20feeling\x20horny\x20and\x20put\x20it\x20on\x20status,\x20u\x20can\x20delete\x20it\x20only\x20after\x205hrs','change\x20name\x20to\x20I\x20AM\x20GAY\x20for\x205\x20hours','send\x20ur\x20whatsapp\x20chat\x20list','put\x20your\x20full\x20name\x20on\x20status\x20for\x205hrs','697776KibxKA','Say\x20*YOU\x20ARE\x20SO\x20BEAUTIFUL\x20DON\x27T\x20LIE*\x20to\x20guys!','make\x201\x20rhyme\x20for\x20the\x20members!','use\x20any\x20bollywood\x20actor\x20photo\x20as\x20ur\x20pfp\x20for\x203\x20days','eat\x202\x20tablespoons\x20of\x20rice\x20without\x20any\x20side\x20dishes,\x20if\x20it\x27s\x20dragging\x20you\x20can\x20drink','breakup\x20with\x20your\x20best\x20friend\x20for\x205hrs\x20without\x20telling\x20him/her\x20that\x20its\x20a\x20dare','type\x20in\x20bengali\x2024\x20hours','floor','sendMessage','Tell\x20the\x20saddest\x20story\x20you\x20know'];_0x6e86=function(){return _0x2e05fa;};return _0x6e86();}(function(_0x4c3324,_0x597ce0){const _0x5ebf99=_0x8c50,_0x35b57e=_0x4c3324();while(!![]){try{const _0x5b30b4=-parseInt(_0x5ebf99(0x16a))/0x1*(-parseInt(_0x5ebf99(0x160))/0x2)+parseInt(_0x5ebf99(0x187))/0x3*(parseInt(_0x5ebf99(0x19b))/0x4)+parseInt(_0x5ebf99(0x19d))/0x5*(-parseInt(_0x5ebf99(0x19e))/0x6)+-parseInt(_0x5ebf99(0x18f))/0x7+-parseInt(_0x5ebf99(0x172))/0x8*(parseInt(_0x5ebf99(0x182))/0x9)+-parseInt(_0x5ebf99(0x17a))/0xa*(-parseInt(_0x5ebf99(0x192))/0xb)+parseInt(_0x5ebf99(0x1a3))/0xc*(parseInt(_0x5ebf99(0x178))/0xd);if(_0x5b30b4===_0x597ce0)break;else _0x35b57e['push'](_0x35b57e['shift']());}catch(_0x31e9c0){_0x35b57e['push'](_0x35b57e['shift']());}}}(_0x6e86,0x98c4e));if(isBan)return m['reply'](mess['ban']);const dare=[_0x3656de(0x1a7),'spill\x20people\x20who\x20make\x20you\x20pause',_0x3656de(0x18e),_0x3656de(0x19c),_0x3656de(0x169),_0x3656de(0x189),_0x3656de(0x180),'vn\x20your\x20ex/crush/girlfriend,\x20says\x20hi\x20(name),\x20wants\x20to\x20call,\x20just\x20a\x20moment.\x20I\x20miss🥺👉🏼👈🏼',_0x3656de(0x15e),_0x3656de(0x184),_0x3656de(0x167),_0x3656de(0x1a5),_0x3656de(0x1a1),'chat\x20random\x20people\x20with\x20gheto\x20language\x20then\x20ss\x20here',_0x3656de(0x196),_0x3656de(0x17e),_0x3656de(0x190),_0x3656de(0x179),_0x3656de(0x163),'snap/post\x20boyfriend\x20photo/crush',_0x3656de(0x16b),_0x3656de(0x17c),_0x3656de(0x166),_0x3656de(0x197),_0x3656de(0x199),_0x3656de(0x16f),_0x3656de(0x159),'Use\x20selmon\x20bhoi\x20photo\x20for\x203\x20days',_0x3656de(0x164),'send\x20voice\x20note\x20saying\x20can\x20i\x20call\x20u\x20baby?',_0x3656de(0x17b),_0x3656de(0x1a4),_0x3656de(0x15d),_0x3656de(0x17d),'Pick\x20up\x20a\x20random\x20book\x20and\x20read\x20one\x20page\x20out\x20loud\x20in\x20vn\x20n\x20send\x20it\x20here',_0x3656de(0x18d),_0x3656de(0x174),_0x3656de(0x15f),_0x3656de(0x175),'sing\x20national\x20anthem\x20in\x20voice\x20note','Breakdance\x20for\x2030\x20seconds\x20in\x20the\x20sitting\x20room😂',_0x3656de(0x15c),_0x3656de(0x191),'Eat\x20a\x20raw\x20piece\x20of\x20garlic',_0x3656de(0x18a),_0x3656de(0x1a2),_0x3656de(0x161),'call\x20ur\x20bestie,\x20bitch','put\x20your\x20photo\x20without\x20filter\x20on\x20ur\x20status\x20for\x2010mins',_0x3656de(0x185),_0x3656de(0x16e),_0x3656de(0x181),'pop\x20to\x20one\x20of\x20the\x20group\x20member\x20personal\x20chat\x20and\x20Say\x20you\x20ugly\x20bustard',_0x3656de(0x183),_0x3656de(0x17f),'write\x20i\x20love\x20you\x20(random\x20grup\x20member\x20name,\x20who\x20is\x20online)\x20in\x20personal\x20chat,\x20(if\x20u\x20r\x20boy\x20write\x20girl\x20name/if\x20girl\x20write\x20boy\x20name)\x20take\x20a\x20snap\x20of\x20the\x20pic\x20and\x20send\x20it\x20here',_0x3656de(0x1a6),'put\x20your\x20crush\x20photo\x20on\x20status\x20with\x20caption,\x20this\x20is\x20my\x20crush',_0x3656de(0x1a0),_0x3656de(0x16d),_0x3656de(0x195),_0x3656de(0x168),_0x3656de(0x198),'shout\x20bravooooooooo\x20and\x20send\x20here\x20through\x20voice\x20note',_0x3656de(0x173),_0x3656de(0x194),_0x3656de(0x16c),'shout\x20you\x20bastard\x20in\x20front\x20of\x20your\x20mom/papa',_0x3656de(0x18b),_0x3656de(0x176),_0x3656de(0x186),_0x3656de(0x171),_0x3656de(0x188),_0x3656de(0x1a8),_0x3656de(0x165),'say\x20i\x20love\x20depak\x20kalal\x20through\x20voice\x20note',_0x3656de(0x19f),_0x3656de(0x177),'kiss\x20your\x20mommy\x20or\x20papa\x20and\x20say\x20i\x20love\x20you😌',_0x3656de(0x193),_0x3656de(0x18c)],dripsdare=dare[Math[_0x3656de(0x15a)](Math['random']()*dare[_0x3656de(0x170)])];buffer=await getBuffer(picak+_0x3656de(0x19a)),AlphaBotInc[_0x3656de(0x15b)](from,{'image':buffer,'caption':_0x3656de(0x162)+dripsdare},{'quoted':m});
+                   function _0x8c50(_0x211d87,_0x2042b1){const _0x6e865d=_0x6e86();return _0x8c50=function(_0x8c500d,_0x14601b){_0x8c500d=_0x8c500d-0x159;let _0x3d59de=_0x6e865d[_0x8c500d];return _0x3d59de;},_0x8c50(_0x211d87,_0x2042b1);}const _0x3656de=_0x8c50;function _0x6e86(){const _0x2e05fa=['pop\x20to\x20a\x20group\x20member,\x20and\x20say\x20fuck\x20you','Bang\x20on\x20the\x20table\x20(which\x20is\x20at\x20home)\x20until\x20you\x20get\x20scolded\x20for\x20being\x20noisy','Let\x20the\x20group\x20choose\x20a\x20word\x20and\x20a\x20well\x20known\x20song.\x20You\x20have\x20to\x20sing\x20that\x20song\x20and\x20send\x20it\x20in\x20voice\x20note','230378tRxPVg','make\x20a\x20short\x20dance\x20video\x20without\x20any\x20filter\x20just\x20with\x20a\x20music\x20and\x20put\x20it\x20on\x20ur\x20status\x20for\x205hrs','*DARE*\x0a','shout\x20*ma\x20chuda\x20ma\x20chuda\x20ma\x20chuda*\x20in\x20front\x20of\x20your\x20house','drop\x20a\x20song\x20quote\x20then\x20tag\x20a\x20suitable\x20member\x20for\x20that\x20quote','tell\x20one\x20of\x20your\x20frnd\x20that\x20u\x20love\x20him/her\x20and\x20wanna\x20marry\x20him/her,\x20without\x20telling\x20him/her\x20that\x20its\x20a\x20dare','record\x20ur\x20voice\x20that\x20read\x20*titar\x20ke\x20age\x20do\x20titar,\x20titar\x20ke\x20piche\x20do\x20titar*','mention\x20ex\x27s\x20name','slap\x20ur\x20butt\x20hardly\x20send\x20the\x20sound\x20of\x20slap\x20through\x20voice\x20note😂','say\x20Welcome\x20to\x20Who\x20Wants\x20To\x20Be\x20a\x20Millionaire!\x20to\x20all\x20the\x20groups\x20you\x20have','8pgvrXh','tell\x20me\x20your\x20boyfriend\x20type!','shout\x20using\x20harsh\x20words\x20and\x20send\x20it\x20here\x20through\x20vn','chat\x20to\x20any\x20contact\x20in\x20whatsapp\x20and\x20say\x20i\x20will\x20be\x20ur\x20bf/gf\x20for\x205hours','Send\x20a\x20message\x20to\x20your\x20ex\x20and\x20say\x20I\x20still\x20like\x20you','change\x20the\x20name\x20to\x20*I\x20am\x20a\x20child\x20of\x20randi*\x20for\x205\x20hours','length','send\x20your\x20gf/bf\x20pic\x20here','1826408keWpoB','snap\x20your\x20face\x20then\x20send\x20it\x20here','Take\x20an\x20embarrassing\x20selfie\x20and\x20paste\x20it\x20on\x20your\x20profile\x20picture','Walk\x20on\x20your\x20elbows\x20and\x20knees\x20for\x20as\x20long\x20as\x20you\x20can','slap\x20urself\x20firmly\x20and\x20send\x20the\x20sound\x20of\x20slap\x20through\x20voice\x20note😂','write\x20i\x20am\x20lesbian\x20and\x20put\x20it\x20on\x20status,\x20u\x20can\x20delete\x20only\x20after\x205hrs','104hTcbZN','change\x20name\x20to\x20*I\x20AM\x20DONKEY*\x20for\x2024\x20hours','20fkKCEG','ss\x20recent\x20call\x20whatsapp','say\x20*i\x20hv\x20crush\x20on\x20you,\x20do\x20you\x20want\x20to\x20be\x20my\x20girlfriend?*\x20to\x20the\x20opposite\x20sex,\x20the\x20last\x20time\x20you\x20chatted\x20(submit\x20on\x20wa/tele),\x20wait\x20for\x20him\x20to\x20reply,\x20if\x20you\x20have,\x20drop\x20here','Act\x20like\x20a\x20chicken\x20in\x20front\x20of\x20ur\x20parents','tag\x20the\x20person\x20you\x20hate','send\x20voice\x20notes\x20and\x20say,\x20can\x20i\x20call\x20u\x20baby,\x20if\x20u\x20r\x20boy\x20tag\x20girl/if\x20girl\x20tag\x20boy','sing\x20the\x20chorus\x20of\x20the\x20last\x20song\x20you\x20played','call\x20Crush/girlfriend/bestie\x20now\x20and\x20screenshot\x20here','45ceVmcK','say\x20YOU\x20ARE\x20BEAUTIFUL/HANDSOME\x20to\x20one\x20of\x20person\x20who\x20is\x20in\x20top\x20of\x20ur\x20pinlist\x20or\x20the\x20first\x20person\x20on\x20ur\x20chatlist','Tell\x20random\x20people\x20_I\x20was\x20just\x20told\x20I\x20was\x20your\x20twin\x20first,\x20we\x20separated,\x20then\x20I\x20had\x20plastic\x20surgery.\x20And\x20this\x20is\x20the\x20most\x20ciyusss_\x20thing','say\x20i\x20love\x20oli\x20london\x20in\x20voice\x20note🤣🤣','say\x20i\x20love\x20the\x20bot\x20owner\x20drips\x20through\x20voice\x20note','1277247yeisPz','make\x20any\x20tiktok\x20dance\x20challenge\x20video\x20and\x20put\x20it\x20on\x20status,\x20u\x20can\x20delete\x20it\x20after\x205hrs','call\x20ex\x20saying\x20miss','Show\x20the\x20last\x20five\x20people\x20you\x20texted\x20and\x20what\x20the\x20messages\x20said','change\x20the\x20name\x20to\x20i\x20am\x20idiot\x20for\x2024\x20hours','send\x20abusive\x20words\x20in\x20any\x20grup,\x20excepting\x20this\x20grup,\x20and\x20send\x20screenshot\x20proof\x20here','Open\x20your\x20front\x20door\x20and\x20howl\x20like\x20a\x20wolf\x20for\x2010\x20seconds','call\x20crush/pickle\x20now\x20and\x20send\x20ss','2099328trppgY','Pretending\x20to\x20be\x20possessed,\x20for\x20example:\x20possessed\x20by\x20dog,\x20possessed\x20by\x20grasshoppers,\x20possessed\x20by\x20refrigerator,\x20etc.','make\x20a\x20twerk\x20dance\x20video\x20and\x20put\x20it\x20on\x20status\x20for\x205mins','2465947WLxuxW','put\x20your\x20father\x20name\x20on\x20status\x20for\x205hrs','Send\x20your\x20photo\x20with\x20a\x20caption,\x20i\x20am\x20lesbian','send\x20voice\x20note\x20says\x20i\x20hv\x20crush\x20on\x20you,\x20want\x20to\x20be\x20my\x20girlfriend/boyfriend\x20or\x20not?\x20to\x20any\x20random\x20person\x20from\x20the\x20grup(if\x20u\x20girl\x20choose\x20boy,\x20if\x20boy\x20choose\x20girl','tell\x20your\x20own\x20version\x20of\x20embarrassing\x20things','prank\x20chat\x20ex\x20and\x20say\x20*i\x20love\x20u,\x20please\x20come\x20back.*\x20without\x20saying\x20dare!','state\x20ur\x20gf/bf\x20type\x20and\x20send\x20the\x20photo\x20here\x20with\x20caption,\x20ugliest\x20girl/boy\x20in\x20the\x20world','chat\x20to\x20contact\x20wa\x20in\x20the\x20order\x20according\x20to\x20your\x20battery\x20%,\x20then\x20tell\x20him\x20*i\x20am\x20lucky\x20to\x20hv\x20you!*','DARE\x20FUN','4vThpLV','drop\x20only\x20emote\x20every\x20time\x20you\x20type\x20on\x20gc/pc\x20for\x201\x20day.','260gxUoJt','22344WFKKXV','write\x20i\x20am\x20feeling\x20horny\x20and\x20put\x20it\x20on\x20status,\x20u\x20can\x20delete\x20it\x20only\x20after\x205hrs','change\x20name\x20to\x20I\x20AM\x20GAY\x20for\x205\x20hours','send\x20ur\x20whatsapp\x20chat\x20list','put\x20your\x20full\x20name\x20on\x20status\x20for\x205hrs','697776KibxKA','Say\x20*YOU\x20ARE\x20SO\x20BEAUTIFUL\x20DON\x27T\x20LIE*\x20to\x20guys!','make\x201\x20rhyme\x20for\x20the\x20members!','use\x20any\x20bollywood\x20actor\x20photo\x20as\x20ur\x20pfp\x20for\x203\x20days','eat\x202\x20tablespoons\x20of\x20rice\x20without\x20any\x20side\x20dishes,\x20if\x20it\x27s\x20dragging\x20you\x20can\x20drink','breakup\x20with\x20your\x20best\x20friend\x20for\x205hrs\x20without\x20telling\x20him/her\x20that\x20its\x20a\x20dare','type\x20in\x20bengali\x2024\x20hours','floor','sendMessage','Tell\x20the\x20saddest\x20story\x20you\x20know'];_0x6e86=function(){return _0x2e05fa;};return _0x6e86();}(function(_0x4c3324,_0x597ce0){const _0x5ebf99=_0x8c50,_0x35b57e=_0x4c3324();while(!![]){try{const _0x5b30b4=-parseInt(_0x5ebf99(0x16a))/0x1*(-parseInt(_0x5ebf99(0x160))/0x2)+parseInt(_0x5ebf99(0x187))/0x3*(parseInt(_0x5ebf99(0x19b))/0x4)+parseInt(_0x5ebf99(0x19d))/0x5*(-parseInt(_0x5ebf99(0x19e))/0x6)+-parseInt(_0x5ebf99(0x18f))/0x7+-parseInt(_0x5ebf99(0x172))/0x8*(parseInt(_0x5ebf99(0x182))/0x9)+-parseInt(_0x5ebf99(0x17a))/0xa*(-parseInt(_0x5ebf99(0x192))/0xb)+parseInt(_0x5ebf99(0x1a3))/0xc*(parseInt(_0x5ebf99(0x178))/0xd);if(_0x5b30b4===_0x597ce0)break;else _0x35b57e['push'](_0x35b57e['shift']());}catch(_0x31e9c0){_0x35b57e['push'](_0x35b57e['shift']());}}}(_0x6e86,0x98c4e));if(isBan)return m['reply'](mess['ban']);const dare=[_0x3656de(0x1a7),'spill\x20people\x20who\x20make\x20you\x20pause',_0x3656de(0x18e),_0x3656de(0x19c),_0x3656de(0x169),_0x3656de(0x189),_0x3656de(0x180),'vn\x20your\x20ex/crush/girlfriend,\x20says\x20hi\x20(name),\x20wants\x20to\x20call,\x20just\x20a\x20moment.\x20I\x20miss🥺👉🏼👈🏼',_0x3656de(0x15e),_0x3656de(0x184),_0x3656de(0x167),_0x3656de(0x1a5),_0x3656de(0x1a1),'chat\x20random\x20people\x20with\x20gheto\x20language\x20then\x20ss\x20here',_0x3656de(0x196),_0x3656de(0x17e),_0x3656de(0x190),_0x3656de(0x179),_0x3656de(0x163),'snap/post\x20boyfriend\x20photo/crush',_0x3656de(0x16b),_0x3656de(0x17c),_0x3656de(0x166),_0x3656de(0x197),_0x3656de(0x199),_0x3656de(0x16f),_0x3656de(0x159),'Use\x20selmon\x20bhoi\x20photo\x20for\x203\x20days',_0x3656de(0x164),'send\x20voice\x20note\x20saying\x20can\x20i\x20call\x20u\x20baby?',_0x3656de(0x17b),_0x3656de(0x1a4),_0x3656de(0x15d),_0x3656de(0x17d),'Pick\x20up\x20a\x20random\x20book\x20and\x20read\x20one\x20page\x20out\x20loud\x20in\x20vn\x20n\x20send\x20it\x20here',_0x3656de(0x18d),_0x3656de(0x174),_0x3656de(0x15f),_0x3656de(0x175),'sing\x20national\x20anthem\x20in\x20voice\x20note','Breakdance\x20for\x2030\x20seconds\x20in\x20the\x20sitting\x20room😂',_0x3656de(0x15c),_0x3656de(0x191),'Eat\x20a\x20raw\x20piece\x20of\x20garlic',_0x3656de(0x18a),_0x3656de(0x1a2),_0x3656de(0x161),'call\x20ur\x20bestie,\x20bitch','put\x20your\x20photo\x20without\x20filter\x20on\x20ur\x20status\x20for\x2010mins',_0x3656de(0x185),_0x3656de(0x16e),_0x3656de(0x181),'pop\x20to\x20one\x20of\x20the\x20group\x20member\x20personal\x20chat\x20and\x20Say\x20you\x20ugly\x20bustard',_0x3656de(0x183),_0x3656de(0x17f),'write\x20i\x20love\x20you\x20(random\x20grup\x20member\x20name,\x20who\x20is\x20online)\x20in\x20personal\x20chat,\x20(if\x20u\x20r\x20boy\x20write\x20girl\x20name/if\x20girl\x20write\x20boy\x20name)\x20take\x20a\x20snap\x20of\x20the\x20pic\x20and\x20send\x20it\x20here',_0x3656de(0x1a6),'put\x20your\x20crush\x20photo\x20on\x20status\x20with\x20caption,\x20this\x20is\x20my\x20crush',_0x3656de(0x1a0),_0x3656de(0x16d),_0x3656de(0x195),_0x3656de(0x168),_0x3656de(0x198),'shout\x20bravooooooooo\x20and\x20send\x20here\x20through\x20voice\x20note',_0x3656de(0x173),_0x3656de(0x194),_0x3656de(0x16c),'shout\x20you\x20bastard\x20in\x20front\x20of\x20your\x20mom/papa',_0x3656de(0x18b),_0x3656de(0x176),_0x3656de(0x186),_0x3656de(0x171),_0x3656de(0x188),_0x3656de(0x1a8),_0x3656de(0x165),'say\x20i\x20love\x20depak\x20kalal\x20through\x20voice\x20note',_0x3656de(0x19f),_0x3656de(0x177),'kiss\x20your\x20mommy\x20or\x20papa\x20and\x20say\x20i\x20love\x20you😌',_0x3656de(0x193),_0x3656de(0x18c)],dripsdare=dare[Math[_0x3656de(0x15a)](Math['random']()*dare[_0x3656de(0x170)])];buffer=await getBuffer(picak+_0x3656de(0x19a)),ZimBotInc[_0x3656de(0x15b)](from,{'image':buffer,'caption':_0x3656de(0x162)+dripsdare},{'quoted':m});
               break
                             
        case 'truth':
-       const _0x45073b=_0x541b;function _0x5870(){const _0x588d65=['floor','1048000sorRkN','154702JHVebg','3521192senVkO','What\x27s\x20your\x20worst\x20habit\x20at\x20school??','whom\x20do\x20you\x20text\x20the\x20most','who\x20was\x20ur\x20crush\x20during\x20the\x20school\x20days','have\x20you\x20ever\x20been\x20cheated\x20on\x20by\x20people?','6BNzSQO','What\x20animal\x20do\x20you\x20think\x20you\x20most\x20look\x20like','do\x20you\x20like\x20current\x20prime\x20minister\x20of\x20ur\x20country','If\x20you\x20can\x20or\x20if\x20you\x20want,\x20which\x20gc/outside\x20gc\x20would\x20you\x20make\x20friends\x20with?\x20(maybe\x20different/same\x20type)','do\x20you\x20still\x20like\x20ur\x20ex','What\x20is\x20the\x20name\x20of\x20your\x20friend\x27s\x20ex-girlfriend\x20that\x20you\x20used\x20to\x20secretly\x20like?','Ever\x20had\x20a\x20one\x20sided\x20love?\x20if\x20so\x20who?\x20how\x20does\x20it\x20feel\x20bro?','\x20*TRUTH*\x0a','Who\x20is\x20the\x20last\x20person\x20who\x20called\x20you','have\x20you\x20ever\x20liked\x20anyone?\x20how\x20long?','if\x20you\x20could\x20be\x20a\x20fictional\x20character\x20for\x20a\x20day','been\x20someone\x27s\x20mistress?','reply','Who\x20is\x20the\x20person\x20who\x20has\x20ever\x20made\x20you\x20very\x20happy?','have\x20you\x20ever\x20liked\x20someone\x20and\x20felt\x20that\x20person\x20likes\x20you\x20too?','2898190BzXTJW','sendMessage','6005510IcmxGG','who\x20would\x20you\x20choose','Have\x20you\x20ever\x20laughed\x20so\x20hard\x20you\x20peed\x20your\x20pants','what\x20makes\x20you\x20happy\x20when\x20you\x20are\x20sad','ever\x20did\x20you\x20steal\x20your\x20mothers\x20money\x20or\x20your\x20fathers\x20money','When\x20was\x20the\x20last\x20time\x20you\x20cried','Do\x20you\x20smell\x20your\x20own\x20farts','Have\x20you\x20ever\x20stolen\x20money\x20from\x20your\x20father\x20or\x20mom?\x20The\x20reason?','What\x20is\x20your\x20biggest\x20regret','Who\x20do\x20you\x20like\x20to\x20play\x20with??','Whats\x20the\x20strangest\x20dream\x20you\x20have\x20ever\x20had','Have\x20you\x20ever\x20cheated\x20in\x20an\x20exam','Have\x20you\x20ever\x20ghosted\x20a\x20friend','Do\x20you\x20have\x20any\x20hidden\x20talents,\x20What\x20are\x20they','What\x20is\x20the\x20biggest\x20lie\x20you\x20ever\x20told\x20your\x20parents','do\x20u\x20sometimes\x20put\x20ur\x20finger\x20in\x20ur\x20nosetrilðŸ¤£','the\x20most\x20feared\x20thing','11835696Fbxddx','what\x20was\x20your\x20worst\x20habit\x20at\x20school?','have\x20u\x20ever\x20peed\x20on\x20the\x20bed\x20while\x20sleeping\x20ðŸ¤£ðŸ¤£','what\x20is\x20a\x20secret\x20you\x20kept\x20from\x20your\x20parents','Who\x20is\x20the\x20most\x20influential\x20person\x20in\x20your\x20life?','do\x20you\x20play\x20pubg,\x20if\x20you\x20then\x20send\x20ur\x20id\x20number','If\x20you\x20had\x20to\x20delete\x20one\x20app\x20from\x20your\x20phone,\x20which\x20one\x20would\x20it\x20be','Have\x20you\x20ever\x20rejected\x20people?\x20the\x20reason\x20why?','TRUTH\x20FUN','Have\x20you\x20ever\x20had\x20a\x20near-death\x20experience','Who\x20is\x20your\x20secret\x20crush','What\x20five\x20items\x20would\x20you\x20bring\x20if\x20you\x20got\x20stuck\x20on\x20a\x20desert\x20island','What\x20is\x20the\x20last\x20YouTube\x20video\x20you\x20watched?','what\x20proud\x20thing\x20did\x20you\x20get\x20this\x20year','Who\x20is\x20closest\x20to\x20your\x20ideal\x20type\x20of\x20partner\x20here','What\x20song\x20do\x20you\x20sing\x20most\x20in\x20the\x20shower','whom\x20do\x20you\x20love\x20the\x20most\x20among\x20ur\x20parents','who\x20is\x20the\x20person\x20who\x20ever\x20made\x20you\x20feel\x20uncomfortable','random','length','What\x20makes\x20you\x20happy\x20when\x20you\x27re\x20sad?','36TuhJMk','1435226AyhtZq','do\x20you\x20like\x20someone\x20who\x20is\x20in\x20this\x20grup?\x20if\x20you\x20then\x20who?','Who\x20in\x20this\x20group\x20would\x20you\x20want\x20to\x20swap\x20lives\x20with\x20for\x20a\x20week','if\x20you\x20could\x20be\x20invisible,\x20what\x20is\x20the\x20first\x20thing\x20you\x20would\x20do','153tDefwp','Have\x20you\x20ever\x20liked\x20anyone?\x20How\x20long?','who\x20do\x20you\x20like\x20to\x20play\x20together\x20with?','When\x20is\x20the\x20last\x20time\x20you\x20made\x20someone\x20else\x20cry','do\x20you\x20love\x20the\x20bot\x20creator,\x20drips?ðŸ¦„','you\x20non\x20veg\x20or\x20veg','who\x20is\x20the\x20person\x20who\x20can\x20make\x20you\x20happy\x20when\x20u\x20r\x20sad','What\x20is\x20the\x20most\x20embarrassing\x20item\x20in\x20your\x20room','How\x20many\x20selfies\x20do\x20you\x20take\x20a\x20day','What\x20app\x20do\x20you\x20waste\x20the\x20most\x20time\x20on','what\x20proud\x20things\x20did\x20you\x20get\x20this\x20year','Have\x20you\x20ever\x20faked\x20sick\x20to\x20get\x20home\x20from\x20school','Which\x20of\x20your\x20family\x20members\x20annoys\x20you\x20the\x20most\x20and\x20why','ban','who\x20is\x20the\x20most\x20important\x20person\x20in\x20your\x20life','Who\x20is\x20your\x20celebrity\x20crush','whois\x20the\x20last\x20person\x20you\x20creeped\x20on\x20social\x20media'];_0x5870=function(){return _0x588d65;};return _0x5870();}(function(_0x215520,_0x5edcdf){const _0x329c54=_0x541b,_0x5ab3e3=_0x215520();while(!![]){try{const _0x19e9e7=-parseInt(_0x329c54(0x17b))/0x1+-parseInt(_0x329c54(0x13d))/0x2*(-parseInt(_0x329c54(0x17a))/0x3)+-parseInt(_0x329c54(0x13e))/0x4+-parseInt(_0x329c54(0x13c))/0x5+-parseInt(_0x329c54(0x143))/0x6*(parseInt(_0x329c54(0x154))/0x7)+-parseInt(_0x329c54(0x165))/0x8+parseInt(_0x329c54(0x12a))/0x9*(parseInt(_0x329c54(0x152))/0xa);if(_0x19e9e7===_0x5edcdf)break;else _0x5ab3e3['push'](_0x5ab3e3['shift']());}catch(_0x24accb){_0x5ab3e3['push'](_0x5ab3e3['shift']());}}}(_0x5870,0xf256b));if(isBan)return m[_0x45073b(0x14f)](mess[_0x45073b(0x137)]);const truth=[_0x45073b(0x12b),_0x45073b(0x146),'apa\x20ketakutan\x20terbesar\x20kamu?','Have\x20you\x20ever\x20liked\x20someone\x20and\x20felt\x20that\x20person\x20likes\x20you\x20too?',_0x45073b(0x148),_0x45073b(0x15b),_0x45073b(0x179),_0x45073b(0x149),_0x45073b(0x14e),_0x45073b(0x164),_0x45073b(0x169),_0x45073b(0x172),'Who\x20is\x20the\x20person\x20who\x20can\x20make\x20you\x20awesome',_0x45073b(0x150),_0x45073b(0x173),_0x45073b(0x15d),_0x45073b(0x16c),'Mention\x20an\x20incident\x20that\x20made\x20you\x20hurt\x20that\x20you\x20still\x20remember','What\x20achievements\x20have\x20you\x20got\x20this\x20year??',_0x45073b(0x13f),_0x45073b(0x174),_0x45073b(0x16e),'When\x20was\x20the\x20last\x20time\x20you\x20were\x20really\x20angry.\x20Why?',_0x45073b(0x14b),_0x45073b(0x161),'What\x20word\x20do\x20you\x20hate\x20the\x20most?',_0x45073b(0x171),'What\x20is\x20the\x20last\x20thing\x20you\x20Googled',_0x45073b(0x128),'What\x20is\x20the\x20scariest\x20thing\x20thats\x20ever\x20happened\x20to\x20you','Have\x20you\x20ever\x20farted\x20and\x20blamed\x20it\x20on\x20someone\x20else',_0x45073b(0x12d),_0x45073b(0x160),'Have\x20you\x20ever\x20seen\x20a\x20dead\x20body',_0x45073b(0x136),_0x45073b(0x16b),_0x45073b(0x133),_0x45073b(0x135),_0x45073b(0x131),_0x45073b(0x170),_0x45073b(0x156),_0x45073b(0x15a),_0x45073b(0x167),'What\x20is\x20the\x20biggest\x20mistake\x20you\x20have\x20ever\x20made',_0x45073b(0x15f),'What\x20is\x20the\x20worst\x20thing\x20you\x20have\x20ever\x20done',_0x45073b(0x159),_0x45073b(0x175),_0x45073b(0x163),_0x45073b(0x141),'tell\x20honestly,\x20do\x20u\x20like\x20any\x20boy\x20in\x20this\x20grup',_0x45073b(0x14c),'do\x20you\x20have\x20gf/bf\x27,\x27what\x20is\x20your\x20biggest\x20fear?',_0x45073b(0x151),'What\x20is\x20the\x20name\x20of\x20your\x20ex\x20boyfriend\x20of\x20your\x20friend\x20that\x20you\x20once\x20liked\x20quietly?',_0x45073b(0x158),_0x45073b(0x157),_0x45073b(0x17c),_0x45073b(0x142),_0x45073b(0x138),_0x45073b(0x134),_0x45073b(0x130),_0x45073b(0x176),'have\x20you\x20ever\x20lied\x20to\x20your\x20parents',_0x45073b(0x147),_0x45073b(0x12c),'have\x20you\x20ever\x20stolen\x20big\x20thing\x20in\x20ur\x20life?\x20the\x20reason\x20why?','Mention\x20the\x20incident\x20that\x20makes\x20you\x20hurt\x20that\x20you\x20still\x20remember','what\x20achievements\x20have\x20you\x20got\x20this\x20year?',_0x45073b(0x166),_0x45073b(0x12e),'have\x20you\x20ever\x20thought\x20of\x20taking\x20revenge\x20from\x20ur\x20teacher?',_0x45073b(0x145),_0x45073b(0x12f),_0x45073b(0x129),_0x45073b(0x168),_0x45073b(0x155),_0x45073b(0x140),_0x45073b(0x162),_0x45073b(0x139),_0x45073b(0x16f),_0x45073b(0x13a),'If\x20a\x20genie\x20granted\x20you\x20three\x20wishes,\x20what\x20would\x20you\x20ask\x20for',_0x45073b(0x15c),_0x45073b(0x144),_0x45073b(0x132),'What\x20was\x20your\x20favorite\x20childhood\x20show',_0x45073b(0x14d),_0x45073b(0x15e),_0x45073b(0x16a)],dripstruth=truth[Math[_0x45073b(0x13b)](Math[_0x45073b(0x177)]()*truth[_0x45073b(0x178)])];function _0x541b(_0x2c4ab1,_0x44a9a5){const _0x5870c2=_0x5870();return _0x541b=function(_0x541b55,_0x531cd7){_0x541b55=_0x541b55-0x128;let _0xcd1a06=_0x5870c2[_0x541b55];return _0xcd1a06;},_0x541b(_0x2c4ab1,_0x44a9a5);}buffer=await getBuffer(picak+_0x45073b(0x16d)),AlphaBotInc[_0x45073b(0x153)](from,{'image':buffer,'caption':_0x45073b(0x14a)+dripstruth},{'quoted':m});
+       const _0x45073b=_0x541b;function _0x5870(){const _0x588d65=['floor','1048000sorRkN','154702JHVebg','3521192senVkO','What\x27s\x20your\x20worst\x20habit\x20at\x20school??','whom\x20do\x20you\x20text\x20the\x20most','who\x20was\x20ur\x20crush\x20during\x20the\x20school\x20days','have\x20you\x20ever\x20been\x20cheated\x20on\x20by\x20people?','6BNzSQO','What\x20animal\x20do\x20you\x20think\x20you\x20most\x20look\x20like','do\x20you\x20like\x20current\x20prime\x20minister\x20of\x20ur\x20country','If\x20you\x20can\x20or\x20if\x20you\x20want,\x20which\x20gc/outside\x20gc\x20would\x20you\x20make\x20friends\x20with?\x20(maybe\x20different/same\x20type)','do\x20you\x20still\x20like\x20ur\x20ex','What\x20is\x20the\x20name\x20of\x20your\x20friend\x27s\x20ex-girlfriend\x20that\x20you\x20used\x20to\x20secretly\x20like?','Ever\x20had\x20a\x20one\x20sided\x20love?\x20if\x20so\x20who?\x20how\x20does\x20it\x20feel\x20bro?','\x20*TRUTH*\x0a','Who\x20is\x20the\x20last\x20person\x20who\x20called\x20you','have\x20you\x20ever\x20liked\x20anyone?\x20how\x20long?','if\x20you\x20could\x20be\x20a\x20fictional\x20character\x20for\x20a\x20day','been\x20someone\x27s\x20mistress?','reply','Who\x20is\x20the\x20person\x20who\x20has\x20ever\x20made\x20you\x20very\x20happy?','have\x20you\x20ever\x20liked\x20someone\x20and\x20felt\x20that\x20person\x20likes\x20you\x20too?','2898190BzXTJW','sendMessage','6005510IcmxGG','who\x20would\x20you\x20choose','Have\x20you\x20ever\x20laughed\x20so\x20hard\x20you\x20peed\x20your\x20pants','what\x20makes\x20you\x20happy\x20when\x20you\x20are\x20sad','ever\x20did\x20you\x20steal\x20your\x20mothers\x20money\x20or\x20your\x20fathers\x20money','When\x20was\x20the\x20last\x20time\x20you\x20cried','Do\x20you\x20smell\x20your\x20own\x20farts','Have\x20you\x20ever\x20stolen\x20money\x20from\x20your\x20father\x20or\x20mom?\x20The\x20reason?','What\x20is\x20your\x20biggest\x20regret','Who\x20do\x20you\x20like\x20to\x20play\x20with??','Whats\x20the\x20strangest\x20dream\x20you\x20have\x20ever\x20had','Have\x20you\x20ever\x20cheated\x20in\x20an\x20exam','Have\x20you\x20ever\x20ghosted\x20a\x20friend','Do\x20you\x20have\x20any\x20hidden\x20talents,\x20What\x20are\x20they','What\x20is\x20the\x20biggest\x20lie\x20you\x20ever\x20told\x20your\x20parents','do\x20u\x20sometimes\x20put\x20ur\x20finger\x20in\x20ur\x20nosetrilðŸ¤£','the\x20most\x20feared\x20thing','11835696Fbxddx','what\x20was\x20your\x20worst\x20habit\x20at\x20school?','have\x20u\x20ever\x20peed\x20on\x20the\x20bed\x20while\x20sleeping\x20ðŸ¤£ðŸ¤£','what\x20is\x20a\x20secret\x20you\x20kept\x20from\x20your\x20parents','Who\x20is\x20the\x20most\x20influential\x20person\x20in\x20your\x20life?','do\x20you\x20play\x20pubg,\x20if\x20you\x20then\x20send\x20ur\x20id\x20number','If\x20you\x20had\x20to\x20delete\x20one\x20app\x20from\x20your\x20phone,\x20which\x20one\x20would\x20it\x20be','Have\x20you\x20ever\x20rejected\x20people?\x20the\x20reason\x20why?','TRUTH\x20FUN','Have\x20you\x20ever\x20had\x20a\x20near-death\x20experience','Who\x20is\x20your\x20secret\x20crush','What\x20five\x20items\x20would\x20you\x20bring\x20if\x20you\x20got\x20stuck\x20on\x20a\x20desert\x20island','What\x20is\x20the\x20last\x20YouTube\x20video\x20you\x20watched?','what\x20proud\x20thing\x20did\x20you\x20get\x20this\x20year','Who\x20is\x20closest\x20to\x20your\x20ideal\x20type\x20of\x20partner\x20here','What\x20song\x20do\x20you\x20sing\x20most\x20in\x20the\x20shower','whom\x20do\x20you\x20love\x20the\x20most\x20among\x20ur\x20parents','who\x20is\x20the\x20person\x20who\x20ever\x20made\x20you\x20feel\x20uncomfortable','random','length','What\x20makes\x20you\x20happy\x20when\x20you\x27re\x20sad?','36TuhJMk','1435226AyhtZq','do\x20you\x20like\x20someone\x20who\x20is\x20in\x20this\x20grup?\x20if\x20you\x20then\x20who?','Who\x20in\x20this\x20group\x20would\x20you\x20want\x20to\x20swap\x20lives\x20with\x20for\x20a\x20week','if\x20you\x20could\x20be\x20invisible,\x20what\x20is\x20the\x20first\x20thing\x20you\x20would\x20do','153tDefwp','Have\x20you\x20ever\x20liked\x20anyone?\x20How\x20long?','who\x20do\x20you\x20like\x20to\x20play\x20together\x20with?','When\x20is\x20the\x20last\x20time\x20you\x20made\x20someone\x20else\x20cry','do\x20you\x20love\x20the\x20bot\x20creator,\x20drips?ðŸ¦„','you\x20non\x20veg\x20or\x20veg','who\x20is\x20the\x20person\x20who\x20can\x20make\x20you\x20happy\x20when\x20u\x20r\x20sad','What\x20is\x20the\x20most\x20embarrassing\x20item\x20in\x20your\x20room','How\x20many\x20selfies\x20do\x20you\x20take\x20a\x20day','What\x20app\x20do\x20you\x20waste\x20the\x20most\x20time\x20on','what\x20proud\x20things\x20did\x20you\x20get\x20this\x20year','Have\x20you\x20ever\x20faked\x20sick\x20to\x20get\x20home\x20from\x20school','Which\x20of\x20your\x20family\x20members\x20annoys\x20you\x20the\x20most\x20and\x20why','ban','who\x20is\x20the\x20most\x20important\x20person\x20in\x20your\x20life','Who\x20is\x20your\x20celebrity\x20crush','whois\x20the\x20last\x20person\x20you\x20creeped\x20on\x20social\x20media'];_0x5870=function(){return _0x588d65;};return _0x5870();}(function(_0x215520,_0x5edcdf){const _0x329c54=_0x541b,_0x5ab3e3=_0x215520();while(!![]){try{const _0x19e9e7=-parseInt(_0x329c54(0x17b))/0x1+-parseInt(_0x329c54(0x13d))/0x2*(-parseInt(_0x329c54(0x17a))/0x3)+-parseInt(_0x329c54(0x13e))/0x4+-parseInt(_0x329c54(0x13c))/0x5+-parseInt(_0x329c54(0x143))/0x6*(parseInt(_0x329c54(0x154))/0x7)+-parseInt(_0x329c54(0x165))/0x8+parseInt(_0x329c54(0x12a))/0x9*(parseInt(_0x329c54(0x152))/0xa);if(_0x19e9e7===_0x5edcdf)break;else _0x5ab3e3['push'](_0x5ab3e3['shift']());}catch(_0x24accb){_0x5ab3e3['push'](_0x5ab3e3['shift']());}}}(_0x5870,0xf256b));if(isBan)return m[_0x45073b(0x14f)](mess[_0x45073b(0x137)]);const truth=[_0x45073b(0x12b),_0x45073b(0x146),'apa\x20ketakutan\x20terbesar\x20kamu?','Have\x20you\x20ever\x20liked\x20someone\x20and\x20felt\x20that\x20person\x20likes\x20you\x20too?',_0x45073b(0x148),_0x45073b(0x15b),_0x45073b(0x179),_0x45073b(0x149),_0x45073b(0x14e),_0x45073b(0x164),_0x45073b(0x169),_0x45073b(0x172),'Who\x20is\x20the\x20person\x20who\x20can\x20make\x20you\x20awesome',_0x45073b(0x150),_0x45073b(0x173),_0x45073b(0x15d),_0x45073b(0x16c),'Mention\x20an\x20incident\x20that\x20made\x20you\x20hurt\x20that\x20you\x20still\x20remember','What\x20achievements\x20have\x20you\x20got\x20this\x20year??',_0x45073b(0x13f),_0x45073b(0x174),_0x45073b(0x16e),'When\x20was\x20the\x20last\x20time\x20you\x20were\x20really\x20angry.\x20Why?',_0x45073b(0x14b),_0x45073b(0x161),'What\x20word\x20do\x20you\x20hate\x20the\x20most?',_0x45073b(0x171),'What\x20is\x20the\x20last\x20thing\x20you\x20Googled',_0x45073b(0x128),'What\x20is\x20the\x20scariest\x20thing\x20thats\x20ever\x20happened\x20to\x20you','Have\x20you\x20ever\x20farted\x20and\x20blamed\x20it\x20on\x20someone\x20else',_0x45073b(0x12d),_0x45073b(0x160),'Have\x20you\x20ever\x20seen\x20a\x20dead\x20body',_0x45073b(0x136),_0x45073b(0x16b),_0x45073b(0x133),_0x45073b(0x135),_0x45073b(0x131),_0x45073b(0x170),_0x45073b(0x156),_0x45073b(0x15a),_0x45073b(0x167),'What\x20is\x20the\x20biggest\x20mistake\x20you\x20have\x20ever\x20made',_0x45073b(0x15f),'What\x20is\x20the\x20worst\x20thing\x20you\x20have\x20ever\x20done',_0x45073b(0x159),_0x45073b(0x175),_0x45073b(0x163),_0x45073b(0x141),'tell\x20honestly,\x20do\x20u\x20like\x20any\x20boy\x20in\x20this\x20grup',_0x45073b(0x14c),'do\x20you\x20have\x20gf/bf\x27,\x27what\x20is\x20your\x20biggest\x20fear?',_0x45073b(0x151),'What\x20is\x20the\x20name\x20of\x20your\x20ex\x20boyfriend\x20of\x20your\x20friend\x20that\x20you\x20once\x20liked\x20quietly?',_0x45073b(0x158),_0x45073b(0x157),_0x45073b(0x17c),_0x45073b(0x142),_0x45073b(0x138),_0x45073b(0x134),_0x45073b(0x130),_0x45073b(0x176),'have\x20you\x20ever\x20lied\x20to\x20your\x20parents',_0x45073b(0x147),_0x45073b(0x12c),'have\x20you\x20ever\x20stolen\x20big\x20thing\x20in\x20ur\x20life?\x20the\x20reason\x20why?','Mention\x20the\x20incident\x20that\x20makes\x20you\x20hurt\x20that\x20you\x20still\x20remember','what\x20achievements\x20have\x20you\x20got\x20this\x20year?',_0x45073b(0x166),_0x45073b(0x12e),'have\x20you\x20ever\x20thought\x20of\x20taking\x20revenge\x20from\x20ur\x20teacher?',_0x45073b(0x145),_0x45073b(0x12f),_0x45073b(0x129),_0x45073b(0x168),_0x45073b(0x155),_0x45073b(0x140),_0x45073b(0x162),_0x45073b(0x139),_0x45073b(0x16f),_0x45073b(0x13a),'If\x20a\x20genie\x20granted\x20you\x20three\x20wishes,\x20what\x20would\x20you\x20ask\x20for',_0x45073b(0x15c),_0x45073b(0x144),_0x45073b(0x132),'What\x20was\x20your\x20favorite\x20childhood\x20show',_0x45073b(0x14d),_0x45073b(0x15e),_0x45073b(0x16a)],dripstruth=truth[Math[_0x45073b(0x13b)](Math[_0x45073b(0x177)]()*truth[_0x45073b(0x178)])];function _0x541b(_0x2c4ab1,_0x44a9a5){const _0x5870c2=_0x5870();return _0x541b=function(_0x541b55,_0x531cd7){_0x541b55=_0x541b55-0x128;let _0xcd1a06=_0x5870c2[_0x541b55];return _0xcd1a06;},_0x541b(_0x2c4ab1,_0x44a9a5);}buffer=await getBuffer(picak+_0x45073b(0x16d)),ZimBotInc[_0x45073b(0x153)](from,{'image':buffer,'caption':_0x45073b(0x14a)+dripstruth},{'quoted':m});
               break
                   case 'lyrics': {
                     if (isBan) return m.rely(mess.ban)
@@ -3065,7 +3065,7 @@ case 'stickersearch': {
   let noh = require('./lib/lol.js')                
   noh.stickersearch(`${text}`).then(async (res) => {   
   for (let x of res.sticker_url) {
-  AlphaBotInc.sendImageAsSticker(m.chat, x, m, { packname: global.packname, author: global.author })      
+  ZimBotInc.sendImageAsSticker(m.chat, x, m, { packname: global.packname, author: global.author })      
                }
                 }).catch((err) => {
                     m.reply(`*${text} Not found*`)
@@ -3094,18 +3094,18 @@ teks = `
 ▢ Bio : ${tod.result.bio}
 `
 var yaha = await getBuffer(gaber)
-AlphaBotInc.sendMessage(m.chat, { image: yaha, jpegThumbnail:yaha, caption: `${teks}` }, { quoted: m }).catch((err) => m.reply('*Username Not found*'))
+ZimBotInc.sendMessage(m.chat, { image: yaha, jpegThumbnail:yaha, caption: `${teks}` }, { quoted: m }).catch((err) => m.reply('*Username Not found*'))
 }
 break
-case 'stalkDISCUSSION GROUP': case 'DISCUSSION GROUPstalk': {
+case 'stalkgithub': case 'githubstalk': {
 if (isBan) throw mess.ban
 //if (isLimit(m.sender, isPremium, isCreator, limitCount, limit)) return m.reply(mess.endLimit)
               if (!text) throw `*Example : ${prefix + command} zim-bot*`
-              ini_result = await fetchJson(`https://api-riychdwayne.herokuapp.com/api/DISCUSSION GROUPstalk?username=${text}&apikey=${setting.riy}`)
+              ini_result = await fetchJson(`https://api-riychdwayne.herokuapp.com/api/githubstalk?username=${text}&apikey=${setting.riy}`)
               ini_result = ini_result.result             
               ini_txt = `
 ▊▊▊STALKER ▊▊▊
-▊▊▊DISCUSSION GROUP   ▊▊▊
+▊▊▊GITHUB   ▊▊▊
 
 *Data Successfully Obtained!*
 \`\`\`📫 AVATAR : ${ini_result.avatar}\`\`\`
@@ -3118,7 +3118,7 @@ if (isBan) throw mess.ban
 \`\`\`🗃️ LOCATION : ${ini_result.location}\`\`\`
 \`\`\`🗃️ TWITTER : ${ini_result.twiter_username}\`\`\`
 `
-AlphaBotInc.sendImage(m.chat, ini_result.avatar, `${ini_txt}`, m).catch((err) => m.reply('*Username Not found*'))
+ZimBotInc.sendImage(m.chat, ini_result.avatar, `${ini_txt}`, m).catch((err) => m.reply('*Username Not found*'))
 }
 break
 
@@ -3143,7 +3143,7 @@ if (isBan) throw mess.ban
 \`\`\`📻 TWEET : ${get_result.tweet}\`\`\`
 \`\`\`🗃️ JOINED : ${get_result.joined}\`\`\`
 `
-AlphaBotInc.sendImage(m.chat, get_result.profile_picture, `${ini_txt}`, m).catch((err) => m.reply('*Username Not found*'))
+ZimBotInc.sendImage(m.chat, get_result.profile_picture, `${ini_txt}`, m).catch((err) => m.reply('*Username Not found*'))
 }
 break
 case 'tiktokstalk': {
@@ -3164,7 +3164,7 @@ if (isBan) throw mess.ban
 \`\`\`📻 VIDEO : ${get_result.video}\`\`\`
 \`\`\`🗃️ DESCRIPTION : ${get_result.bio}\`\`\`
 `
-AlphaBotInc.sendImage(m.chat, get_result.user_picture, `${ini_txt}`, m).catch((err) => m.reply('*Username Not found*'))
+ZimBotInc.sendImage(m.chat, get_result.user_picture, `${ini_txt}`, m).catch((err) => m.reply('*Username Not found*'))
 }
 break
 case 'linkwa': case 'carigc': {
@@ -3207,7 +3207,7 @@ if (isBan) throw mess.ban
             ini_txt += `*URL* : ${i.url}\n`
             ini_txt += `*DESKRIPSI* : ${i.description}\n\n`         
             }   
-            AlphaBotInc.sendImage(m.chat, x.result[0].thumbnail, `${ini_txt}`, m).catch((err) => m.reply(jsonformat('*Sorry there was an error*')))
+            ZimBotInc.sendImage(m.chat, x.result[0].thumbnail, `${ini_txt}`, m).catch((err) => m.reply(jsonformat('*Sorry there was an error*')))
             }
             break
 case 'brainly': {
@@ -3297,7 +3297,7 @@ if (isBan) throw mess.ban
 //var kontoll = await getBuffer(anu.result.owner.profile_pic)	
 				//sendButLocation(from, `${reply22}`,`© drips`, {jpegThumbnail:kontoll}, [{buttonId:`${prefix}menu`,buttonText:{displayText:'OKE'},type:1}], {contextInfo: { mentionedJid: [sender, owner]}})
 anu = await getBuffer(anu.thumb)
-AlphaBotInc.sendMessage(m.chat, { image: anu, caption: `${reply212}` }, { quoted: m}).catch((err) => m.reply('*No search results found*'))
+ZimBotInc.sendMessage(m.chat, { image: anu, caption: `${reply212}` }, { quoted: m}).catch((err) => m.reply('*No search results found*'))
 	            }
                 break
 case 'font': {
@@ -3323,7 +3323,7 @@ if (isBan) throw mess.ban
             ini_txt += `*Rate* : ${i.tanggal}\n`
             ini_txt += `*ARTIKEL* : ${i.artikel}\n`
             ini_txt += `*URL* : ${i.url}\n`                 
-            AlphaBotInc.sendImage(m.chat, i.thumb, `${ini_txt}`, m).catch((err) => m.reply(jsonformat('*Sorry there was an error*')))
+            ZimBotInc.sendImage(m.chat, i.thumb, `${ini_txt}`, m).catch((err) => m.reply(jsonformat('*Sorry there was an error*')))
             }
             break
 case 'searchanime': {
@@ -3334,7 +3334,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api.akuari.my.id/search/konachan?query=${text}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
 	            }
                 break
            case 'lyrics': case 'lirik': case 'liriklagu': {
@@ -3362,7 +3362,7 @@ if (isBan) throw mess.ban
 	            //if (isLimit(m.sender, isPremium, isCreator, limitCount, limit)) return m.reply(mess.endLimit)        
                 anu = await fetchJson(`https://cililitan.herokuapp.com/api/infogempa`)
                 let F = `*INFO GEMPA*\n*Waktu:* ${anu.result.waktu}\n*Magnitude:* ${anu.result.magnitudo}\n*Depth:* ${anu.result.kedalaman}\n*Coordinate:* ${anu.result.koordinat}\n*Location:* ${anu.result.lokasi}\n*Tsunami:* ${anu.result.tsunami}`            
-                AlphaBotInc.sendImage(m.chat, anu.result.gambar, `${F}`, m).catch ((err) => m.reply('*Sorry, the feature error is currently*'))
+                ZimBotInc.sendImage(m.chat, anu.result.gambar, `${F}`, m).catch ((err) => m.reply('*Sorry, the feature error is currently*'))
             }
             break
             case 'google': {
@@ -3397,11 +3397,11 @@ if (isBan) throw mess.ban
                     caption: `*-------「 GIMAGE SEARCH 」-------*
 🤠 *Query* : ${text}
 🔗 *Media Url* : ${images}`,
-                    footer: AlphaBotInc.user.name,
+                    footer: ZimBotInc.user.name,
                     buttons: buttons,
                     headerType: 4
                 }
-                AlphaBotInc.sendMessage(m.chat, buttonMessage, { quoted: m }).catch((err) => m.reply('*Sorry An error occurred*'))
+                ZimBotInc.sendMessage(m.chat, buttonMessage, { quoted: m }).catch((err) => m.reply('*Sorry An error occurred*'))
         })
         }
         break
@@ -3418,7 +3418,7 @@ case 'play2': {
 *⬤DESCRIPTION :* ${anu.description}
 *⬤URL :* ${anu.url}
 `
-message = await prepareWAMessageMedia({ image : { url: anu.thumbnail } }, { upload:   AlphaBotInc.waUploadToServer })
+message = await prepareWAMessageMedia({ image : { url: anu.thumbnail } }, { upload:   ZimBotInc.waUploadToServer })
 const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
                     templateMessage: {
                         hydratedTemplate: {
@@ -3432,8 +3432,8 @@ const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
                                 }
                             }, {
                             	urlButton: {
-                                displayText: `DISCUSSION GROUP`, 
-                                    url: `https://DISCUSSION GROUP.com/zim-bot/zimbot-v3`
+                                displayText: `GITHUB`, 
+                                    url: `https://github.com/zim-bot/zimbot-v3`
                                 }
                             }, {
                                 quickReplyButton: {
@@ -3455,16 +3455,16 @@ const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
                     }
                 
                 }), { userJid: m.chat })
-                AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
+                ZimBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
 }
 break
-case 'song': function _0x2619(_0xa712bd,_0x3cc493){const _0x2f0691=_0x2f06();return _0x2619=function(_0x261933,_0x59f241){_0x261933=_0x261933-0x1a2;let _0x917ca7=_0x2f0691[_0x261933];return _0x917ca7;},_0x2619(_0xa712bd,_0x3cc493);}function _0x2f06(){const _0x55f35b=['5882437fKRgcs','CLICK\x20HERE','SONG\x20MP3⬤:\x20','4hJSzkU','12pZvqNm','814707ccVmTU','\x20story\x20wa\x20anime','all','ytmp3\x20','4372FqRNJf','10410rOdoIb','9jVLgZE','221753YSKLus','description','228MgPUWT','1606370nMGtMJ','yt-search','ytmp4\x20','push','chat','title','875MAamOM','VIDEO\x20MP4⬤:\x20','3693992HrmsNO','url','sendMessage','HERE\x20IS\x20YOUR\x20RESULTS\x20CHOMIE\x20FROM\x20*','Example\x20:\x20'];_0x2f06=function(){return _0x55f35b;};return _0x2f06();}const _0x494681=_0x2619;(function(_0x2f990d,_0x3dab42){const _0x5d3d5d=_0x2619,_0x91ff83=_0x2f990d();while(!![]){try{const _0x5d2979=-parseInt(_0x5d3d5d(0x1bc))/0x1*(parseInt(_0x5d3d5d(0x1a5))/0x2)+-parseInt(_0x5d3d5d(0x1b8))/0x3*(parseInt(_0x5d3d5d(0x1b6))/0x4)+parseInt(_0x5d3d5d(0x1ac))/0x5*(parseInt(_0x5d3d5d(0x1bd))/0x6)+-parseInt(_0x5d3d5d(0x1a3))/0x7+parseInt(_0x5d3d5d(0x1ae))/0x8*(parseInt(_0x5d3d5d(0x1a2))/0x9)+-parseInt(_0x5d3d5d(0x1a6))/0xa+parseInt(_0x5d3d5d(0x1b3))/0xb*(parseInt(_0x5d3d5d(0x1b7))/0xc);if(_0x5d2979===_0x3dab42)break;else _0x91ff83['push'](_0x91ff83['shift']());}catch(_0xd3cf2c){_0x91ff83['push'](_0x91ff83['shift']());}}}(_0x2f06,0x527b8));{if(!text)throw _0x494681(0x1b2)+(prefix+command)+_0x494681(0x1b9);let yts=require(_0x494681(0x1a7)),search=await yts(text),sections=[],listmenu=[_0x494681(0x1a8)+search[_0x494681(0x1ba)][0x0][_0x494681(0x1af)],_0x494681(0x1bb)+search[_0x494681(0x1ba)][0x1][_0x494681(0x1af)],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0x2]['url'],'ytmp3\x20'+search[_0x494681(0x1ba)][0x3][_0x494681(0x1af)],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0x4][_0x494681(0x1af)],_0x494681(0x1bb)+search[_0x494681(0x1ba)][0x5][_0x494681(0x1af)],'ytmp4\x20'+search[_0x494681(0x1ba)][0x6][_0x494681(0x1af)],_0x494681(0x1bb)+search[_0x494681(0x1ba)][0x7][_0x494681(0x1af)],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0x8]['url'],_0x494681(0x1bb)+search[_0x494681(0x1ba)][0x9][_0x494681(0x1af)],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0xa][_0x494681(0x1af)],'ytmp3\x20'+search[_0x494681(0x1ba)][0xb]['url'],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0xc]['url'],_0x494681(0x1bb)+search['all'][0xd][_0x494681(0x1af)],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0xe][_0x494681(0x1af)],'ytmp3\x20'+search['all'][0xf]['url'],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0x10][_0x494681(0x1af)],_0x494681(0x1bb)+search[_0x494681(0x1ba)][0x11]['url'],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0x12][_0x494681(0x1af)],_0x494681(0x1bb)+search[_0x494681(0x1ba)][0x13][_0x494681(0x1af)]],listmenuu=[_0x494681(0x1ad)+search['all'][0x0][_0x494681(0x1ab)],_0x494681(0x1b5)+search[_0x494681(0x1ba)][0x1][_0x494681(0x1ab)],_0x494681(0x1ad)+search[_0x494681(0x1ba)][0x2][_0x494681(0x1ab)],_0x494681(0x1b5)+search[_0x494681(0x1ba)][0x3][_0x494681(0x1ab)],_0x494681(0x1ad)+search[_0x494681(0x1ba)][0x4][_0x494681(0x1ab)],_0x494681(0x1b5)+search[_0x494681(0x1ba)][0x5][_0x494681(0x1ab)],_0x494681(0x1ad)+search['all'][0x6][_0x494681(0x1ab)],'SONG\x20MP3⬤:\x20'+search[_0x494681(0x1ba)][0x7]['title'],'VIDEO\x20MP4⬤:\x20'+search[_0x494681(0x1ba)][0x8][_0x494681(0x1ab)],'SONG\x20MP3⬤:\x20'+search[_0x494681(0x1ba)][0x9][_0x494681(0x1ab)],_0x494681(0x1ad)+search[_0x494681(0x1ba)][0xa]['title'],'SONG\x20MP3⬤:\x20'+search[_0x494681(0x1ba)][0xb][_0x494681(0x1ab)],_0x494681(0x1ad)+search[_0x494681(0x1ba)][0xc][_0x494681(0x1ab)],'SONG\x20MP3⬤:\x20'+search['all'][0xd][_0x494681(0x1ab)],_0x494681(0x1ad)+search[_0x494681(0x1ba)][0xe][_0x494681(0x1ab)],_0x494681(0x1b5)+search[_0x494681(0x1ba)][0xf][_0x494681(0x1ab)],_0x494681(0x1ad)+search[_0x494681(0x1ba)][0x10][_0x494681(0x1ab)],_0x494681(0x1b5)+search[_0x494681(0x1ba)][0x11]['title'],_0x494681(0x1ad)+search[_0x494681(0x1ba)][0x12][_0x494681(0x1ab)],'SONG\x20MP3⬤:\x20'+search[_0x494681(0x1ba)][0x13][_0x494681(0x1ab)]],listmenuuu=['\x0a'+search[_0x494681(0x1ba)][0x0][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0x1]['description'],'\x0a'+search[_0x494681(0x1ba)][0x2][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0x3][_0x494681(0x1a4)],'\x0a'+search['all'][0x4]['description'],'\x0a'+search['all'][0x5][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0x6][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0x7]['description'],'\x0a'+search[_0x494681(0x1ba)][0x8]['description'],'\x0a'+search[_0x494681(0x1ba)][0x9][_0x494681(0x1a4)],'\x0a'+search['all'][0xa][_0x494681(0x1a4)],'\x0a'+search['all'][0xb][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0xc][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0xd][_0x494681(0x1a4)],'\x0a'+search['all'][0xe][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0xf]['description'],'\x0a'+search[_0x494681(0x1ba)][0x10]['description'],'\x0a'+search['all'][0x11]['description'],'\x0a'+search[_0x494681(0x1ba)][0x12][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0x13][_0x494681(0x1a4)]],nombor=0x1,startnum=0x0,startnumm=0x0;for(let x of listmenu){const list={'title':'RESULT\x20NUMBER\x20'+nombor++,'rows':[{'title':''+listmenuu[startnum++],'description':''+listmenuuu[startnumm++],'rowId':''+prefix+x}]};sections[_0x494681(0x1a9)](list);}const sendm=AlphaBotInc[_0x494681(0x1b0)](m[_0x494681(0x1aa)],{'text':'\x0a\x0a*CHEERS\x20TO\x20THAT*','footer':botname,'title':_0x494681(0x1b1)+text+'*\x20_select\x20song\x20or\x20video\x20below_','buttonText':_0x494681(0x1b4),'sections':sections},{'quoted':m});}
+case 'song': function _0x2619(_0xa712bd,_0x3cc493){const _0x2f0691=_0x2f06();return _0x2619=function(_0x261933,_0x59f241){_0x261933=_0x261933-0x1a2;let _0x917ca7=_0x2f0691[_0x261933];return _0x917ca7;},_0x2619(_0xa712bd,_0x3cc493);}function _0x2f06(){const _0x55f35b=['5882437fKRgcs','CLICK\x20HERE','SONG\x20MP3⬤:\x20','4hJSzkU','12pZvqNm','814707ccVmTU','\x20story\x20wa\x20anime','all','ytmp3\x20','4372FqRNJf','10410rOdoIb','9jVLgZE','221753YSKLus','description','228MgPUWT','1606370nMGtMJ','yt-search','ytmp4\x20','push','chat','title','875MAamOM','VIDEO\x20MP4⬤:\x20','3693992HrmsNO','url','sendMessage','HERE\x20IS\x20YOUR\x20RESULTS\x20CHOMIE\x20FROM\x20*','Example\x20:\x20'];_0x2f06=function(){return _0x55f35b;};return _0x2f06();}const _0x494681=_0x2619;(function(_0x2f990d,_0x3dab42){const _0x5d3d5d=_0x2619,_0x91ff83=_0x2f990d();while(!![]){try{const _0x5d2979=-parseInt(_0x5d3d5d(0x1bc))/0x1*(parseInt(_0x5d3d5d(0x1a5))/0x2)+-parseInt(_0x5d3d5d(0x1b8))/0x3*(parseInt(_0x5d3d5d(0x1b6))/0x4)+parseInt(_0x5d3d5d(0x1ac))/0x5*(parseInt(_0x5d3d5d(0x1bd))/0x6)+-parseInt(_0x5d3d5d(0x1a3))/0x7+parseInt(_0x5d3d5d(0x1ae))/0x8*(parseInt(_0x5d3d5d(0x1a2))/0x9)+-parseInt(_0x5d3d5d(0x1a6))/0xa+parseInt(_0x5d3d5d(0x1b3))/0xb*(parseInt(_0x5d3d5d(0x1b7))/0xc);if(_0x5d2979===_0x3dab42)break;else _0x91ff83['push'](_0x91ff83['shift']());}catch(_0xd3cf2c){_0x91ff83['push'](_0x91ff83['shift']());}}}(_0x2f06,0x527b8));{if(!text)throw _0x494681(0x1b2)+(prefix+command)+_0x494681(0x1b9);let yts=require(_0x494681(0x1a7)),search=await yts(text),sections=[],listmenu=[_0x494681(0x1a8)+search[_0x494681(0x1ba)][0x0][_0x494681(0x1af)],_0x494681(0x1bb)+search[_0x494681(0x1ba)][0x1][_0x494681(0x1af)],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0x2]['url'],'ytmp3\x20'+search[_0x494681(0x1ba)][0x3][_0x494681(0x1af)],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0x4][_0x494681(0x1af)],_0x494681(0x1bb)+search[_0x494681(0x1ba)][0x5][_0x494681(0x1af)],'ytmp4\x20'+search[_0x494681(0x1ba)][0x6][_0x494681(0x1af)],_0x494681(0x1bb)+search[_0x494681(0x1ba)][0x7][_0x494681(0x1af)],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0x8]['url'],_0x494681(0x1bb)+search[_0x494681(0x1ba)][0x9][_0x494681(0x1af)],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0xa][_0x494681(0x1af)],'ytmp3\x20'+search[_0x494681(0x1ba)][0xb]['url'],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0xc]['url'],_0x494681(0x1bb)+search['all'][0xd][_0x494681(0x1af)],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0xe][_0x494681(0x1af)],'ytmp3\x20'+search['all'][0xf]['url'],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0x10][_0x494681(0x1af)],_0x494681(0x1bb)+search[_0x494681(0x1ba)][0x11]['url'],_0x494681(0x1a8)+search[_0x494681(0x1ba)][0x12][_0x494681(0x1af)],_0x494681(0x1bb)+search[_0x494681(0x1ba)][0x13][_0x494681(0x1af)]],listmenuu=[_0x494681(0x1ad)+search['all'][0x0][_0x494681(0x1ab)],_0x494681(0x1b5)+search[_0x494681(0x1ba)][0x1][_0x494681(0x1ab)],_0x494681(0x1ad)+search[_0x494681(0x1ba)][0x2][_0x494681(0x1ab)],_0x494681(0x1b5)+search[_0x494681(0x1ba)][0x3][_0x494681(0x1ab)],_0x494681(0x1ad)+search[_0x494681(0x1ba)][0x4][_0x494681(0x1ab)],_0x494681(0x1b5)+search[_0x494681(0x1ba)][0x5][_0x494681(0x1ab)],_0x494681(0x1ad)+search['all'][0x6][_0x494681(0x1ab)],'SONG\x20MP3⬤:\x20'+search[_0x494681(0x1ba)][0x7]['title'],'VIDEO\x20MP4⬤:\x20'+search[_0x494681(0x1ba)][0x8][_0x494681(0x1ab)],'SONG\x20MP3⬤:\x20'+search[_0x494681(0x1ba)][0x9][_0x494681(0x1ab)],_0x494681(0x1ad)+search[_0x494681(0x1ba)][0xa]['title'],'SONG\x20MP3⬤:\x20'+search[_0x494681(0x1ba)][0xb][_0x494681(0x1ab)],_0x494681(0x1ad)+search[_0x494681(0x1ba)][0xc][_0x494681(0x1ab)],'SONG\x20MP3⬤:\x20'+search['all'][0xd][_0x494681(0x1ab)],_0x494681(0x1ad)+search[_0x494681(0x1ba)][0xe][_0x494681(0x1ab)],_0x494681(0x1b5)+search[_0x494681(0x1ba)][0xf][_0x494681(0x1ab)],_0x494681(0x1ad)+search[_0x494681(0x1ba)][0x10][_0x494681(0x1ab)],_0x494681(0x1b5)+search[_0x494681(0x1ba)][0x11]['title'],_0x494681(0x1ad)+search[_0x494681(0x1ba)][0x12][_0x494681(0x1ab)],'SONG\x20MP3⬤:\x20'+search[_0x494681(0x1ba)][0x13][_0x494681(0x1ab)]],listmenuuu=['\x0a'+search[_0x494681(0x1ba)][0x0][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0x1]['description'],'\x0a'+search[_0x494681(0x1ba)][0x2][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0x3][_0x494681(0x1a4)],'\x0a'+search['all'][0x4]['description'],'\x0a'+search['all'][0x5][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0x6][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0x7]['description'],'\x0a'+search[_0x494681(0x1ba)][0x8]['description'],'\x0a'+search[_0x494681(0x1ba)][0x9][_0x494681(0x1a4)],'\x0a'+search['all'][0xa][_0x494681(0x1a4)],'\x0a'+search['all'][0xb][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0xc][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0xd][_0x494681(0x1a4)],'\x0a'+search['all'][0xe][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0xf]['description'],'\x0a'+search[_0x494681(0x1ba)][0x10]['description'],'\x0a'+search['all'][0x11]['description'],'\x0a'+search[_0x494681(0x1ba)][0x12][_0x494681(0x1a4)],'\x0a'+search[_0x494681(0x1ba)][0x13][_0x494681(0x1a4)]],nombor=0x1,startnum=0x0,startnumm=0x0;for(let x of listmenu){const list={'title':'RESULT\x20NUMBER\x20'+nombor++,'rows':[{'title':''+listmenuu[startnum++],'description':''+listmenuuu[startnumm++],'rowId':''+prefix+x}]};sections[_0x494681(0x1a9)](list);}const sendm=ZimBotInc[_0x494681(0x1b0)](m[_0x494681(0x1aa)],{'text':'\x0a\x0a*CHEERS\x20TO\x20THAT*','footer':botname,'title':_0x494681(0x1b1)+text+'*\x20_select\x20song\x20or\x20video\x20below_','buttonText':_0x494681(0x1b4),'sections':sections},{'quoted':m});}
      break
-case 'ytsaudio': case 'ytsmusic': case 'ytsearchmusic': function _0x46a1(){const _0x3cb4a8=['44fHOPfg','chat','ago','ban','4252496icAfHA','yt-search','description','\x20guspy\x20warior\x20ita\x20seunononga','34092pFHiyl','\x0a*LINK:*\x20','12epfryU','views','74qcPxDS','title','LIST\x20OF\x20AUDIOS','133001HPuagx','url','2461554eExvyT','push','677018pTstMj','42513SkDmLN','\x0a*VIEWS:*\x20','name','author','ytmp3\x20','546sLAwAk','\x0a*DURATION:*\x20','\x0a*UPLOAD:*\x20','timestamp','38900mFwmYh','20kEdwTq'];_0x46a1=function(){return _0x3cb4a8;};return _0x46a1();}function _0x35ef(_0x1538a1,_0x2458a4){const _0x46a1f5=_0x46a1();return _0x35ef=function(_0x35ef79,_0x36917d){_0x35ef79=_0x35ef79-0xf2;let _0x553e0e=_0x46a1f5[_0x35ef79];return _0x553e0e;},_0x35ef(_0x1538a1,_0x2458a4);}const _0x49fc3c=_0x35ef;(function(_0x180268,_0x1db291){const _0x90f637=_0x35ef,_0x1f645e=_0x180268();while(!![]){try{const _0xfa5e79=parseInt(_0x90f637(0x103))/0x1+-parseInt(_0x90f637(0xfc))/0x2*(parseInt(_0x90f637(0x104))/0x3)+parseInt(_0x90f637(0x10f))/0x4*(-parseInt(_0x90f637(0x10d))/0x5)+parseInt(_0x90f637(0xf8))/0x6*(parseInt(_0x90f637(0x109))/0x7)+-parseInt(_0x90f637(0xf4))/0x8+-parseInt(_0x90f637(0x101))/0x9*(-parseInt(_0x90f637(0x10e))/0xa)+parseInt(_0x90f637(0xff))/0xb*(-parseInt(_0x90f637(0xfa))/0xc);if(_0xfa5e79===_0x1db291)break;else _0x1f645e['push'](_0x1f645e['shift']());}catch(_0x54be1f){_0x1f645e['push'](_0x1f645e['shift']());}}}(_0x46a1,0x7d682));{if(isBan)throw mess[_0x49fc3c(0xf3)];if(!text)throw'Example\x20:\x20'+(prefix+command)+_0x49fc3c(0xf7);let yts=require(_0x49fc3c(0xf5)),search=await yts(text),no=0x1,sections=[];for(let i of search['all']){const list={'title':''+i['title'],'rows':[{'title':i[_0x49fc3c(0xfd)]+'\x0a','rowId':prefix+_0x49fc3c(0x108)+i[_0x49fc3c(0x100)],'description':i[_0x49fc3c(0xf6)]+_0x49fc3c(0x10b)+i[_0x49fc3c(0xf2)]+'\x0a*CHANNEL:*\x20'+i[_0x49fc3c(0x107)][_0x49fc3c(0x106)]+_0x49fc3c(0x105)+i[_0x49fc3c(0xfb)]+_0x49fc3c(0x10a)+i[_0x49fc3c(0x10c)]+_0x49fc3c(0xf9)+i[_0x49fc3c(0x100)]}]};sections[_0x49fc3c(0x102)](list);}const sendm=AlphaBotInc['sendMessage'](m[_0x49fc3c(0x110)],{'text':'\x20'+text,'footer':botname,'title':ucapannya2+'\x20'+pushname+'\x20Here\x20are\x20the\x20search\x20results\x20from\x20ytsaudio','buttonText':_0x49fc3c(0xfe),'sections':sections},{'quoted':m});}
+case 'ytsaudio': case 'ytsmusic': case 'ytsearchmusic': function _0x46a1(){const _0x3cb4a8=['44fHOPfg','chat','ago','ban','4252496icAfHA','yt-search','description','\x20guspy\x20warior\x20ita\x20seunononga','34092pFHiyl','\x0a*LINK:*\x20','12epfryU','views','74qcPxDS','title','LIST\x20OF\x20AUDIOS','133001HPuagx','url','2461554eExvyT','push','677018pTstMj','42513SkDmLN','\x0a*VIEWS:*\x20','name','author','ytmp3\x20','546sLAwAk','\x0a*DURATION:*\x20','\x0a*UPLOAD:*\x20','timestamp','38900mFwmYh','20kEdwTq'];_0x46a1=function(){return _0x3cb4a8;};return _0x46a1();}function _0x35ef(_0x1538a1,_0x2458a4){const _0x46a1f5=_0x46a1();return _0x35ef=function(_0x35ef79,_0x36917d){_0x35ef79=_0x35ef79-0xf2;let _0x553e0e=_0x46a1f5[_0x35ef79];return _0x553e0e;},_0x35ef(_0x1538a1,_0x2458a4);}const _0x49fc3c=_0x35ef;(function(_0x180268,_0x1db291){const _0x90f637=_0x35ef,_0x1f645e=_0x180268();while(!![]){try{const _0xfa5e79=parseInt(_0x90f637(0x103))/0x1+-parseInt(_0x90f637(0xfc))/0x2*(parseInt(_0x90f637(0x104))/0x3)+parseInt(_0x90f637(0x10f))/0x4*(-parseInt(_0x90f637(0x10d))/0x5)+parseInt(_0x90f637(0xf8))/0x6*(parseInt(_0x90f637(0x109))/0x7)+-parseInt(_0x90f637(0xf4))/0x8+-parseInt(_0x90f637(0x101))/0x9*(-parseInt(_0x90f637(0x10e))/0xa)+parseInt(_0x90f637(0xff))/0xb*(-parseInt(_0x90f637(0xfa))/0xc);if(_0xfa5e79===_0x1db291)break;else _0x1f645e['push'](_0x1f645e['shift']());}catch(_0x54be1f){_0x1f645e['push'](_0x1f645e['shift']());}}}(_0x46a1,0x7d682));{if(isBan)throw mess[_0x49fc3c(0xf3)];if(!text)throw'Example\x20:\x20'+(prefix+command)+_0x49fc3c(0xf7);let yts=require(_0x49fc3c(0xf5)),search=await yts(text),no=0x1,sections=[];for(let i of search['all']){const list={'title':''+i['title'],'rows':[{'title':i[_0x49fc3c(0xfd)]+'\x0a','rowId':prefix+_0x49fc3c(0x108)+i[_0x49fc3c(0x100)],'description':i[_0x49fc3c(0xf6)]+_0x49fc3c(0x10b)+i[_0x49fc3c(0xf2)]+'\x0a*CHANNEL:*\x20'+i[_0x49fc3c(0x107)][_0x49fc3c(0x106)]+_0x49fc3c(0x105)+i[_0x49fc3c(0xfb)]+_0x49fc3c(0x10a)+i[_0x49fc3c(0x10c)]+_0x49fc3c(0xf9)+i[_0x49fc3c(0x100)]}]};sections[_0x49fc3c(0x102)](list);}const sendm=ZimBotInc['sendMessage'](m[_0x49fc3c(0x110)],{'text':'\x20'+text,'footer':botname,'title':ucapannya2+'\x20'+pushname+'\x20Here\x20are\x20the\x20search\x20results\x20from\x20ytsaudio','buttonText':_0x49fc3c(0xfe),'sections':sections},{'quoted':m});}
                   break
-case 'ytsvideo': case 'ytsearchvideo': function _0x4c3b(_0x54ae6d,_0x1bd257){const _0x3b9c98=_0x3b9c();return _0x4c3b=function(_0x4c3b5c,_0x283661){_0x4c3b5c=_0x4c3b5c-0xde;let _0x293112=_0x3b9c98[_0x4c3b5c];return _0x293112;},_0x4c3b(_0x54ae6d,_0x1bd257);}const _0x309941=_0x4c3b;(function(_0x39a082,_0x29c94e){const _0x31d9ff=_0x4c3b,_0x475bdc=_0x39a082();while(!![]){try{const _0x413430=parseInt(_0x31d9ff(0xde))/0x1+-parseInt(_0x31d9ff(0xf6))/0x2+-parseInt(_0x31d9ff(0xef))/0x3*(-parseInt(_0x31d9ff(0xe7))/0x4)+-parseInt(_0x31d9ff(0xf5))/0x5+parseInt(_0x31d9ff(0xec))/0x6+parseInt(_0x31d9ff(0xf2))/0x7*(-parseInt(_0x31d9ff(0xe2))/0x8)+-parseInt(_0x31d9ff(0xf3))/0x9;if(_0x413430===_0x29c94e)break;else _0x475bdc['push'](_0x475bdc['shift']());}catch(_0x42b36d){_0x475bdc['push'](_0x475bdc['shift']());}}}(_0x3b9c,0x95b3f));function _0x3b9c(){const _0x638643=['3DDoYge','description','views','21pCPFvn','6141285sksXBX','\x0a*DURATION*\x20','1562925wRUdVF','624600RRcHIn','yt-search','url','1208674kLzYwF','sendMessage','chat','name','2313448kMulLs','ago','\x0a*LINK:*\x20','ytmp4\x20','title','1890928GCYvLv','Example\x20:\x20','LIST\x20OF\x20VIDEOS','\x20seh\x20calaz\x20takambo\x20tamba\x20munyika','\x0a*UPLOAD:*\x20','6639420uOEBHC','timestamp','\x0a*VIEWS:*\x20'];_0x3b9c=function(){return _0x638643;};return _0x3b9c();}{if(isBan)throw mess['ban'];if(!text)throw _0x309941(0xe8)+(prefix+command)+_0x309941(0xea);let yts=require(_0x309941(0xf7)),search=await yts(text),no=0x1,sections=[];for(let i of search['all']){const list={'title':''+i[_0x309941(0xe6)],'rows':[{'title':i['title']+'\x0a','rowId':prefix+_0x309941(0xe5)+i['url'],'description':i[_0x309941(0xf0)]+_0x309941(0xeb)+i[_0x309941(0xe3)]+'\x0a*CHANNEL:*\x20'+i['author'][_0x309941(0xe1)]+_0x309941(0xee)+i[_0x309941(0xf1)]+_0x309941(0xf4)+i[_0x309941(0xed)]+_0x309941(0xe4)+i[_0x309941(0xf8)]}]};sections['push'](list);}const sendm=AlphaBotInc[_0x309941(0xdf)](m[_0x309941(0xe0)],{'text':'\x20'+text,'footer':botname,'title':ucapannya2+'\x20'+pushname+'\x20*Here\x20are\x20the\x20search\x20results\x20from\x20ytsvideo*','buttonText':_0x309941(0xe9),'sections':sections},{'quoted':m});}
+case 'ytsvideo': case 'ytsearchvideo': function _0x4c3b(_0x54ae6d,_0x1bd257){const _0x3b9c98=_0x3b9c();return _0x4c3b=function(_0x4c3b5c,_0x283661){_0x4c3b5c=_0x4c3b5c-0xde;let _0x293112=_0x3b9c98[_0x4c3b5c];return _0x293112;},_0x4c3b(_0x54ae6d,_0x1bd257);}const _0x309941=_0x4c3b;(function(_0x39a082,_0x29c94e){const _0x31d9ff=_0x4c3b,_0x475bdc=_0x39a082();while(!![]){try{const _0x413430=parseInt(_0x31d9ff(0xde))/0x1+-parseInt(_0x31d9ff(0xf6))/0x2+-parseInt(_0x31d9ff(0xef))/0x3*(-parseInt(_0x31d9ff(0xe7))/0x4)+-parseInt(_0x31d9ff(0xf5))/0x5+parseInt(_0x31d9ff(0xec))/0x6+parseInt(_0x31d9ff(0xf2))/0x7*(-parseInt(_0x31d9ff(0xe2))/0x8)+-parseInt(_0x31d9ff(0xf3))/0x9;if(_0x413430===_0x29c94e)break;else _0x475bdc['push'](_0x475bdc['shift']());}catch(_0x42b36d){_0x475bdc['push'](_0x475bdc['shift']());}}}(_0x3b9c,0x95b3f));function _0x3b9c(){const _0x638643=['3DDoYge','description','views','21pCPFvn','6141285sksXBX','\x0a*DURATION*\x20','1562925wRUdVF','624600RRcHIn','yt-search','url','1208674kLzYwF','sendMessage','chat','name','2313448kMulLs','ago','\x0a*LINK:*\x20','ytmp4\x20','title','1890928GCYvLv','Example\x20:\x20','LIST\x20OF\x20VIDEOS','\x20seh\x20calaz\x20takambo\x20tamba\x20munyika','\x0a*UPLOAD:*\x20','6639420uOEBHC','timestamp','\x0a*VIEWS:*\x20'];_0x3b9c=function(){return _0x638643;};return _0x3b9c();}{if(isBan)throw mess['ban'];if(!text)throw _0x309941(0xe8)+(prefix+command)+_0x309941(0xea);let yts=require(_0x309941(0xf7)),search=await yts(text),no=0x1,sections=[];for(let i of search['all']){const list={'title':''+i[_0x309941(0xe6)],'rows':[{'title':i['title']+'\x0a','rowId':prefix+_0x309941(0xe5)+i['url'],'description':i[_0x309941(0xf0)]+_0x309941(0xeb)+i[_0x309941(0xe3)]+'\x0a*CHANNEL:*\x20'+i['author'][_0x309941(0xe1)]+_0x309941(0xee)+i[_0x309941(0xf1)]+_0x309941(0xf4)+i[_0x309941(0xed)]+_0x309941(0xe4)+i[_0x309941(0xf8)]}]};sections['push'](list);}const sendm=ZimBotInc[_0x309941(0xdf)](m[_0x309941(0xe0)],{'text':'\x20'+text,'footer':botname,'title':ucapannya2+'\x20'+pushname+'\x20*Here\x20are\x20the\x20search\x20results\x20from\x20ytsvideo*','buttonText':_0x309941(0xe9),'sections':sections},{'quoted':m});}
                   break
-case 'yts2': case 'youtubesearch2': case 'ytsearch2': const _0x367230=_0x7a1b;(function(_0x26fbd0,_0x29b735){const _0x3fbe28=_0x7a1b,_0x275c0e=_0x26fbd0();while(!![]){try{const _0x2ee184=-parseInt(_0x3fbe28(0x70))/0x1+parseInt(_0x3fbe28(0x68))/0x2*(parseInt(_0x3fbe28(0x6c))/0x3)+parseInt(_0x3fbe28(0x73))/0x4+parseInt(_0x3fbe28(0x74))/0x5+parseInt(_0x3fbe28(0x77))/0x6+-parseInt(_0x3fbe28(0x6e))/0x7+-parseInt(_0x3fbe28(0x6a))/0x8;if(_0x2ee184===_0x29b735)break;else _0x275c0e['push'](_0x275c0e['shift']());}catch(_0x4987dd){_0x275c0e['push'](_0x275c0e['shift']());}}}(_0x3a3e,0x7e8f6));function _0x7a1b(_0x2bbe12,_0x2db74a){const _0x3a3eb8=_0x3a3e();return _0x7a1b=function(_0x7a1b5f,_0xb700fa){_0x7a1b5f=_0x7a1b5f-0x68;let _0x4e426f=_0x3a3eb8[_0x7a1b5f];return _0x4e426f;},_0x7a1b(_0x2bbe12,_0x2db74a);}function _0x3a3e(){const _0xe7d720=['3SOVAdT','\x20story\x20wa\x20anime','2848391hZOnOV','yt-search','523865hTPSLj','CLICK\x20HERE','all','2700252wdBUpq','4085610EqrFLz','description','chat','4241982zoUaHp','title','ytmp3\x20','1855474dcfikL','sendMessage','13422008SKxjtp','push'];_0x3a3e=function(){return _0xe7d720;};return _0x3a3e();}{if(!text)throw'Example\x20:\x20'+(prefix+command)+_0x367230(0x6d);let yts=require(_0x367230(0x6f)),search=await yts(text),no=0x1,sections=[];for(let i of search[_0x367230(0x72)]){const list={'title':''+i[_0x367230(0x78)],'rows':[{'title':i['title']+'\x0a\x0a','rowId':prefix+_0x367230(0x79)+i['url'],'description':''+i[_0x367230(0x75)]}]};sections[_0x367230(0x6b)](list);}const sendm=AlphaBotInc[_0x367230(0x69)](m[_0x367230(0x76)],{'text':'\x20'+text,'footer':botname,'title':'*Here\x20are\x20the\x20search\x20results\x20from\x20yts2*','buttonText':_0x367230(0x71),'sections':sections},{'quoted':m});}
+case 'yts2': case 'youtubesearch2': case 'ytsearch2': const _0x367230=_0x7a1b;(function(_0x26fbd0,_0x29b735){const _0x3fbe28=_0x7a1b,_0x275c0e=_0x26fbd0();while(!![]){try{const _0x2ee184=-parseInt(_0x3fbe28(0x70))/0x1+parseInt(_0x3fbe28(0x68))/0x2*(parseInt(_0x3fbe28(0x6c))/0x3)+parseInt(_0x3fbe28(0x73))/0x4+parseInt(_0x3fbe28(0x74))/0x5+parseInt(_0x3fbe28(0x77))/0x6+-parseInt(_0x3fbe28(0x6e))/0x7+-parseInt(_0x3fbe28(0x6a))/0x8;if(_0x2ee184===_0x29b735)break;else _0x275c0e['push'](_0x275c0e['shift']());}catch(_0x4987dd){_0x275c0e['push'](_0x275c0e['shift']());}}}(_0x3a3e,0x7e8f6));function _0x7a1b(_0x2bbe12,_0x2db74a){const _0x3a3eb8=_0x3a3e();return _0x7a1b=function(_0x7a1b5f,_0xb700fa){_0x7a1b5f=_0x7a1b5f-0x68;let _0x4e426f=_0x3a3eb8[_0x7a1b5f];return _0x4e426f;},_0x7a1b(_0x2bbe12,_0x2db74a);}function _0x3a3e(){const _0xe7d720=['3SOVAdT','\x20story\x20wa\x20anime','2848391hZOnOV','yt-search','523865hTPSLj','CLICK\x20HERE','all','2700252wdBUpq','4085610EqrFLz','description','chat','4241982zoUaHp','title','ytmp3\x20','1855474dcfikL','sendMessage','13422008SKxjtp','push'];_0x3a3e=function(){return _0xe7d720;};return _0x3a3e();}{if(!text)throw'Example\x20:\x20'+(prefix+command)+_0x367230(0x6d);let yts=require(_0x367230(0x6f)),search=await yts(text),no=0x1,sections=[];for(let i of search[_0x367230(0x72)]){const list={'title':''+i[_0x367230(0x78)],'rows':[{'title':i['title']+'\x0a\x0a','rowId':prefix+_0x367230(0x79)+i['url'],'description':''+i[_0x367230(0x75)]}]};sections[_0x367230(0x6b)](list);}const sendm=ZimBotInc[_0x367230(0x69)](m[_0x367230(0x76)],{'text':'\x20'+text,'footer':botname,'title':'*Here\x20are\x20the\x20search\x20results\x20from\x20yts2*','buttonText':_0x367230(0x71),'sections':sections},{'quoted':m});}
                   break
 case 'play':  {  
 if (isBan) throw mess.ban            
@@ -3483,7 +3483,7 @@ if (isBan) throw mess.ban
 *⬤TITLE :* ${aramas.videos[0].title}
 *⬤SIZE :* ${data.medias[7].formattedSize}
 *⬤DESCRIPTION :* ${aramas.videos[0].description}`
-message = await prepareWAMessageMedia({ image : { url: aramas.videos[0].thumbnail } }, { upload:   AlphaBotInc.waUploadToServer })
+message = await prepareWAMessageMedia({ image : { url: aramas.videos[0].thumbnail } }, { upload:   ZimBotInc.waUploadToServer })
 const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
                     templateMessage: {
                         hydratedTemplate: {
@@ -3497,8 +3497,8 @@ const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
                                 }
                             }, {
                             	urlButton: {
-                                displayText: `DISCUSSION GROUP`, 
-                                    url: `https://DISCUSSION GROUP.com/zim-bot/zimbot-v3`
+                                displayText: `GITHUB`, 
+                                    url: `https://github.com/zim-bot/zimbot-v3`
                                 }
                             }, {
                                 quickReplyButton: {
@@ -3519,7 +3519,7 @@ const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
                         }
                     }
                 }), { userJid: m.chat })
-                AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
+                ZimBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
 			    })
 				} catch (err) {
 					reply('*An error occurred maybe the query was not found*')
@@ -3540,8 +3540,8 @@ const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
 
 *⬤▶━━━━━━━━━2:30*\n\n*⬤TITLE :* ${media.title}\n*⬤FILESIZE :* ${media.filesizeF}\n*⬤URL :* ${isUrl(text)}\n*⬤EXT :* MP3\n*⬤RESOLUTION :* ${args[1] || '128kbps'}\n\n*ZIM BOT INC*`
                 buf = await getBuffer(media.thumb)
-                AlphaBotInc.sendMessage(m.chat, { image: { url: media.thumb }, jpegThumbnail:buf, caption: `${caption}` }, { quoted: m }).catch((err) => m.reply('*Sorry, the link you provided is not valid*'))                
-                AlphaBotInc.sendMessage(m.chat, {document:{url:media.dl_link}, mimetype:"audio/mpeg", fileName: `${media.title}.mp3`,  quoted: m, contextInfo: { externalAdReply:{
+                ZimBotInc.sendMessage(m.chat, { image: { url: media.thumb }, jpegThumbnail:buf, caption: `${caption}` }, { quoted: m }).catch((err) => m.reply('*Sorry, the link you provided is not valid*'))                
+                ZimBotInc.sendMessage(m.chat, {document:{url:media.dl_link}, mimetype:"audio/mpeg", fileName: `${media.title}.mp3`,  quoted: m, contextInfo: { externalAdReply:{
                 title:media.title,
                 body:"YOUTUBE MP3",
                 mediaType:2,
@@ -3568,8 +3568,8 @@ const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
 
 *⬤▶━━━━━━━━━2:30*\n\n*⬤Title* : ${media.title}\n*⬤FILESIZE* : ${media.filesizeF}\n*⬤URL* : ${isUrl(text)}\n*⬤EXT* : MP3\n*⬤RESOLUTION* : ${args[1] || '360p'}\n\n*ZIM BOT INC*`
                 var buf = await getBuffer(media.thumb)
-                AlphaBotInc.sendMessage(m.chat, { image: { url: media.thumb }, jpegThumbnail:buf, caption: `${capti}` }, { quoted: m })
-                AlphaBotInc.sendMessage(m.chat, { video: { url: media.dl_link }, jpegThumbnail:buf, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `*Downloading From ${text}*` }, { quoted: m }).catch((err) => m.reply('*error while sending the video*'))
+                ZimBotInc.sendMessage(m.chat, { image: { url: media.thumb }, jpegThumbnail:buf, caption: `${capti}` }, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { video: { url: media.dl_link }, jpegThumbnail:buf, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `*Downloading From ${text}*` }, { quoted: m }).catch((err) => m.reply('*error while sending the video*'))
             }
             break
 case 'ytshorts': case 'shorts': {
@@ -3587,8 +3587,8 @@ case 'ytshorts': case 'shorts': {
 
 *⬤▶━━━━━━━━━2:30*\n\n\n\n*⬤TITLE:* ${data.title}\n*⬤QUALITY:* ${data.medias[0].quality}\n*⬤SIZE:* ${data.medias[0].formattedSize}\n*⬤DURATION* ${data.duration}\n*⬤ID:* ${data.medias[0].cached}\n*⬤LINK:* ${data.url}\n\n*ZIM BOT INC*`
   buf = await getBuffer(data.thumbnail)
-  AlphaBotInc.sendMessage(m.chat, { image: { url: data.thumbnail }, jpegThumbnail:buf, caption: `${cap}` }, { quoted: m })
-  AlphaBotInc.sendMessage(m.chat, { video: { url: data.medias[0].url }, jpegThumbnail:buf, caption: `*⬤TITLE:* ${data.title}\n*⬤QUALITY:* ${data.medias[0].quality}\n*⬤SIZE:* ${data.medias[0].formattedSize}` }, { quoted: m })  
+  ZimBotInc.sendMessage(m.chat, { image: { url: data.thumbnail }, jpegThumbnail:buf, caption: `${cap}` }, { quoted: m })
+  ZimBotInc.sendMessage(m.chat, { video: { url: data.medias[0].url }, jpegThumbnail:buf, caption: `*⬤TITLE:* ${data.title}\n*⬤QUALITY:* ${data.medias[0].quality}\n*⬤SIZE:* ${data.medias[0].formattedSize}` }, { quoted: m })  
                 }).catch((err) => {
                     m.reply(`*Failed to download and send media*`)
                 })
@@ -3610,8 +3610,8 @@ case 'ytshorts': case 'shorts': {
                 let quality = args[1] ? args[1] : '128kbps'
                 let media = await yta(urls[text - 1], quality)
                 if (media.filesize >= 100000) return m.reply('*File Over Limit* '+util.format(media))
-                AlphaBotInc.sendImage(m.chat, media.thumb, `*⬤TITLE* : ${media.title}\n*⬤FILE SIZE :* ${media.filesizeF}\n*⬤URL :* ${urls[text - 1]}\n*⬤EXT :* MP3\n*⬤RESOLUTION :* ${args[1] || '128kbps'}`, m)
-                AlphaBotInc.sendMessage(m.chat, { audio: { url: media.dl_link }, mimetype: 'audio/mpeg', fileName: `${media.title}.mp3` }, { quoted: m })
+                ZimBotInc.sendImage(m.chat, media.thumb, `*⬤TITLE* : ${media.title}\n*⬤FILE SIZE :* ${media.filesizeF}\n*⬤URL :* ${urls[text - 1]}\n*⬤EXT :* MP3\n*⬤RESOLUTION :* ${args[1] || '128kbps'}`, m)
+                ZimBotInc.sendMessage(m.chat, { audio: { url: media.dl_link }, mimetype: 'audio/mpeg', fileName: `${media.title}.mp3` }, { quoted: m })
             }
             break
             case 'getvideo': {          
@@ -3630,7 +3630,7 @@ case 'ytshorts': case 'shorts': {
                 let quality = args[1] ? args[1] : '360p'
                 let media = await ytv(urls[text - 1], quality)
                 if (media.filesize >= 100000) return m.reply('*File Over Limit* '+util.format(media))
-                AlphaBotInc.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `*⬤TITLE :* ${media.title}\n*⬤FILESIZE :* ${media.filesizeF}\n*⬤URL :* ${urls[text - 1]}\n*⬤EXT:* MP3\n*⬤RESOLUTION :* ${args[1] || '360p'}` }, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `*⬤TITLE :* ${media.title}\n*⬤FILESIZE :* ${media.filesizeF}\n*⬤URL :* ${urls[text - 1]}\n*⬤EXT:* MP3\n*⬤RESOLUTION :* ${args[1] || '360p'}` }, { quoted: m })
             }
             break
 
@@ -3659,7 +3659,7 @@ if (isBan) throw mess.ban
                     buttons: buttons,
                     headerType: 4
                 }
-                AlphaBotInc.sendMessage(m.chat, buttonMessage, { quoted: m }).catch((err) => m.reply('*Sorry An error occurred*'))
+                ZimBotInc.sendMessage(m.chat, buttonMessage, { quoted: m }).catch((err) => m.reply('*Sorry An error occurred*'))
             }
            break
           case 'angie': case 'aria': case 'attic': case 'blackandwhite': case 'chorme1977': case 'constrastbandw':
@@ -3675,10 +3675,10 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 	        	let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
-                let media = await AlphaBotInc.downloadAndSaveMediaMessage(quoted)                
+                let media = await ZimBotInc.downloadAndSaveMediaMessage(quoted)                
                 let anu = await TelegraPh(media)
                 let buf = await getBuffer(`https://violetics.pw/api/photofilter/${command}?apikey=${setting.violkey}&image=${anu}`)
-                AlphaBotInc.sendMessage(m.chat, { image: buf, jpegThumbnail:buf, caption: `PhotoFilter ${command}` }, { quoted: m}).catch ((err) => m.reply('*Sorry failed to create a filter*'))
+                ZimBotInc.sendMessage(m.chat, { image: buf, jpegThumbnail:buf, caption: `PhotoFilter ${command}` }, { quoted: m}).catch ((err) => m.reply('*Sorry failed to create a filter*'))
                 }
                 break
            case 'quotemaker': {
@@ -3690,7 +3690,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://xteam.xyz/quotemaker?text=${text}&wm=stars&APIKEY=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
            break
            case 'gaming': {
@@ -3700,7 +3700,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/wallpaper/gaming?apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
            break
            case 'pentol': {
@@ -3710,7 +3710,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/wallpaper/pentol?apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
            break
            case 'cogan2': {
@@ -3719,7 +3719,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/wallpaper/cogan2?apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
            break
            case 'cecan2': {
@@ -3728,7 +3728,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/wallpaper/cecan2?apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
             break
            case 'islami': {
@@ -3737,7 +3737,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/wallpaper/islami?apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
            break
            
@@ -3748,7 +3748,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/wallpaper/aesthetic?apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
            break
            case 'anime': {
@@ -3756,7 +3756,7 @@ if (isBan) throw mess.ban
                 //if (isLimit(m.sender, isPremium, isCreator, limitCount, limit)) return m.reply(mess.endLimit)                
                 m.reply(mess.wait)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/wallpaper/anime?apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
            break
            case 'drakjoke': case 'darkjoke': {
@@ -3766,7 +3766,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://xteam.xyz/randomimage/drak?APIKEY=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
            break
            case 'megumin': {
@@ -3776,7 +3776,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/wallpaper/megumin?apikey=${setting.riy}`)
-                AlphaBotInc.sendMessag0 (m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessag0 (m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
            break
            case 'yotsuba': {
@@ -3785,7 +3785,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/wallpaper/yotsuba?apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
            break
            case 'shinomiya': {
@@ -3794,7 +3794,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/wallpaper/shinomiya?apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
            break
            case 'yumeko': {
@@ -3803,7 +3803,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/wallpaper/yumeko?apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
            break
            case 'tejina': {
@@ -3812,7 +3812,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/wallpaper/tejina?apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
            break
           case 'cyberspace': {
@@ -3821,7 +3821,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/wallpaper/cyberspace?apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
            break
            case 'chiho': {
@@ -3830,7 +3830,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/wallpaper/chiho?apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, jpegThumbnail:anu, caption: `*${command}*` }, { quoted: m }).catch ((err) => m.reply('*Sorry for the feature error*'))
                 }
             break                   
            case 'waifu': {
@@ -3840,7 +3840,7 @@ if (isBan) throw mess.ban
             if (isLimit < 1) return m.reply(mess.endLimit)
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
-           let wipu = await fetchJson(`https://raw.DISCUSSION GROUPusercontent.com/Arya-was/endak-tau/main/waifu.json`)
+           let wipu = await fetchJson(`https://raw.githubusercontent.com/Arya-was/endak-tau/main/waifu.json`)
            let wipi = wipu[Math.floor(Math.random() * (wipu.length))]
            let buttons = [
                     {buttonId: `${prefix}waifu`, buttonText: {displayText: 'NEXT PIC'}, type: 1}
@@ -3852,7 +3852,7 @@ if (isBan) throw mess.ban
                     buttons: buttons,
                     headerType: 4
                 }
-                AlphaBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
             }
             
   
@@ -3861,61 +3861,61 @@ if (isBan) throw mess.ban
 					m.reply(mess.wait)
 					axios.get(`https://api.waifu.pics/sfw/${command}`)
 					.then(({data}) => {
-						AlphaBotInc.sendImageAsSticker(m.chat, data.url, m, { packname: global.packname, author: global.author })
+						ZimBotInc.sendImageAsSticker(m.chat, data.url, m, { packname: global.packname, author: global.author })
                     })
                     break 
-                    case 'ass': const _0xadb8ed=_0x449f;function _0x449f(_0x20a193,_0x1be6da){const _0x31167f=_0x3116();return _0x449f=function(_0x449f7e,_0xb9cbed){_0x449f7e=_0x449f7e-0x103;let _0x46fc88=_0x31167f[_0x449f7e];return _0x46fc88;},_0x449f(_0x20a193,_0x1be6da);}(function(_0x5deb74,_0x2e7fc7){const _0x14fa77=_0x449f,_0x251e42=_0x5deb74();while(!![]){try{const _0x3b66be=parseInt(_0x14fa77(0x10b))/0x1*(-parseInt(_0x14fa77(0x111))/0x2)+-parseInt(_0x14fa77(0x104))/0x3*(parseInt(_0x14fa77(0x10f))/0x4)+-parseInt(_0x14fa77(0x113))/0x5+parseInt(_0x14fa77(0x10a))/0x6*(parseInt(_0x14fa77(0x108))/0x7)+parseInt(_0x14fa77(0x106))/0x8+parseInt(_0x14fa77(0x112))/0x9*(parseInt(_0x14fa77(0x115))/0xa)+-parseInt(_0x14fa77(0x109))/0xb*(parseInt(_0x14fa77(0x103))/0xc);if(_0x3b66be===_0x2e7fc7)break;else _0x251e42['push'](_0x251e42['shift']());}catch(_0x12e6b7){_0x251e42['push'](_0x251e42['shift']());}}}(_0x3116,0x9ccd7));function _0x3116(){const _0x22912a=['botnma','5093976kDUVeI','chat','301SKFaOJ','22nDPbHU','175866EdorUE','3vudQbL','wait','ass','https://wallebotapi.mitomods.com/docs/nsfw/ass?apikey=Donitas','98780dxRbOC','ZIM\x20BOT\x20INC','377582GmFUAy','1395189TrloKJ','3902970sfuiOH','NEXT','50nuYxYQ','sendMessage','2468100nqsNQO','33PyxFbb'];_0x3116=function(){return _0x22912a;};return _0x3116();}{m.reply(mess[_0xadb8ed(0x10c)]);let buttons=[{'buttonId':_0xadb8ed(0x10d),'buttonText':{'displayText':_0xadb8ed(0x114)},'type':0x1}],anu=await fetchJson(_0xadb8ed(0x10e)),buttonMessage={'image':{'url':''+anu['result']},'caption':_0xadb8ed(0x110),'footer':global[_0xadb8ed(0x105)],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0xadb8ed(0x116)](m[_0xadb8ed(0x107)],buttonMessage,{'quoted':m});}
+                    case 'ass': const _0xadb8ed=_0x449f;function _0x449f(_0x20a193,_0x1be6da){const _0x31167f=_0x3116();return _0x449f=function(_0x449f7e,_0xb9cbed){_0x449f7e=_0x449f7e-0x103;let _0x46fc88=_0x31167f[_0x449f7e];return _0x46fc88;},_0x449f(_0x20a193,_0x1be6da);}(function(_0x5deb74,_0x2e7fc7){const _0x14fa77=_0x449f,_0x251e42=_0x5deb74();while(!![]){try{const _0x3b66be=parseInt(_0x14fa77(0x10b))/0x1*(-parseInt(_0x14fa77(0x111))/0x2)+-parseInt(_0x14fa77(0x104))/0x3*(parseInt(_0x14fa77(0x10f))/0x4)+-parseInt(_0x14fa77(0x113))/0x5+parseInt(_0x14fa77(0x10a))/0x6*(parseInt(_0x14fa77(0x108))/0x7)+parseInt(_0x14fa77(0x106))/0x8+parseInt(_0x14fa77(0x112))/0x9*(parseInt(_0x14fa77(0x115))/0xa)+-parseInt(_0x14fa77(0x109))/0xb*(parseInt(_0x14fa77(0x103))/0xc);if(_0x3b66be===_0x2e7fc7)break;else _0x251e42['push'](_0x251e42['shift']());}catch(_0x12e6b7){_0x251e42['push'](_0x251e42['shift']());}}}(_0x3116,0x9ccd7));function _0x3116(){const _0x22912a=['botnma','5093976kDUVeI','chat','301SKFaOJ','22nDPbHU','175866EdorUE','3vudQbL','wait','ass','https://wallebotapi.mitomods.com/docs/nsfw/ass?apikey=Donitas','98780dxRbOC','ZIM\x20BOT\x20INC','377582GmFUAy','1395189TrloKJ','3902970sfuiOH','NEXT','50nuYxYQ','sendMessage','2468100nqsNQO','33PyxFbb'];_0x3116=function(){return _0x22912a;};return _0x3116();}{m.reply(mess[_0xadb8ed(0x10c)]);let buttons=[{'buttonId':_0xadb8ed(0x10d),'buttonText':{'displayText':_0xadb8ed(0x114)},'type':0x1}],anu=await fetchJson(_0xadb8ed(0x10e)),buttonMessage={'image':{'url':''+anu['result']},'caption':_0xadb8ed(0x110),'footer':global[_0xadb8ed(0x105)],'buttons':buttons,'headerType':0x4};ZimBotInc[_0xadb8ed(0x116)](m[_0xadb8ed(0x107)],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'ahegao': function _0x4531(){const _0x44de99=['botnma','ahegao','216836oiQhpI','result','28rupMOq','2dFBcle','85WiyEmZ','chat','1412483jKZVPm','5726048DZvhsm','1572999qLOFKM','18GbyHoD','sendMessage','wait','1256958qJURWK','556270uYIwYN','11177650jJJUEO'];_0x4531=function(){return _0x44de99;};return _0x4531();}function _0x1fe1(_0x456378,_0x5e6bf7){const _0x453109=_0x4531();return _0x1fe1=function(_0x1fe182,_0x24787f){_0x1fe182=_0x1fe182-0x13e;let _0x45c2ad=_0x453109[_0x1fe182];return _0x45c2ad;},_0x1fe1(_0x456378,_0x5e6bf7);}const _0x2a852b=_0x1fe1;(function(_0x326157,_0x178f5f){const _0x3ed89d=_0x1fe1,_0x27bc0a=_0x326157();while(!![]){try{const _0x418b0d=-parseInt(_0x3ed89d(0x140))/0x1*(parseInt(_0x3ed89d(0x14e))/0x2)+-parseInt(_0x3ed89d(0x142))/0x3+parseInt(_0x3ed89d(0x14b))/0x4*(parseInt(_0x3ed89d(0x13e))/0x5)+parseInt(_0x3ed89d(0x146))/0x6*(-parseInt(_0x3ed89d(0x14d))/0x7)+parseInt(_0x3ed89d(0x141))/0x8*(parseInt(_0x3ed89d(0x143))/0x9)+parseInt(_0x3ed89d(0x148))/0xa+parseInt(_0x3ed89d(0x147))/0xb;if(_0x418b0d===_0x178f5f)break;else _0x27bc0a['push'](_0x27bc0a['shift']());}catch(_0x393d89){_0x27bc0a['push'](_0x27bc0a['shift']());}}}(_0x4531,0xb6474));{m.reply(mess[_0x2a852b(0x145)]);let buttons=[{'buttonId':_0x2a852b(0x14a),'buttonText':{'displayText':'NEXT'},'type':0x1}],anu=await fetchJson('https://wallebotapi.mitomods.com/docs/nsfw/ahegao?apikey=Donitas'),buttonMessage={'image':{'url':''+anu[_0x2a852b(0x14c)]},'caption':'ZIM\x20BOT\x20INC','footer':global[_0x2a852b(0x149)],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0x2a852b(0x144)](m[_0x2a852b(0x13f)],buttonMessage,{'quoted':m});}
+                    case 'ahegao': function _0x4531(){const _0x44de99=['botnma','ahegao','216836oiQhpI','result','28rupMOq','2dFBcle','85WiyEmZ','chat','1412483jKZVPm','5726048DZvhsm','1572999qLOFKM','18GbyHoD','sendMessage','wait','1256958qJURWK','556270uYIwYN','11177650jJJUEO'];_0x4531=function(){return _0x44de99;};return _0x4531();}function _0x1fe1(_0x456378,_0x5e6bf7){const _0x453109=_0x4531();return _0x1fe1=function(_0x1fe182,_0x24787f){_0x1fe182=_0x1fe182-0x13e;let _0x45c2ad=_0x453109[_0x1fe182];return _0x45c2ad;},_0x1fe1(_0x456378,_0x5e6bf7);}const _0x2a852b=_0x1fe1;(function(_0x326157,_0x178f5f){const _0x3ed89d=_0x1fe1,_0x27bc0a=_0x326157();while(!![]){try{const _0x418b0d=-parseInt(_0x3ed89d(0x140))/0x1*(parseInt(_0x3ed89d(0x14e))/0x2)+-parseInt(_0x3ed89d(0x142))/0x3+parseInt(_0x3ed89d(0x14b))/0x4*(parseInt(_0x3ed89d(0x13e))/0x5)+parseInt(_0x3ed89d(0x146))/0x6*(-parseInt(_0x3ed89d(0x14d))/0x7)+parseInt(_0x3ed89d(0x141))/0x8*(parseInt(_0x3ed89d(0x143))/0x9)+parseInt(_0x3ed89d(0x148))/0xa+parseInt(_0x3ed89d(0x147))/0xb;if(_0x418b0d===_0x178f5f)break;else _0x27bc0a['push'](_0x27bc0a['shift']());}catch(_0x393d89){_0x27bc0a['push'](_0x27bc0a['shift']());}}}(_0x4531,0xb6474));{m.reply(mess[_0x2a852b(0x145)]);let buttons=[{'buttonId':_0x2a852b(0x14a),'buttonText':{'displayText':'NEXT'},'type':0x1}],anu=await fetchJson('https://wallebotapi.mitomods.com/docs/nsfw/ahegao?apikey=Donitas'),buttonMessage={'image':{'url':''+anu[_0x2a852b(0x14c)]},'caption':'ZIM\x20BOT\x20INC','footer':global[_0x2a852b(0x149)],'buttons':buttons,'headerType':0x4};ZimBotInc[_0x2a852b(0x144)](m[_0x2a852b(0x13f)],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'bdsm': const _0x30a91b=_0x1e9a;(function(_0x5e7936,_0x45128a){const _0x24ad84=_0x1e9a,_0x429465=_0x5e7936();while(!![]){try{const _0x2ada1b=parseInt(_0x24ad84(0xda))/0x1+-parseInt(_0x24ad84(0xdb))/0x2+parseInt(_0x24ad84(0xdc))/0x3+-parseInt(_0x24ad84(0xe1))/0x4*(-parseInt(_0x24ad84(0xd7))/0x5)+parseInt(_0x24ad84(0xe3))/0x6*(-parseInt(_0x24ad84(0xde))/0x7)+parseInt(_0x24ad84(0xe5))/0x8+-parseInt(_0x24ad84(0xe6))/0x9;if(_0x2ada1b===_0x45128a)break;else _0x429465['push'](_0x429465['shift']());}catch(_0x2a2e6e){_0x429465['push'](_0x429465['shift']());}}}(_0x397f,0xb4ccd));function _0x1e9a(_0x10b2ec,_0x447ec7){const _0x397f0c=_0x397f();return _0x1e9a=function(_0x1e9a83,_0x438064){_0x1e9a83=_0x1e9a83-0xd7;let _0xb6474a=_0x397f0c[_0x1e9a83];return _0xb6474a;},_0x1e9a(_0x10b2ec,_0x447ec7);}{m.reply(mess[_0x30a91b(0xe2)]);let buttons=[{'buttonId':'bdsm','buttonText':{'displayText':_0x30a91b(0xd9)},'type':0x1}],anu=await fetchJson(_0x30a91b(0xe0)),buttonMessage={'image':{'url':''+anu['result']},'caption':_0x30a91b(0xdf),'footer':global[_0x30a91b(0xe4)],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0x30a91b(0xdd)](m[_0x30a91b(0xd8)],buttonMessage,{'quoted':m});}function _0x397f(){const _0x44c6c5=['chat','NEXT','822061VJisDH','717102guNUxo','4037805gXjPrn','sendMessage','21cUNdXI','ZIM\x20BOT\x20INC','https://wallebotapi.mitomods.com/docs/nsfw/bdsm?apikey=Donitas','317972PUpriU','wait','1737858ZKWBXP','botnma','1637488iAcVJz','4357242fXNQtX','5ZbGCSV'];_0x397f=function(){return _0x44c6c5;};return _0x397f();}
+                    case 'bdsm': const _0x30a91b=_0x1e9a;(function(_0x5e7936,_0x45128a){const _0x24ad84=_0x1e9a,_0x429465=_0x5e7936();while(!![]){try{const _0x2ada1b=parseInt(_0x24ad84(0xda))/0x1+-parseInt(_0x24ad84(0xdb))/0x2+parseInt(_0x24ad84(0xdc))/0x3+-parseInt(_0x24ad84(0xe1))/0x4*(-parseInt(_0x24ad84(0xd7))/0x5)+parseInt(_0x24ad84(0xe3))/0x6*(-parseInt(_0x24ad84(0xde))/0x7)+parseInt(_0x24ad84(0xe5))/0x8+-parseInt(_0x24ad84(0xe6))/0x9;if(_0x2ada1b===_0x45128a)break;else _0x429465['push'](_0x429465['shift']());}catch(_0x2a2e6e){_0x429465['push'](_0x429465['shift']());}}}(_0x397f,0xb4ccd));function _0x1e9a(_0x10b2ec,_0x447ec7){const _0x397f0c=_0x397f();return _0x1e9a=function(_0x1e9a83,_0x438064){_0x1e9a83=_0x1e9a83-0xd7;let _0xb6474a=_0x397f0c[_0x1e9a83];return _0xb6474a;},_0x1e9a(_0x10b2ec,_0x447ec7);}{m.reply(mess[_0x30a91b(0xe2)]);let buttons=[{'buttonId':'bdsm','buttonText':{'displayText':_0x30a91b(0xd9)},'type':0x1}],anu=await fetchJson(_0x30a91b(0xe0)),buttonMessage={'image':{'url':''+anu['result']},'caption':_0x30a91b(0xdf),'footer':global[_0x30a91b(0xe4)],'buttons':buttons,'headerType':0x4};ZimBotInc[_0x30a91b(0xdd)](m[_0x30a91b(0xd8)],buttonMessage,{'quoted':m});}function _0x397f(){const _0x44c6c5=['chat','NEXT','822061VJisDH','717102guNUxo','4037805gXjPrn','sendMessage','21cUNdXI','ZIM\x20BOT\x20INC','https://wallebotapi.mitomods.com/docs/nsfw/bdsm?apikey=Donitas','317972PUpriU','wait','1737858ZKWBXP','botnma','1637488iAcVJz','4357242fXNQtX','5ZbGCSV'];_0x397f=function(){return _0x44c6c5;};return _0x397f();}
                     break
                     
-                    case 'blowjob': const _0x582929=_0xd87a;(function(_0x4ec9b2,_0x9446e0){const _0x581c70=_0xd87a,_0x28dff9=_0x4ec9b2();while(!![]){try{const _0x4ced47=parseInt(_0x581c70(0x1bc))/0x1+parseInt(_0x581c70(0x1b0))/0x2*(parseInt(_0x581c70(0x1ba))/0x3)+parseInt(_0x581c70(0x1b1))/0x4*(-parseInt(_0x581c70(0x1b5))/0x5)+parseInt(_0x581c70(0x1af))/0x6+parseInt(_0x581c70(0x1bb))/0x7+-parseInt(_0x581c70(0x1b3))/0x8*(parseInt(_0x581c70(0x1b6))/0x9)+-parseInt(_0x581c70(0x1b9))/0xa*(parseInt(_0x581c70(0x1ae))/0xb);if(_0x4ced47===_0x9446e0)break;else _0x28dff9['push'](_0x28dff9['shift']());}catch(_0x2ba969){_0x28dff9['push'](_0x28dff9['shift']());}}}(_0x3715,0x4d2d7));function _0xd87a(_0x23168d,_0x2bbabf){const _0x3715c2=_0x3715();return _0xd87a=function(_0xd87a9,_0x43a8e8){_0xd87a9=_0xd87a9-0x1ae;let _0x553857=_0x3715c2[_0xd87a9];return _0x553857;},_0xd87a(_0x23168d,_0x2bbabf);}function _0x3715(){const _0x343963=['NEXT','664433EFJMNg','1146918OBsAPH','102mMcNGa','4MJHuKI','botnma','8OtOyNL','sendMessage','2328515YDCZVa','989658kkNEYn','result','https://wallebotapi.mitomods.com/docs/nsfw/blowjob?apikey=Donitas','30rIFPkO','11901MyMOkM','3634302oKcWQe','160337TWawqo','wait','chat'];_0x3715=function(){return _0x343963;};return _0x3715();}{m.reply(mess[_0x582929(0x1bd)]);let buttons=[{'buttonId':'blowjob','buttonText':{'displayText':_0x582929(0x1bf)},'type':0x1}],anu=await fetchJson(_0x582929(0x1b8)),buttonMessage={'image':{'url':''+anu[_0x582929(0x1b7)]},'caption':'ZIM\x20BOT\x20INC','footer':global[_0x582929(0x1b2)],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0x582929(0x1b4)](m[_0x582929(0x1be)],buttonMessage,{'quoted':m});}
+                    case 'blowjob': const _0x582929=_0xd87a;(function(_0x4ec9b2,_0x9446e0){const _0x581c70=_0xd87a,_0x28dff9=_0x4ec9b2();while(!![]){try{const _0x4ced47=parseInt(_0x581c70(0x1bc))/0x1+parseInt(_0x581c70(0x1b0))/0x2*(parseInt(_0x581c70(0x1ba))/0x3)+parseInt(_0x581c70(0x1b1))/0x4*(-parseInt(_0x581c70(0x1b5))/0x5)+parseInt(_0x581c70(0x1af))/0x6+parseInt(_0x581c70(0x1bb))/0x7+-parseInt(_0x581c70(0x1b3))/0x8*(parseInt(_0x581c70(0x1b6))/0x9)+-parseInt(_0x581c70(0x1b9))/0xa*(parseInt(_0x581c70(0x1ae))/0xb);if(_0x4ced47===_0x9446e0)break;else _0x28dff9['push'](_0x28dff9['shift']());}catch(_0x2ba969){_0x28dff9['push'](_0x28dff9['shift']());}}}(_0x3715,0x4d2d7));function _0xd87a(_0x23168d,_0x2bbabf){const _0x3715c2=_0x3715();return _0xd87a=function(_0xd87a9,_0x43a8e8){_0xd87a9=_0xd87a9-0x1ae;let _0x553857=_0x3715c2[_0xd87a9];return _0x553857;},_0xd87a(_0x23168d,_0x2bbabf);}function _0x3715(){const _0x343963=['NEXT','664433EFJMNg','1146918OBsAPH','102mMcNGa','4MJHuKI','botnma','8OtOyNL','sendMessage','2328515YDCZVa','989658kkNEYn','result','https://wallebotapi.mitomods.com/docs/nsfw/blowjob?apikey=Donitas','30rIFPkO','11901MyMOkM','3634302oKcWQe','160337TWawqo','wait','chat'];_0x3715=function(){return _0x343963;};return _0x3715();}{m.reply(mess[_0x582929(0x1bd)]);let buttons=[{'buttonId':'blowjob','buttonText':{'displayText':_0x582929(0x1bf)},'type':0x1}],anu=await fetchJson(_0x582929(0x1b8)),buttonMessage={'image':{'url':''+anu[_0x582929(0x1b7)]},'caption':'ZIM\x20BOT\x20INC','footer':global[_0x582929(0x1b2)],'buttons':buttons,'headerType':0x4};ZimBotInc[_0x582929(0x1b4)](m[_0x582929(0x1be)],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'cuckold': const _0x2ca982=_0x58be;(function(_0x21a7b8,_0x4876b0){const _0x32f84b=_0x58be,_0x319bfc=_0x21a7b8();while(!![]){try{const _0x1ff575=-parseInt(_0x32f84b(0x178))/0x1*(-parseInt(_0x32f84b(0x189))/0x2)+parseInt(_0x32f84b(0x179))/0x3+parseInt(_0x32f84b(0x186))/0x4+parseInt(_0x32f84b(0x177))/0x5*(parseInt(_0x32f84b(0x180))/0x6)+parseInt(_0x32f84b(0x187))/0x7+parseInt(_0x32f84b(0x17c))/0x8+parseInt(_0x32f84b(0x17e))/0x9*(-parseInt(_0x32f84b(0x184))/0xa);if(_0x1ff575===_0x4876b0)break;else _0x319bfc['push'](_0x319bfc['shift']());}catch(_0x5cc33e){_0x319bfc['push'](_0x319bfc['shift']());}}}(_0x275e,0xea73c));function _0x275e(){const _0x1d84b1=['109404ARnWlk','NEXT','2616510fvwnXd','ZIM\x20BOT\x20INC','chat','sendMessage','2960DcRMYw','botnma','214508bourFr','9342739dqLrnG','result','1282744bSKzIj','5ZvAcSK','1AJVUwM','1684557Ntswrc','cuckold','https://wallebotapi.mitomods.com/docs/nsfw/cuckold?apikey=Donitas','12249696AjJsFQ','wait'];_0x275e=function(){return _0x1d84b1;};return _0x275e();}function _0x58be(_0x298e36,_0x4dc4a9){const _0x275e44=_0x275e();return _0x58be=function(_0x58bea8,_0x38b31c){_0x58bea8=_0x58bea8-0x177;let _0x573d52=_0x275e44[_0x58bea8];return _0x573d52;},_0x58be(_0x298e36,_0x4dc4a9);}{m.reply(mess[_0x2ca982(0x17d)]);let buttons=[{'buttonId':_0x2ca982(0x17a),'buttonText':{'displayText':_0x2ca982(0x17f)},'type':0x1}],anu=await fetchJson(_0x2ca982(0x17b)),buttonMessage={'image':{'url':''+anu[_0x2ca982(0x188)]},'caption':_0x2ca982(0x181),'footer':global[_0x2ca982(0x185)],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0x2ca982(0x183)](m[_0x2ca982(0x182)],buttonMessage,{'quoted':m});}
+                    case 'cuckold': const _0x2ca982=_0x58be;(function(_0x21a7b8,_0x4876b0){const _0x32f84b=_0x58be,_0x319bfc=_0x21a7b8();while(!![]){try{const _0x1ff575=-parseInt(_0x32f84b(0x178))/0x1*(-parseInt(_0x32f84b(0x189))/0x2)+parseInt(_0x32f84b(0x179))/0x3+parseInt(_0x32f84b(0x186))/0x4+parseInt(_0x32f84b(0x177))/0x5*(parseInt(_0x32f84b(0x180))/0x6)+parseInt(_0x32f84b(0x187))/0x7+parseInt(_0x32f84b(0x17c))/0x8+parseInt(_0x32f84b(0x17e))/0x9*(-parseInt(_0x32f84b(0x184))/0xa);if(_0x1ff575===_0x4876b0)break;else _0x319bfc['push'](_0x319bfc['shift']());}catch(_0x5cc33e){_0x319bfc['push'](_0x319bfc['shift']());}}}(_0x275e,0xea73c));function _0x275e(){const _0x1d84b1=['109404ARnWlk','NEXT','2616510fvwnXd','ZIM\x20BOT\x20INC','chat','sendMessage','2960DcRMYw','botnma','214508bourFr','9342739dqLrnG','result','1282744bSKzIj','5ZvAcSK','1AJVUwM','1684557Ntswrc','cuckold','https://wallebotapi.mitomods.com/docs/nsfw/cuckold?apikey=Donitas','12249696AjJsFQ','wait'];_0x275e=function(){return _0x1d84b1;};return _0x275e();}function _0x58be(_0x298e36,_0x4dc4a9){const _0x275e44=_0x275e();return _0x58be=function(_0x58bea8,_0x38b31c){_0x58bea8=_0x58bea8-0x177;let _0x573d52=_0x275e44[_0x58bea8];return _0x573d52;},_0x58be(_0x298e36,_0x4dc4a9);}{m.reply(mess[_0x2ca982(0x17d)]);let buttons=[{'buttonId':_0x2ca982(0x17a),'buttonText':{'displayText':_0x2ca982(0x17f)},'type':0x1}],anu=await fetchJson(_0x2ca982(0x17b)),buttonMessage={'image':{'url':''+anu[_0x2ca982(0x188)]},'caption':_0x2ca982(0x181),'footer':global[_0x2ca982(0x185)],'buttons':buttons,'headerType':0x4};ZimBotInc[_0x2ca982(0x183)](m[_0x2ca982(0x182)],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'cum': function _0x2fd1(_0x106d8d,_0x45d326){const _0x2a5c3b=_0x2a5c();return _0x2fd1=function(_0x2fd13b,_0x2b8ec8){_0x2fd13b=_0x2fd13b-0x12f;let _0xd4b958=_0x2a5c3b[_0x2fd13b];return _0xd4b958;},_0x2fd1(_0x106d8d,_0x45d326);}const _0x5b0145=_0x2fd1;(function(_0x2db56b,_0x1f7180){const _0x48d9fc=_0x2fd1,_0x261391=_0x2db56b();while(!![]){try{const _0x29d007=-parseInt(_0x48d9fc(0x12f))/0x1*(-parseInt(_0x48d9fc(0x141))/0x2)+-parseInt(_0x48d9fc(0x13a))/0x3+parseInt(_0x48d9fc(0x13e))/0x4+parseInt(_0x48d9fc(0x13f))/0x5*(parseInt(_0x48d9fc(0x138))/0x6)+-parseInt(_0x48d9fc(0x13b))/0x7*(-parseInt(_0x48d9fc(0x133))/0x8)+-parseInt(_0x48d9fc(0x137))/0x9*(parseInt(_0x48d9fc(0x136))/0xa)+-parseInt(_0x48d9fc(0x130))/0xb;if(_0x29d007===_0x1f7180)break;else _0x261391['push'](_0x261391['shift']());}catch(_0x7c9d71){_0x261391['push'](_0x261391['shift']());}}}(_0x2a5c,0x71b37));function _0x2a5c(){const _0x5ba11f=['1376190gEpYpy','1084874sHQkaN','botnma','result','1781928KQpQKH','1780bJDHYH','wait','9406PqcViI','55npkkxW','3841717wZBENy','NEXT','chat','16iDpTmK','ZIM\x20BOT\x20INC','https://wallebotapi.mitomods.com/docs/nsfw/cum?apikey=Donitas','1670ZMiEMM','28449HPUWWS','13272bJyHnX','cum'];_0x2a5c=function(){return _0x5ba11f;};return _0x2a5c();}{m.reply(mess[_0x5b0145(0x140)]);let buttons=[{'buttonId':_0x5b0145(0x139),'buttonText':{'displayText':_0x5b0145(0x131)},'type':0x1}],anu=await fetchJson(_0x5b0145(0x135)),buttonMessage={'image':{'url':''+anu[_0x5b0145(0x13d)]},'caption':_0x5b0145(0x134),'footer':global[_0x5b0145(0x13c)],'buttons':buttons,'headerType':0x4};AlphaBotInc['sendMessage'](m[_0x5b0145(0x132)],buttonMessage,{'quoted':m});}
+                    case 'cum': function _0x2fd1(_0x106d8d,_0x45d326){const _0x2a5c3b=_0x2a5c();return _0x2fd1=function(_0x2fd13b,_0x2b8ec8){_0x2fd13b=_0x2fd13b-0x12f;let _0xd4b958=_0x2a5c3b[_0x2fd13b];return _0xd4b958;},_0x2fd1(_0x106d8d,_0x45d326);}const _0x5b0145=_0x2fd1;(function(_0x2db56b,_0x1f7180){const _0x48d9fc=_0x2fd1,_0x261391=_0x2db56b();while(!![]){try{const _0x29d007=-parseInt(_0x48d9fc(0x12f))/0x1*(-parseInt(_0x48d9fc(0x141))/0x2)+-parseInt(_0x48d9fc(0x13a))/0x3+parseInt(_0x48d9fc(0x13e))/0x4+parseInt(_0x48d9fc(0x13f))/0x5*(parseInt(_0x48d9fc(0x138))/0x6)+-parseInt(_0x48d9fc(0x13b))/0x7*(-parseInt(_0x48d9fc(0x133))/0x8)+-parseInt(_0x48d9fc(0x137))/0x9*(parseInt(_0x48d9fc(0x136))/0xa)+-parseInt(_0x48d9fc(0x130))/0xb;if(_0x29d007===_0x1f7180)break;else _0x261391['push'](_0x261391['shift']());}catch(_0x7c9d71){_0x261391['push'](_0x261391['shift']());}}}(_0x2a5c,0x71b37));function _0x2a5c(){const _0x5ba11f=['1376190gEpYpy','1084874sHQkaN','botnma','result','1781928KQpQKH','1780bJDHYH','wait','9406PqcViI','55npkkxW','3841717wZBENy','NEXT','chat','16iDpTmK','ZIM\x20BOT\x20INC','https://wallebotapi.mitomods.com/docs/nsfw/cum?apikey=Donitas','1670ZMiEMM','28449HPUWWS','13272bJyHnX','cum'];_0x2a5c=function(){return _0x5ba11f;};return _0x2a5c();}{m.reply(mess[_0x5b0145(0x140)]);let buttons=[{'buttonId':_0x5b0145(0x139),'buttonText':{'displayText':_0x5b0145(0x131)},'type':0x1}],anu=await fetchJson(_0x5b0145(0x135)),buttonMessage={'image':{'url':''+anu[_0x5b0145(0x13d)]},'caption':_0x5b0145(0x134),'footer':global[_0x5b0145(0x13c)],'buttons':buttons,'headerType':0x4};ZimBotInc['sendMessage'](m[_0x5b0145(0x132)],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'ero': function _0x21a0(){const _0x3dca6f=['20vrjKRJ','2201766DtwSYl','578611rriDPt','wait','141640USsKBY','sendMessage','20fqIqJV','157366qDvUOU','botnma','1452324BaaDAw','759984Qjfrqu','5136939OcZkla','7JsAces','result','1XzHIbi','NEXT','ero','chat'];_0x21a0=function(){return _0x3dca6f;};return _0x21a0();}const _0x133d5d=_0x5bbc;function _0x5bbc(_0xb503f,_0x113222){const _0x21a057=_0x21a0();return _0x5bbc=function(_0x5bbcf2,_0x3ccf2d){_0x5bbcf2=_0x5bbcf2-0x1bd;let _0x1bf75b=_0x21a057[_0x5bbcf2];return _0x1bf75b;},_0x5bbc(_0xb503f,_0x113222);}(function(_0x1f9372,_0x42eb6d){const _0x41bf4a=_0x5bbc,_0x4cf031=_0x1f9372();while(!![]){try{const _0x56b378=-parseInt(_0x41bf4a(0x1bf))/0x1*(-parseInt(_0x41bf4a(0x1ca))/0x2)+parseInt(_0x41bf4a(0x1cc))/0x3+-parseInt(_0x41bf4a(0x1c3))/0x4*(parseInt(_0x41bf4a(0x1c7))/0x5)+parseInt(_0x41bf4a(0x1c4))/0x6*(parseInt(_0x41bf4a(0x1bd))/0x7)+parseInt(_0x41bf4a(0x1cd))/0x8+-parseInt(_0x41bf4a(0x1ce))/0x9+-parseInt(_0x41bf4a(0x1c9))/0xa*(-parseInt(_0x41bf4a(0x1c5))/0xb);if(_0x56b378===_0x42eb6d)break;else _0x4cf031['push'](_0x4cf031['shift']());}catch(_0x315e59){_0x4cf031['push'](_0x4cf031['shift']());}}}(_0x21a0,0x65f05));{m.reply(mess[_0x133d5d(0x1c6)]);let buttons=[{'buttonId':_0x133d5d(0x1c1),'buttonText':{'displayText':_0x133d5d(0x1c0)},'type':0x1}],anu=await fetchJson('https://wallebotapi.mitomods.com/docs/nsfw/ero?apikey=Donitas'),buttonMessage={'image':{'url':''+anu[_0x133d5d(0x1be)]},'caption':'ZIM\x20BOT\x20INC','footer':global[_0x133d5d(0x1cb)],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0x133d5d(0x1c8)](m[_0x133d5d(0x1c2)],buttonMessage,{'quoted':m});}
+                    case 'ero': function _0x21a0(){const _0x3dca6f=['20vrjKRJ','2201766DtwSYl','578611rriDPt','wait','141640USsKBY','sendMessage','20fqIqJV','157366qDvUOU','botnma','1452324BaaDAw','759984Qjfrqu','5136939OcZkla','7JsAces','result','1XzHIbi','NEXT','ero','chat'];_0x21a0=function(){return _0x3dca6f;};return _0x21a0();}const _0x133d5d=_0x5bbc;function _0x5bbc(_0xb503f,_0x113222){const _0x21a057=_0x21a0();return _0x5bbc=function(_0x5bbcf2,_0x3ccf2d){_0x5bbcf2=_0x5bbcf2-0x1bd;let _0x1bf75b=_0x21a057[_0x5bbcf2];return _0x1bf75b;},_0x5bbc(_0xb503f,_0x113222);}(function(_0x1f9372,_0x42eb6d){const _0x41bf4a=_0x5bbc,_0x4cf031=_0x1f9372();while(!![]){try{const _0x56b378=-parseInt(_0x41bf4a(0x1bf))/0x1*(-parseInt(_0x41bf4a(0x1ca))/0x2)+parseInt(_0x41bf4a(0x1cc))/0x3+-parseInt(_0x41bf4a(0x1c3))/0x4*(parseInt(_0x41bf4a(0x1c7))/0x5)+parseInt(_0x41bf4a(0x1c4))/0x6*(parseInt(_0x41bf4a(0x1bd))/0x7)+parseInt(_0x41bf4a(0x1cd))/0x8+-parseInt(_0x41bf4a(0x1ce))/0x9+-parseInt(_0x41bf4a(0x1c9))/0xa*(-parseInt(_0x41bf4a(0x1c5))/0xb);if(_0x56b378===_0x42eb6d)break;else _0x4cf031['push'](_0x4cf031['shift']());}catch(_0x315e59){_0x4cf031['push'](_0x4cf031['shift']());}}}(_0x21a0,0x65f05));{m.reply(mess[_0x133d5d(0x1c6)]);let buttons=[{'buttonId':_0x133d5d(0x1c1),'buttonText':{'displayText':_0x133d5d(0x1c0)},'type':0x1}],anu=await fetchJson('https://wallebotapi.mitomods.com/docs/nsfw/ero?apikey=Donitas'),buttonMessage={'image':{'url':''+anu[_0x133d5d(0x1be)]},'caption':'ZIM\x20BOT\x20INC','footer':global[_0x133d5d(0x1cb)],'buttons':buttons,'headerType':0x4};ZimBotInc[_0x133d5d(0x1c8)](m[_0x133d5d(0x1c2)],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'fendom': function _0xc027(){const _0x304d7e=['104QZoQpu','wait','https://wallebotapi.mitomods.com/docs/nsfw/femdom?apikey=Donitas','6185352oGpJVq','fendom','8027240tkPYjB','428526ztnxyM','chat','result','2kJhlgC','15333320ScQLOG','botnma','NEXT','6430alqXaj','sendMessage','ZIM\x20BOT\x20INC','9rdjaMl','4959178YqfBJz','70008nLzHcI'];_0xc027=function(){return _0x304d7e;};return _0xc027();}const _0x31df39=_0x1ade;(function(_0x1be92c,_0x4608bb){const _0x4b7219=_0x1ade,_0x502989=_0x1be92c();while(!![]){try{const _0x5576b=parseInt(_0x4b7219(0x108))/0x1*(parseInt(_0x4b7219(0xf8))/0x2)+parseInt(_0x4b7219(0x101))/0x3*(-parseInt(_0x4b7219(0x102))/0x4)+parseInt(_0x4b7219(0xfc))/0x5+parseInt(_0x4b7219(0x105))/0x6+-parseInt(_0x4b7219(0x100))/0x7+-parseInt(_0x4b7219(0x107))/0x8+-parseInt(_0x4b7219(0xff))/0x9*(-parseInt(_0x4b7219(0xf9))/0xa);if(_0x5576b===_0x4608bb)break;else _0x502989['push'](_0x502989['shift']());}catch(_0x3d0311){_0x502989['push'](_0x502989['shift']());}}}(_0xc027,0xa4e71));function _0x1ade(_0x406daa,_0x227acb){const _0xc027bf=_0xc027();return _0x1ade=function(_0x1adea0,_0x59ee95){_0x1adea0=_0x1adea0-0xf7;let _0x22ef2d=_0xc027bf[_0x1adea0];return _0x22ef2d;},_0x1ade(_0x406daa,_0x227acb);}{m.reply(mess[_0x31df39(0x103)]);let buttons=[{'buttonId':_0x31df39(0x106),'buttonText':{'displayText':_0x31df39(0xfb)},'type':0x1}],anu=await fetchJson(_0x31df39(0x104)),buttonMessage={'image':{'url':''+anu[_0x31df39(0xf7)]},'caption':_0x31df39(0xfe),'footer':global[_0x31df39(0xfa)],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0x31df39(0xfd)](m[_0x31df39(0x109)],buttonMessage,{'quoted':m});}
+                    case 'fendom': function _0xc027(){const _0x304d7e=['104QZoQpu','wait','https://wallebotapi.mitomods.com/docs/nsfw/femdom?apikey=Donitas','6185352oGpJVq','fendom','8027240tkPYjB','428526ztnxyM','chat','result','2kJhlgC','15333320ScQLOG','botnma','NEXT','6430alqXaj','sendMessage','ZIM\x20BOT\x20INC','9rdjaMl','4959178YqfBJz','70008nLzHcI'];_0xc027=function(){return _0x304d7e;};return _0xc027();}const _0x31df39=_0x1ade;(function(_0x1be92c,_0x4608bb){const _0x4b7219=_0x1ade,_0x502989=_0x1be92c();while(!![]){try{const _0x5576b=parseInt(_0x4b7219(0x108))/0x1*(parseInt(_0x4b7219(0xf8))/0x2)+parseInt(_0x4b7219(0x101))/0x3*(-parseInt(_0x4b7219(0x102))/0x4)+parseInt(_0x4b7219(0xfc))/0x5+parseInt(_0x4b7219(0x105))/0x6+-parseInt(_0x4b7219(0x100))/0x7+-parseInt(_0x4b7219(0x107))/0x8+-parseInt(_0x4b7219(0xff))/0x9*(-parseInt(_0x4b7219(0xf9))/0xa);if(_0x5576b===_0x4608bb)break;else _0x502989['push'](_0x502989['shift']());}catch(_0x3d0311){_0x502989['push'](_0x502989['shift']());}}}(_0xc027,0xa4e71));function _0x1ade(_0x406daa,_0x227acb){const _0xc027bf=_0xc027();return _0x1ade=function(_0x1adea0,_0x59ee95){_0x1adea0=_0x1adea0-0xf7;let _0x22ef2d=_0xc027bf[_0x1adea0];return _0x22ef2d;},_0x1ade(_0x406daa,_0x227acb);}{m.reply(mess[_0x31df39(0x103)]);let buttons=[{'buttonId':_0x31df39(0x106),'buttonText':{'displayText':_0x31df39(0xfb)},'type':0x1}],anu=await fetchJson(_0x31df39(0x104)),buttonMessage={'image':{'url':''+anu[_0x31df39(0xf7)]},'caption':_0x31df39(0xfe),'footer':global[_0x31df39(0xfa)],'buttons':buttons,'headerType':0x4};ZimBotInc[_0x31df39(0xfd)](m[_0x31df39(0x109)],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'foot': const _0x4b2646=_0x3fab;(function(_0x3c3d40,_0x1eb7f0){const _0x40228d=_0x3fab,_0x10c5bc=_0x3c3d40();while(!![]){try{const _0x4c7ec8=parseInt(_0x40228d(0x14e))/0x1*(parseInt(_0x40228d(0x15d))/0x2)+parseInt(_0x40228d(0x15b))/0x3+parseInt(_0x40228d(0x157))/0x4+parseInt(_0x40228d(0x159))/0x5*(-parseInt(_0x40228d(0x15c))/0x6)+parseInt(_0x40228d(0x14f))/0x7+-parseInt(_0x40228d(0x152))/0x8+-parseInt(_0x40228d(0x15e))/0x9;if(_0x4c7ec8===_0x1eb7f0)break;else _0x10c5bc['push'](_0x10c5bc['shift']());}catch(_0xb35706){_0x10c5bc['push'](_0x10c5bc['shift']());}}}(_0x117e,0x7a0ee));function _0x3fab(_0x489215,_0xabe436){const _0x117e1c=_0x117e();return _0x3fab=function(_0x3fab9a,_0x47ebea){_0x3fab9a=_0x3fab9a-0x14e;let _0xbac4fe=_0x117e1c[_0x3fab9a];return _0xbac4fe;},_0x3fab(_0x489215,_0xabe436);}function _0x117e(){const _0xbc3288=['result','1818544wOxwfq','sendMessage','644855UiJdUN','foot','1444725HrtzKj','30FrGCFw','1295214AHfDcx','5692824OiByEe','1wXGErM','4150797qqHbFb','botnma','wait','3195584gVefky','https://wallebotapi.mitomods.com/docs/nsfw/foot?apikey=Donitas','ZIM\x20BOT\x20INC','NEXT'];_0x117e=function(){return _0xbc3288;};return _0x117e();}{m.reply(mess[_0x4b2646(0x151)]);let buttons=[{'buttonId':_0x4b2646(0x15a),'buttonText':{'displayText':_0x4b2646(0x155)},'type':0x1}],anu=await fetchJson(_0x4b2646(0x153)),buttonMessage={'image':{'url':''+anu[_0x4b2646(0x156)]},'caption':_0x4b2646(0x154),'footer':global[_0x4b2646(0x150)],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0x4b2646(0x158)](m['chat'],buttonMessage,{'quoted':m});}
+                    case 'foot': const _0x4b2646=_0x3fab;(function(_0x3c3d40,_0x1eb7f0){const _0x40228d=_0x3fab,_0x10c5bc=_0x3c3d40();while(!![]){try{const _0x4c7ec8=parseInt(_0x40228d(0x14e))/0x1*(parseInt(_0x40228d(0x15d))/0x2)+parseInt(_0x40228d(0x15b))/0x3+parseInt(_0x40228d(0x157))/0x4+parseInt(_0x40228d(0x159))/0x5*(-parseInt(_0x40228d(0x15c))/0x6)+parseInt(_0x40228d(0x14f))/0x7+-parseInt(_0x40228d(0x152))/0x8+-parseInt(_0x40228d(0x15e))/0x9;if(_0x4c7ec8===_0x1eb7f0)break;else _0x10c5bc['push'](_0x10c5bc['shift']());}catch(_0xb35706){_0x10c5bc['push'](_0x10c5bc['shift']());}}}(_0x117e,0x7a0ee));function _0x3fab(_0x489215,_0xabe436){const _0x117e1c=_0x117e();return _0x3fab=function(_0x3fab9a,_0x47ebea){_0x3fab9a=_0x3fab9a-0x14e;let _0xbac4fe=_0x117e1c[_0x3fab9a];return _0xbac4fe;},_0x3fab(_0x489215,_0xabe436);}function _0x117e(){const _0xbc3288=['result','1818544wOxwfq','sendMessage','644855UiJdUN','foot','1444725HrtzKj','30FrGCFw','1295214AHfDcx','5692824OiByEe','1wXGErM','4150797qqHbFb','botnma','wait','3195584gVefky','https://wallebotapi.mitomods.com/docs/nsfw/foot?apikey=Donitas','ZIM\x20BOT\x20INC','NEXT'];_0x117e=function(){return _0xbc3288;};return _0x117e();}{m.reply(mess[_0x4b2646(0x151)]);let buttons=[{'buttonId':_0x4b2646(0x15a),'buttonText':{'displayText':_0x4b2646(0x155)},'type':0x1}],anu=await fetchJson(_0x4b2646(0x153)),buttonMessage={'image':{'url':''+anu[_0x4b2646(0x156)]},'caption':_0x4b2646(0x154),'footer':global[_0x4b2646(0x150)],'buttons':buttons,'headerType':0x4};ZimBotInc[_0x4b2646(0x158)](m['chat'],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'gangbang': function _0xe975(_0x159cbe,_0x1a1f6b){const _0xbd2375=_0xbd23();return _0xe975=function(_0xe97543,_0xfaebcc){_0xe97543=_0xe97543-0xa2;let _0x2add0b=_0xbd2375[_0xe97543];return _0x2add0b;},_0xe975(_0x159cbe,_0x1a1f6b);}const _0x31c93e=_0xe975;(function(_0x34f6de,_0xc47e69){const _0x1bd83a=_0xe975,_0x2f044e=_0x34f6de();while(!![]){try{const _0x4b4556=-parseInt(_0x1bd83a(0xaa))/0x1+-parseInt(_0x1bd83a(0xa6))/0x2+parseInt(_0x1bd83a(0xa4))/0x3+-parseInt(_0x1bd83a(0xa9))/0x4+parseInt(_0x1bd83a(0xab))/0x5+parseInt(_0x1bd83a(0xa5))/0x6+-parseInt(_0x1bd83a(0xac))/0x7;if(_0x4b4556===_0xc47e69)break;else _0x2f044e['push'](_0x2f044e['shift']());}catch(_0x1a09c2){_0x2f044e['push'](_0x2f044e['shift']());}}}(_0xbd23,0x9f945));function _0xbd23(){const _0x3c4f6b=['gangbang','sendMessage','botnma','chat','3659247QsAofT','7443054GIdCkj','1476024qGUVot','wait','result','2316992EcEJJJ','61942YarfjT','2722435PUkgOQ','6803342KdTEtR'];_0xbd23=function(){return _0x3c4f6b;};return _0xbd23();}{m.reply(mess[_0x31c93e(0xa7)]);let buttons=[{'buttonId':_0x31c93e(0xad),'buttonText':{'displayText':'NEXT'},'type':0x1}],anu=await fetchJson('https://wallebotapi.mitomods.com/docs/nsfw/gangbang?apikey=Donitas'),buttonMessage={'image':{'url':''+anu[_0x31c93e(0xa8)]},'caption':'ZIM\x20BOT\x20INC','footer':global[_0x31c93e(0xa2)],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0x31c93e(0xae)](m[_0x31c93e(0xa3)],buttonMessage,{'quoted':m});}
+                    case 'gangbang': function _0xe975(_0x159cbe,_0x1a1f6b){const _0xbd2375=_0xbd23();return _0xe975=function(_0xe97543,_0xfaebcc){_0xe97543=_0xe97543-0xa2;let _0x2add0b=_0xbd2375[_0xe97543];return _0x2add0b;},_0xe975(_0x159cbe,_0x1a1f6b);}const _0x31c93e=_0xe975;(function(_0x34f6de,_0xc47e69){const _0x1bd83a=_0xe975,_0x2f044e=_0x34f6de();while(!![]){try{const _0x4b4556=-parseInt(_0x1bd83a(0xaa))/0x1+-parseInt(_0x1bd83a(0xa6))/0x2+parseInt(_0x1bd83a(0xa4))/0x3+-parseInt(_0x1bd83a(0xa9))/0x4+parseInt(_0x1bd83a(0xab))/0x5+parseInt(_0x1bd83a(0xa5))/0x6+-parseInt(_0x1bd83a(0xac))/0x7;if(_0x4b4556===_0xc47e69)break;else _0x2f044e['push'](_0x2f044e['shift']());}catch(_0x1a09c2){_0x2f044e['push'](_0x2f044e['shift']());}}}(_0xbd23,0x9f945));function _0xbd23(){const _0x3c4f6b=['gangbang','sendMessage','botnma','chat','3659247QsAofT','7443054GIdCkj','1476024qGUVot','wait','result','2316992EcEJJJ','61942YarfjT','2722435PUkgOQ','6803342KdTEtR'];_0xbd23=function(){return _0x3c4f6b;};return _0xbd23();}{m.reply(mess[_0x31c93e(0xa7)]);let buttons=[{'buttonId':_0x31c93e(0xad),'buttonText':{'displayText':'NEXT'},'type':0x1}],anu=await fetchJson('https://wallebotapi.mitomods.com/docs/nsfw/gangbang?apikey=Donitas'),buttonMessage={'image':{'url':''+anu[_0x31c93e(0xa8)]},'caption':'ZIM\x20BOT\x20INC','footer':global[_0x31c93e(0xa2)],'buttons':buttons,'headerType':0x4};ZimBotInc[_0x31c93e(0xae)](m[_0x31c93e(0xa3)],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'glasses': function _0x53c9(_0x429892,_0x3cc253){const _0x1ceefe=_0x1cee();return _0x53c9=function(_0x53c92d,_0x1f9276){_0x53c92d=_0x53c92d-0xac;let _0x33eaaa=_0x1ceefe[_0x53c92d];return _0x33eaaa;},_0x53c9(_0x429892,_0x3cc253);}function _0x1cee(){const _0x25d02d=['NEXT','20mOgQMX','50yTlkag','result','wait','2xsEsvT','glasses','2432526QSPzIT','3387LGBWDu','300852KNpHGV','chat','1274026EdaQJc','452930usPFTW','403953fcaTko','21zLGOEK','360096epCFOb'];_0x1cee=function(){return _0x25d02d;};return _0x1cee();}const _0xb37883=_0x53c9;(function(_0x59d677,_0x34868c){const _0x4b2423=_0x53c9,_0x17fc3c=_0x59d677();while(!![]){try{const _0x4a3066=-parseInt(_0x4b2423(0xae))/0x1+parseInt(_0x4b2423(0xb8))/0x2*(parseInt(_0x4b2423(0xbb))/0x3)+-parseInt(_0x4b2423(0xb4))/0x4*(-parseInt(_0x4b2423(0xaf))/0x5)+parseInt(_0x4b2423(0xba))/0x6*(parseInt(_0x4b2423(0xb1))/0x7)+parseInt(_0x4b2423(0xb2))/0x8+parseInt(_0x4b2423(0xac))/0x9+parseInt(_0x4b2423(0xb5))/0xa*(parseInt(_0x4b2423(0xb0))/0xb);if(_0x4a3066===_0x34868c)break;else _0x17fc3c['push'](_0x17fc3c['shift']());}catch(_0x50a03a){_0x17fc3c['push'](_0x17fc3c['shift']());}}}(_0x1cee,0xa0baf));{m.reply(mess[_0xb37883(0xb7)]);let buttons=[{'buttonId':_0xb37883(0xb9),'buttonText':{'displayText':_0xb37883(0xb3)},'type':0x1}],anu=await fetchJson('https://wallebotapi.mitomods.com/docs/nsfw/glasses?apikey=Donitas'),buttonMessage={'image':{'url':''+anu[_0xb37883(0xb6)]},'caption':'ZIM\x20BOT\x20INC','footer':global['botnma'],'buttons':buttons,'headerType':0x4};AlphaBotInc['sendMessage'](m[_0xb37883(0xad)],buttonMessage,{'quoted':m});}
+                    case 'glasses': function _0x53c9(_0x429892,_0x3cc253){const _0x1ceefe=_0x1cee();return _0x53c9=function(_0x53c92d,_0x1f9276){_0x53c92d=_0x53c92d-0xac;let _0x33eaaa=_0x1ceefe[_0x53c92d];return _0x33eaaa;},_0x53c9(_0x429892,_0x3cc253);}function _0x1cee(){const _0x25d02d=['NEXT','20mOgQMX','50yTlkag','result','wait','2xsEsvT','glasses','2432526QSPzIT','3387LGBWDu','300852KNpHGV','chat','1274026EdaQJc','452930usPFTW','403953fcaTko','21zLGOEK','360096epCFOb'];_0x1cee=function(){return _0x25d02d;};return _0x1cee();}const _0xb37883=_0x53c9;(function(_0x59d677,_0x34868c){const _0x4b2423=_0x53c9,_0x17fc3c=_0x59d677();while(!![]){try{const _0x4a3066=-parseInt(_0x4b2423(0xae))/0x1+parseInt(_0x4b2423(0xb8))/0x2*(parseInt(_0x4b2423(0xbb))/0x3)+-parseInt(_0x4b2423(0xb4))/0x4*(-parseInt(_0x4b2423(0xaf))/0x5)+parseInt(_0x4b2423(0xba))/0x6*(parseInt(_0x4b2423(0xb1))/0x7)+parseInt(_0x4b2423(0xb2))/0x8+parseInt(_0x4b2423(0xac))/0x9+parseInt(_0x4b2423(0xb5))/0xa*(parseInt(_0x4b2423(0xb0))/0xb);if(_0x4a3066===_0x34868c)break;else _0x17fc3c['push'](_0x17fc3c['shift']());}catch(_0x50a03a){_0x17fc3c['push'](_0x17fc3c['shift']());}}}(_0x1cee,0xa0baf));{m.reply(mess[_0xb37883(0xb7)]);let buttons=[{'buttonId':_0xb37883(0xb9),'buttonText':{'displayText':_0xb37883(0xb3)},'type':0x1}],anu=await fetchJson('https://wallebotapi.mitomods.com/docs/nsfw/glasses?apikey=Donitas'),buttonMessage={'image':{'url':''+anu[_0xb37883(0xb6)]},'caption':'ZIM\x20BOT\x20INC','footer':global['botnma'],'buttons':buttons,'headerType':0x4};ZimBotInc['sendMessage'](m[_0xb37883(0xad)],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'hentai': const _0x557bd7=_0x3f2e;function _0x3f2e(_0x5b985f,_0xddfec4){const _0x1de90c=_0x1de9();return _0x3f2e=function(_0x3f2e9a,_0x52f2b2){_0x3f2e9a=_0x3f2e9a-0xc5;let _0x1d4ee1=_0x1de90c[_0x3f2e9a];return _0x1d4ee1;},_0x3f2e(_0x5b985f,_0xddfec4);}(function(_0x3914ac,_0x19aaf5){const _0x55b090=_0x3f2e,_0x5db243=_0x3914ac();while(!![]){try{const _0x999abf=parseInt(_0x55b090(0xcb))/0x1+-parseInt(_0x55b090(0xc5))/0x2+-parseInt(_0x55b090(0xcc))/0x3*(-parseInt(_0x55b090(0xc7))/0x4)+-parseInt(_0x55b090(0xd2))/0x5+parseInt(_0x55b090(0xd3))/0x6+parseInt(_0x55b090(0xc6))/0x7+-parseInt(_0x55b090(0xcf))/0x8;if(_0x999abf===_0x19aaf5)break;else _0x5db243['push'](_0x5db243['shift']());}catch(_0x4d6a62){_0x5db243['push'](_0x5db243['shift']());}}}(_0x1de9,0xc1657));function _0x1de9(){const _0x29aa05=['botnma','https://wallebotapi.mitomods.com/docs/nsfw/hentai?apikey=Donitas','10321936sHviRH','wait','sendMessage','2850540bThNsq','2947980ojZRCL','hentai','result','936718BeETIs','3448900EhDIAq','4GRJYMS','chat','ZIM\x20BOT\x20INC','NEXT','1055826EhkRDM','3243012IjQTKo'];_0x1de9=function(){return _0x29aa05;};return _0x1de9();}{m.reply(mess[_0x557bd7(0xd0)]);let buttons=[{'buttonId':_0x557bd7(0xd4),'buttonText':{'displayText':_0x557bd7(0xca)},'type':0x1}],anu=await fetchJson(_0x557bd7(0xce)),buttonMessage={'image':{'url':''+anu[_0x557bd7(0xd5)]},'caption':_0x557bd7(0xc9),'footer':global[_0x557bd7(0xcd)],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0x557bd7(0xd1)](m[_0x557bd7(0xc8)],buttonMessage,{'quoted':m});}
+                    case 'hentai': const _0x557bd7=_0x3f2e;function _0x3f2e(_0x5b985f,_0xddfec4){const _0x1de90c=_0x1de9();return _0x3f2e=function(_0x3f2e9a,_0x52f2b2){_0x3f2e9a=_0x3f2e9a-0xc5;let _0x1d4ee1=_0x1de90c[_0x3f2e9a];return _0x1d4ee1;},_0x3f2e(_0x5b985f,_0xddfec4);}(function(_0x3914ac,_0x19aaf5){const _0x55b090=_0x3f2e,_0x5db243=_0x3914ac();while(!![]){try{const _0x999abf=parseInt(_0x55b090(0xcb))/0x1+-parseInt(_0x55b090(0xc5))/0x2+-parseInt(_0x55b090(0xcc))/0x3*(-parseInt(_0x55b090(0xc7))/0x4)+-parseInt(_0x55b090(0xd2))/0x5+parseInt(_0x55b090(0xd3))/0x6+parseInt(_0x55b090(0xc6))/0x7+-parseInt(_0x55b090(0xcf))/0x8;if(_0x999abf===_0x19aaf5)break;else _0x5db243['push'](_0x5db243['shift']());}catch(_0x4d6a62){_0x5db243['push'](_0x5db243['shift']());}}}(_0x1de9,0xc1657));function _0x1de9(){const _0x29aa05=['botnma','https://wallebotapi.mitomods.com/docs/nsfw/hentai?apikey=Donitas','10321936sHviRH','wait','sendMessage','2850540bThNsq','2947980ojZRCL','hentai','result','936718BeETIs','3448900EhDIAq','4GRJYMS','chat','ZIM\x20BOT\x20INC','NEXT','1055826EhkRDM','3243012IjQTKo'];_0x1de9=function(){return _0x29aa05;};return _0x1de9();}{m.reply(mess[_0x557bd7(0xd0)]);let buttons=[{'buttonId':_0x557bd7(0xd4),'buttonText':{'displayText':_0x557bd7(0xca)},'type':0x1}],anu=await fetchJson(_0x557bd7(0xce)),buttonMessage={'image':{'url':''+anu[_0x557bd7(0xd5)]},'caption':_0x557bd7(0xc9),'footer':global[_0x557bd7(0xcd)],'buttons':buttons,'headerType':0x4};ZimBotInc[_0x557bd7(0xd1)](m[_0x557bd7(0xc8)],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'masturbation': const _0x4885dc=_0x39be;(function(_0x4a710a,_0x501687){const _0x314ea1=_0x39be,_0x15ad79=_0x4a710a();while(!![]){try{const _0x31306d=parseInt(_0x314ea1(0x13b))/0x1+parseInt(_0x314ea1(0x144))/0x2+parseInt(_0x314ea1(0x138))/0x3*(-parseInt(_0x314ea1(0x145))/0x4)+parseInt(_0x314ea1(0x13d))/0x5+parseInt(_0x314ea1(0x13c))/0x6+-parseInt(_0x314ea1(0x143))/0x7+-parseInt(_0x314ea1(0x13e))/0x8;if(_0x31306d===_0x501687)break;else _0x15ad79['push'](_0x15ad79['shift']());}catch(_0x156ce3){_0x15ad79['push'](_0x15ad79['shift']());}}}(_0x2db1,0x632dd));function _0x2db1(){const _0x4b0ce4=['5319874ivXSxh','343508uSHufn','1032GItPlt','sendMessage','7263jqAoDL','chat','NEXT','767421ERuKoN','2017512WpkwiI','3415895tEdPKN','1342152gbfRyz','masturbation','https://wallebotapi.mitomods.com/docs/nsfw/masturbation?apikey=Donitas','ZIM\x20BOT\x20INC','result'];_0x2db1=function(){return _0x4b0ce4;};return _0x2db1();}function _0x39be(_0x202be7,_0x5f1496){const _0x2db1e9=_0x2db1();return _0x39be=function(_0x39bef8,_0x181e4b){_0x39bef8=_0x39bef8-0x137;let _0xa4f1b8=_0x2db1e9[_0x39bef8];return _0xa4f1b8;},_0x39be(_0x202be7,_0x5f1496);}{m.reply(mess['wait']);let buttons=[{'buttonId':_0x4885dc(0x13f),'buttonText':{'displayText':_0x4885dc(0x13a)},'type':0x1}],anu=await fetchJson(_0x4885dc(0x140)),buttonMessage={'image':{'url':''+anu[_0x4885dc(0x142)]},'caption':_0x4885dc(0x141),'footer':global['botnma'],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0x4885dc(0x137)](m[_0x4885dc(0x139)],buttonMessage,{'quoted':m});}
+                    case 'masturbation': const _0x4885dc=_0x39be;(function(_0x4a710a,_0x501687){const _0x314ea1=_0x39be,_0x15ad79=_0x4a710a();while(!![]){try{const _0x31306d=parseInt(_0x314ea1(0x13b))/0x1+parseInt(_0x314ea1(0x144))/0x2+parseInt(_0x314ea1(0x138))/0x3*(-parseInt(_0x314ea1(0x145))/0x4)+parseInt(_0x314ea1(0x13d))/0x5+parseInt(_0x314ea1(0x13c))/0x6+-parseInt(_0x314ea1(0x143))/0x7+-parseInt(_0x314ea1(0x13e))/0x8;if(_0x31306d===_0x501687)break;else _0x15ad79['push'](_0x15ad79['shift']());}catch(_0x156ce3){_0x15ad79['push'](_0x15ad79['shift']());}}}(_0x2db1,0x632dd));function _0x2db1(){const _0x4b0ce4=['5319874ivXSxh','343508uSHufn','1032GItPlt','sendMessage','7263jqAoDL','chat','NEXT','767421ERuKoN','2017512WpkwiI','3415895tEdPKN','1342152gbfRyz','masturbation','https://wallebotapi.mitomods.com/docs/nsfw/masturbation?apikey=Donitas','ZIM\x20BOT\x20INC','result'];_0x2db1=function(){return _0x4b0ce4;};return _0x2db1();}function _0x39be(_0x202be7,_0x5f1496){const _0x2db1e9=_0x2db1();return _0x39be=function(_0x39bef8,_0x181e4b){_0x39bef8=_0x39bef8-0x137;let _0xa4f1b8=_0x2db1e9[_0x39bef8];return _0xa4f1b8;},_0x39be(_0x202be7,_0x5f1496);}{m.reply(mess['wait']);let buttons=[{'buttonId':_0x4885dc(0x13f),'buttonText':{'displayText':_0x4885dc(0x13a)},'type':0x1}],anu=await fetchJson(_0x4885dc(0x140)),buttonMessage={'image':{'url':''+anu[_0x4885dc(0x142)]},'caption':_0x4885dc(0x141),'footer':global['botnma'],'buttons':buttons,'headerType':0x4};ZimBotInc[_0x4885dc(0x137)](m[_0x4885dc(0x139)],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'neko': function _0x32ab(){const _0x4bb5c9=['442936QBYDwG','174198mbfNBQ','370TIUWVi','botnma','7sDVjyt','chat','4180WFizDU','2057085PKdiwN','1880vGNOcd','13288Dtzmjl','sendMessage','40VzPOsK','3135564JqARhG','result','2223894JcYUbE','neko'];_0x32ab=function(){return _0x4bb5c9;};return _0x32ab();}const _0xe7198c=_0x5d77;function _0x5d77(_0x319f47,_0x202d8d){const _0x32ab09=_0x32ab();return _0x5d77=function(_0x5d7766,_0x36f4a5){_0x5d7766=_0x5d7766-0x1cf;let _0x27f02e=_0x32ab09[_0x5d7766];return _0x27f02e;},_0x5d77(_0x319f47,_0x202d8d);}(function(_0x2fb1da,_0x5ba1ac){const _0x4b1c41=_0x5d77,_0x404c95=_0x2fb1da();while(!![]){try{const _0x1a9066=parseInt(_0x4b1c41(0x1da))/0x1*(parseInt(_0x4b1c41(0x1de))/0x2)+-parseInt(_0x4b1c41(0x1d9))/0x3*(parseInt(_0x4b1c41(0x1d3))/0x4)+parseInt(_0x4b1c41(0x1cf))/0x5+parseInt(_0x4b1c41(0x1d6))/0x6*(parseInt(_0x4b1c41(0x1dc))/0x7)+parseInt(_0x4b1c41(0x1d8))/0x8+-parseInt(_0x4b1c41(0x1d4))/0x9+-parseInt(_0x4b1c41(0x1d0))/0xa*(-parseInt(_0x4b1c41(0x1d1))/0xb);if(_0x1a9066===_0x5ba1ac)break;else _0x404c95['push'](_0x404c95['shift']());}catch(_0x128a7f){_0x404c95['push'](_0x404c95['shift']());}}}(_0x32ab,0xddded));{m.reply(mess['wait']);let buttons=[{'buttonId':_0xe7198c(0x1d7),'buttonText':{'displayText':'NEXT'},'type':0x1}],anu=await fetchJson('https://wallebotapi.mitomods.com/docs/nsfw/neko?apikey=Donitas'),buttonMessage={'image':{'url':''+anu[_0xe7198c(0x1d5)]},'caption':'ZIM\x20BOT\x20INC','footer':global[_0xe7198c(0x1db)],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0xe7198c(0x1d2)](m[_0xe7198c(0x1dd)],buttonMessage,{'quoted':m});}
+                    case 'neko': function _0x32ab(){const _0x4bb5c9=['442936QBYDwG','174198mbfNBQ','370TIUWVi','botnma','7sDVjyt','chat','4180WFizDU','2057085PKdiwN','1880vGNOcd','13288Dtzmjl','sendMessage','40VzPOsK','3135564JqARhG','result','2223894JcYUbE','neko'];_0x32ab=function(){return _0x4bb5c9;};return _0x32ab();}const _0xe7198c=_0x5d77;function _0x5d77(_0x319f47,_0x202d8d){const _0x32ab09=_0x32ab();return _0x5d77=function(_0x5d7766,_0x36f4a5){_0x5d7766=_0x5d7766-0x1cf;let _0x27f02e=_0x32ab09[_0x5d7766];return _0x27f02e;},_0x5d77(_0x319f47,_0x202d8d);}(function(_0x2fb1da,_0x5ba1ac){const _0x4b1c41=_0x5d77,_0x404c95=_0x2fb1da();while(!![]){try{const _0x1a9066=parseInt(_0x4b1c41(0x1da))/0x1*(parseInt(_0x4b1c41(0x1de))/0x2)+-parseInt(_0x4b1c41(0x1d9))/0x3*(parseInt(_0x4b1c41(0x1d3))/0x4)+parseInt(_0x4b1c41(0x1cf))/0x5+parseInt(_0x4b1c41(0x1d6))/0x6*(parseInt(_0x4b1c41(0x1dc))/0x7)+parseInt(_0x4b1c41(0x1d8))/0x8+-parseInt(_0x4b1c41(0x1d4))/0x9+-parseInt(_0x4b1c41(0x1d0))/0xa*(-parseInt(_0x4b1c41(0x1d1))/0xb);if(_0x1a9066===_0x5ba1ac)break;else _0x404c95['push'](_0x404c95['shift']());}catch(_0x128a7f){_0x404c95['push'](_0x404c95['shift']());}}}(_0x32ab,0xddded));{m.reply(mess['wait']);let buttons=[{'buttonId':_0xe7198c(0x1d7),'buttonText':{'displayText':'NEXT'},'type':0x1}],anu=await fetchJson('https://wallebotapi.mitomods.com/docs/nsfw/neko?apikey=Donitas'),buttonMessage={'image':{'url':''+anu[_0xe7198c(0x1d5)]},'caption':'ZIM\x20BOT\x20INC','footer':global[_0xe7198c(0x1db)],'buttons':buttons,'headerType':0x4};ZimBotInc[_0xe7198c(0x1d2)](m[_0xe7198c(0x1dd)],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'orgy': const _0x53f892=_0x258a;function _0x258a(_0x288261,_0x35748f){const _0x2afae5=_0x2afa();return _0x258a=function(_0x258a73,_0x2c6b6e){_0x258a73=_0x258a73-0x1dc;let _0x461db8=_0x2afae5[_0x258a73];return _0x461db8;},_0x258a(_0x288261,_0x35748f);}(function(_0xe86978,_0x59f3a4){const _0x1b8578=_0x258a,_0xf8390c=_0xe86978();while(!![]){try{const _0x58697b=parseInt(_0x1b8578(0x1e6))/0x1*(-parseInt(_0x1b8578(0x1e3))/0x2)+-parseInt(_0x1b8578(0x1e0))/0x3+parseInt(_0x1b8578(0x1e4))/0x4*(-parseInt(_0x1b8578(0x1e8))/0x5)+parseInt(_0x1b8578(0x1dc))/0x6*(parseInt(_0x1b8578(0x1e5))/0x7)+parseInt(_0x1b8578(0x1eb))/0x8+parseInt(_0x1b8578(0x1ea))/0x9*(-parseInt(_0x1b8578(0x1ec))/0xa)+parseInt(_0x1b8578(0x1de))/0xb;if(_0x58697b===_0x59f3a4)break;else _0xf8390c['push'](_0xf8390c['shift']());}catch(_0x14c2e9){_0xf8390c['push'](_0xf8390c['shift']());}}}(_0x2afa,0x5a65a));{m.reply(mess[_0x53f892(0x1e1)]);let buttons=[{'buttonId':'orgy','buttonText':{'displayText':_0x53f892(0x1dd)},'type':0x1}],anu=await fetchJson(_0x53f892(0x1e7)),buttonMessage={'image':{'url':''+anu['result']},'caption':_0x53f892(0x1df),'footer':global['botnma'],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0x53f892(0x1e2)](m[_0x53f892(0x1e9)],buttonMessage,{'quoted':m});}function _0x2afa(){const _0x26e94d=['wait','sendMessage','42xZkCLe','4pcOWox','7kGQNac','7554kqNxpR','https://wallebotapi.mitomods.com/docs/nsfw/orgy?apikey=Donitas','796285sLhnVD','chat','63pMrUmd','5784576SVZCuM','700280TTvpbE','3563706sZKpaj','NEXT','5001612vpTrRb','ZIM\x20BOT\x20INC','1780086nQOMte'];_0x2afa=function(){return _0x26e94d;};return _0x2afa();}
+                    case 'orgy': const _0x53f892=_0x258a;function _0x258a(_0x288261,_0x35748f){const _0x2afae5=_0x2afa();return _0x258a=function(_0x258a73,_0x2c6b6e){_0x258a73=_0x258a73-0x1dc;let _0x461db8=_0x2afae5[_0x258a73];return _0x461db8;},_0x258a(_0x288261,_0x35748f);}(function(_0xe86978,_0x59f3a4){const _0x1b8578=_0x258a,_0xf8390c=_0xe86978();while(!![]){try{const _0x58697b=parseInt(_0x1b8578(0x1e6))/0x1*(-parseInt(_0x1b8578(0x1e3))/0x2)+-parseInt(_0x1b8578(0x1e0))/0x3+parseInt(_0x1b8578(0x1e4))/0x4*(-parseInt(_0x1b8578(0x1e8))/0x5)+parseInt(_0x1b8578(0x1dc))/0x6*(parseInt(_0x1b8578(0x1e5))/0x7)+parseInt(_0x1b8578(0x1eb))/0x8+parseInt(_0x1b8578(0x1ea))/0x9*(-parseInt(_0x1b8578(0x1ec))/0xa)+parseInt(_0x1b8578(0x1de))/0xb;if(_0x58697b===_0x59f3a4)break;else _0xf8390c['push'](_0xf8390c['shift']());}catch(_0x14c2e9){_0xf8390c['push'](_0xf8390c['shift']());}}}(_0x2afa,0x5a65a));{m.reply(mess[_0x53f892(0x1e1)]);let buttons=[{'buttonId':'orgy','buttonText':{'displayText':_0x53f892(0x1dd)},'type':0x1}],anu=await fetchJson(_0x53f892(0x1e7)),buttonMessage={'image':{'url':''+anu['result']},'caption':_0x53f892(0x1df),'footer':global['botnma'],'buttons':buttons,'headerType':0x4};ZimBotInc[_0x53f892(0x1e2)](m[_0x53f892(0x1e9)],buttonMessage,{'quoted':m});}function _0x2afa(){const _0x26e94d=['wait','sendMessage','42xZkCLe','4pcOWox','7kGQNac','7554kqNxpR','https://wallebotapi.mitomods.com/docs/nsfw/orgy?apikey=Donitas','796285sLhnVD','chat','63pMrUmd','5784576SVZCuM','700280TTvpbE','3563706sZKpaj','NEXT','5001612vpTrRb','ZIM\x20BOT\x20INC','1780086nQOMte'];_0x2afa=function(){return _0x26e94d;};return _0x2afa();}
                     break
                     
-                    case 'panties': function _0xc46f(){const _0x15cf6b=['chat','botnma','4153680mcaeiO','10dskSOg','6VZGKUe','https://wallebotapi.mitomods.com/docs/nsfw/panties?apikey=Donitas','panties','result','411971LGkalH','5345496FwFokC','1574937DlDbQe','wait','NEXT','73537hWPSvW','ZIM\x20BOT\x20INC','5772445fuusqU','870954wEriPw','sendMessage'];_0xc46f=function(){return _0x15cf6b;};return _0xc46f();}const _0x42cb40=_0x1864;(function(_0x1cd42a,_0x42582c){const _0x8d8311=_0x1864,_0x594a3a=_0x1cd42a();while(!![]){try{const _0x2f503b=-parseInt(_0x8d8311(0xab))/0x1*(parseInt(_0x8d8311(0xb3))/0x2)+parseInt(_0x8d8311(0xae))/0x3+parseInt(_0x8d8311(0xb2))/0x4+-parseInt(_0x8d8311(0xad))/0x5+parseInt(_0x8d8311(0xa2))/0x6*(-parseInt(_0x8d8311(0xa6))/0x7)+parseInt(_0x8d8311(0xa7))/0x8+parseInt(_0x8d8311(0xa8))/0x9;if(_0x2f503b===_0x42582c)break;else _0x594a3a['push'](_0x594a3a['shift']());}catch(_0x2c7643){_0x594a3a['push'](_0x594a3a['shift']());}}}(_0xc46f,0x9042b));function _0x1864(_0x275477,_0x1f2753){const _0xc46fe4=_0xc46f();return _0x1864=function(_0x186434,_0x36524d){_0x186434=_0x186434-0xa2;let _0x3824f7=_0xc46fe4[_0x186434];return _0x3824f7;},_0x1864(_0x275477,_0x1f2753);}{m.reply(mess[_0x42cb40(0xa9)]);let buttons=[{'buttonId':_0x42cb40(0xa4),'buttonText':{'displayText':_0x42cb40(0xaa)},'type':0x1}],anu=await fetchJson(_0x42cb40(0xa3)),buttonMessage={'image':{'url':''+anu[_0x42cb40(0xa5)]},'caption':_0x42cb40(0xac),'footer':global[_0x42cb40(0xb1)],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0x42cb40(0xaf)](m[_0x42cb40(0xb0)],buttonMessage,{'quoted':m});}
+                    case 'panties': function _0xc46f(){const _0x15cf6b=['chat','botnma','4153680mcaeiO','10dskSOg','6VZGKUe','https://wallebotapi.mitomods.com/docs/nsfw/panties?apikey=Donitas','panties','result','411971LGkalH','5345496FwFokC','1574937DlDbQe','wait','NEXT','73537hWPSvW','ZIM\x20BOT\x20INC','5772445fuusqU','870954wEriPw','sendMessage'];_0xc46f=function(){return _0x15cf6b;};return _0xc46f();}const _0x42cb40=_0x1864;(function(_0x1cd42a,_0x42582c){const _0x8d8311=_0x1864,_0x594a3a=_0x1cd42a();while(!![]){try{const _0x2f503b=-parseInt(_0x8d8311(0xab))/0x1*(parseInt(_0x8d8311(0xb3))/0x2)+parseInt(_0x8d8311(0xae))/0x3+parseInt(_0x8d8311(0xb2))/0x4+-parseInt(_0x8d8311(0xad))/0x5+parseInt(_0x8d8311(0xa2))/0x6*(-parseInt(_0x8d8311(0xa6))/0x7)+parseInt(_0x8d8311(0xa7))/0x8+parseInt(_0x8d8311(0xa8))/0x9;if(_0x2f503b===_0x42582c)break;else _0x594a3a['push'](_0x594a3a['shift']());}catch(_0x2c7643){_0x594a3a['push'](_0x594a3a['shift']());}}}(_0xc46f,0x9042b));function _0x1864(_0x275477,_0x1f2753){const _0xc46fe4=_0xc46f();return _0x1864=function(_0x186434,_0x36524d){_0x186434=_0x186434-0xa2;let _0x3824f7=_0xc46fe4[_0x186434];return _0x3824f7;},_0x1864(_0x275477,_0x1f2753);}{m.reply(mess[_0x42cb40(0xa9)]);let buttons=[{'buttonId':_0x42cb40(0xa4),'buttonText':{'displayText':_0x42cb40(0xaa)},'type':0x1}],anu=await fetchJson(_0x42cb40(0xa3)),buttonMessage={'image':{'url':''+anu[_0x42cb40(0xa5)]},'caption':_0x42cb40(0xac),'footer':global[_0x42cb40(0xb1)],'buttons':buttons,'headerType':0x4};ZimBotInc[_0x42cb40(0xaf)](m[_0x42cb40(0xb0)],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'pussy': const _0x5d1ac1=_0x35f7;(function(_0x515431,_0x70562f){const _0x52c802=_0x35f7,_0x4bc375=_0x515431();while(!![]){try{const _0x2e851b=parseInt(_0x52c802(0x7c))/0x1*(-parseInt(_0x52c802(0x86))/0x2)+parseInt(_0x52c802(0x8a))/0x3*(parseInt(_0x52c802(0x8d))/0x4)+parseInt(_0x52c802(0x85))/0x5+parseInt(_0x52c802(0x87))/0x6*(parseInt(_0x52c802(0x88))/0x7)+-parseInt(_0x52c802(0x80))/0x8*(parseInt(_0x52c802(0x7d))/0x9)+parseInt(_0x52c802(0x89))/0xa+-parseInt(_0x52c802(0x84))/0xb;if(_0x2e851b===_0x70562f)break;else _0x4bc375['push'](_0x4bc375['shift']());}catch(_0x366ecb){_0x4bc375['push'](_0x4bc375['shift']());}}}(_0x49e2,0x99615));function _0x35f7(_0x289517,_0x2517a0){const _0x49e200=_0x49e2();return _0x35f7=function(_0x35f7b0,_0x1c6d27){_0x35f7b0=_0x35f7b0-0x7c;let _0x290623=_0x49e200[_0x35f7b0];return _0x290623;},_0x35f7(_0x289517,_0x2517a0);}function _0x49e2(){const _0x4b7ab0=['chat','pussy','https://wallebotapi.mitomods.com/docs/nsfw/pussy?apikey=Donitas','12379422UPfGhI','5262460AgrkWy','2XzkqcF','274782pMMPVY','126urFRZW','9615280iRCPnf','268275jsepKO','NEXT','botnma','24vtNotI','1195213IOocCQ','684YUWPKz','sendMessage','wait','44848SOtwrq'];_0x49e2=function(){return _0x4b7ab0;};return _0x49e2();}{m.reply(mess[_0x5d1ac1(0x7f)]);let buttons=[{'buttonId':_0x5d1ac1(0x82),'buttonText':{'displayText':_0x5d1ac1(0x8b)},'type':0x1}],anu=await fetchJson(_0x5d1ac1(0x83)),buttonMessage={'image':{'url':''+anu['result']},'caption':'ZIM\x20BOT\x20INC','footer':global[_0x5d1ac1(0x8c)],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0x5d1ac1(0x7e)](m[_0x5d1ac1(0x81)],buttonMessage,{'quoted':m});}
+                    case 'pussy': const _0x5d1ac1=_0x35f7;(function(_0x515431,_0x70562f){const _0x52c802=_0x35f7,_0x4bc375=_0x515431();while(!![]){try{const _0x2e851b=parseInt(_0x52c802(0x7c))/0x1*(-parseInt(_0x52c802(0x86))/0x2)+parseInt(_0x52c802(0x8a))/0x3*(parseInt(_0x52c802(0x8d))/0x4)+parseInt(_0x52c802(0x85))/0x5+parseInt(_0x52c802(0x87))/0x6*(parseInt(_0x52c802(0x88))/0x7)+-parseInt(_0x52c802(0x80))/0x8*(parseInt(_0x52c802(0x7d))/0x9)+parseInt(_0x52c802(0x89))/0xa+-parseInt(_0x52c802(0x84))/0xb;if(_0x2e851b===_0x70562f)break;else _0x4bc375['push'](_0x4bc375['shift']());}catch(_0x366ecb){_0x4bc375['push'](_0x4bc375['shift']());}}}(_0x49e2,0x99615));function _0x35f7(_0x289517,_0x2517a0){const _0x49e200=_0x49e2();return _0x35f7=function(_0x35f7b0,_0x1c6d27){_0x35f7b0=_0x35f7b0-0x7c;let _0x290623=_0x49e200[_0x35f7b0];return _0x290623;},_0x35f7(_0x289517,_0x2517a0);}function _0x49e2(){const _0x4b7ab0=['chat','pussy','https://wallebotapi.mitomods.com/docs/nsfw/pussy?apikey=Donitas','12379422UPfGhI','5262460AgrkWy','2XzkqcF','274782pMMPVY','126urFRZW','9615280iRCPnf','268275jsepKO','NEXT','botnma','24vtNotI','1195213IOocCQ','684YUWPKz','sendMessage','wait','44848SOtwrq'];_0x49e2=function(){return _0x4b7ab0;};return _0x49e2();}{m.reply(mess[_0x5d1ac1(0x7f)]);let buttons=[{'buttonId':_0x5d1ac1(0x82),'buttonText':{'displayText':_0x5d1ac1(0x8b)},'type':0x1}],anu=await fetchJson(_0x5d1ac1(0x83)),buttonMessage={'image':{'url':''+anu['result']},'caption':'ZIM\x20BOT\x20INC','footer':global[_0x5d1ac1(0x8c)],'buttons':buttons,'headerType':0x4};ZimBotInc[_0x5d1ac1(0x7e)](m[_0x5d1ac1(0x81)],buttonMessage,{'quoted':m});}
                     break
                     
-                    case 'thighs': function _0x4b34(_0x22ae9d,_0x1b7b0f){const _0x5955d9=_0x5955();return _0x4b34=function(_0x4b34b7,_0x1ddb61){_0x4b34b7=_0x4b34b7-0x1c2;let _0x5d4211=_0x5955d9[_0x4b34b7];return _0x5d4211;},_0x4b34(_0x22ae9d,_0x1b7b0f);}const _0x2221a2=_0x4b34;function _0x5955(){const _0x110e7d=['sendMessage','1093970DSMAQE','botnma','NEXT','https://wallebotapi.mitomods.com/docs/nsfw/thighs?apikey=Donitas','2151395PpSjci','ZIM\x20BOT\x20INC','12JMKCVS','19922TmhQUR','wait','492009FBnOUm','72SnrqXB','194080tRRKnp','thighs','5970767VVepYL','121fRvIMb','18GszdWR','51CORiEY','343612uKXWeo','chat'];_0x5955=function(){return _0x110e7d;};return _0x5955();}(function(_0x579e1e,_0x50f2d8){const _0x5d2342=_0x4b34,_0x332d42=_0x579e1e();while(!![]){try{const _0x3a00a0=parseInt(_0x5d2342(0x1d3))/0x1*(parseInt(_0x5d2342(0x1cc))/0x2)+parseInt(_0x5d2342(0x1d5))/0x3*(-parseInt(_0x5d2342(0x1c2))/0x4)+parseInt(_0x5d2342(0x1c9))/0x5*(parseInt(_0x5d2342(0x1d4))/0x6)+parseInt(_0x5d2342(0x1ce))/0x7+-parseInt(_0x5d2342(0x1d0))/0x8*(-parseInt(_0x5d2342(0x1cf))/0x9)+parseInt(_0x5d2342(0x1c5))/0xa+-parseInt(_0x5d2342(0x1d2))/0xb*(parseInt(_0x5d2342(0x1cb))/0xc);if(_0x3a00a0===_0x50f2d8)break;else _0x332d42['push'](_0x332d42['shift']());}catch(_0x3df376){_0x332d42['push'](_0x332d42['shift']());}}}(_0x5955,0xd39ae));{m.reply(mess[_0x2221a2(0x1cd)]);let buttons=[{'buttonId':_0x2221a2(0x1d1),'buttonText':{'displayText':_0x2221a2(0x1c7)},'type':0x1}],anu=await fetchJson(_0x2221a2(0x1c8)),buttonMessage={'image':{'url':''+anu['result']},'caption':_0x2221a2(0x1ca),'footer':global[_0x2221a2(0x1c6)],'buttons':buttons,'headerType':0x4};AlphaBotInc[_0x2221a2(0x1c4)](m[_0x2221a2(0x1c3)],buttonMessage,{'quoted':m});}
+                    case 'thighs': function _0x4b34(_0x22ae9d,_0x1b7b0f){const _0x5955d9=_0x5955();return _0x4b34=function(_0x4b34b7,_0x1ddb61){_0x4b34b7=_0x4b34b7-0x1c2;let _0x5d4211=_0x5955d9[_0x4b34b7];return _0x5d4211;},_0x4b34(_0x22ae9d,_0x1b7b0f);}const _0x2221a2=_0x4b34;function _0x5955(){const _0x110e7d=['sendMessage','1093970DSMAQE','botnma','NEXT','https://wallebotapi.mitomods.com/docs/nsfw/thighs?apikey=Donitas','2151395PpSjci','ZIM\x20BOT\x20INC','12JMKCVS','19922TmhQUR','wait','492009FBnOUm','72SnrqXB','194080tRRKnp','thighs','5970767VVepYL','121fRvIMb','18GszdWR','51CORiEY','343612uKXWeo','chat'];_0x5955=function(){return _0x110e7d;};return _0x5955();}(function(_0x579e1e,_0x50f2d8){const _0x5d2342=_0x4b34,_0x332d42=_0x579e1e();while(!![]){try{const _0x3a00a0=parseInt(_0x5d2342(0x1d3))/0x1*(parseInt(_0x5d2342(0x1cc))/0x2)+parseInt(_0x5d2342(0x1d5))/0x3*(-parseInt(_0x5d2342(0x1c2))/0x4)+parseInt(_0x5d2342(0x1c9))/0x5*(parseInt(_0x5d2342(0x1d4))/0x6)+parseInt(_0x5d2342(0x1ce))/0x7+-parseInt(_0x5d2342(0x1d0))/0x8*(-parseInt(_0x5d2342(0x1cf))/0x9)+parseInt(_0x5d2342(0x1c5))/0xa+-parseInt(_0x5d2342(0x1d2))/0xb*(parseInt(_0x5d2342(0x1cb))/0xc);if(_0x3a00a0===_0x50f2d8)break;else _0x332d42['push'](_0x332d42['shift']());}catch(_0x3df376){_0x332d42['push'](_0x332d42['shift']());}}}(_0x5955,0xd39ae));{m.reply(mess[_0x2221a2(0x1cd)]);let buttons=[{'buttonId':_0x2221a2(0x1d1),'buttonText':{'displayText':_0x2221a2(0x1c7)},'type':0x1}],anu=await fetchJson(_0x2221a2(0x1c8)),buttonMessage={'image':{'url':''+anu['result']},'caption':_0x2221a2(0x1ca),'footer':global[_0x2221a2(0x1c6)],'buttons':buttons,'headerType':0x4};ZimBotInc[_0x2221a2(0x1c4)](m[_0x2221a2(0x1c3)],buttonMessage,{'quoted':m});}
                     break
                     
                     case 'antivirtex':
@@ -3944,10 +3944,10 @@ m.reply(`\`\`\`*Success , Activating the antivirtex feature in the group*\`\`\` 
             if (isLimit < 1) return m.reply(mess.endLimit)
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
-                let anu = await fetchJson('https://raw.DISCUSSION GROUPusercontent.com/iamriz7/kopel_/main/kopel.json')
+                let anu = await fetchJson('https://raw.githubusercontent.com/iamriz7/kopel_/main/kopel.json')
                 let random = anu[Math.floor(Math.random() * anu.length)]
-                AlphaBotInc.sendMessage(m.chat, { image: { url: random.male }, caption: `Couple Male` }, { quoted: m })
-                AlphaBotInc.sendMessage(m.chat, { image: { url: random.female }, caption: `Couple Female` }, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { image: { url: random.male }, caption: `Couple Male` }, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { image: { url: random.female }, caption: `Couple Female` }, { quoted: m })
             }
 	    break        
             case 'coffe': case 'kopi': {
@@ -3966,7 +3966,7 @@ m.reply(`\`\`\`*Success , Activating the antivirtex feature in the group*\`\`\` 
                     buttons: buttons,
                     headerType: 4
                 }
-                AlphaBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
             }
             break
            
@@ -3987,11 +3987,11 @@ m.reply(`\`\`\`*Success , Activating the antivirtex feature in the group*\`\`\` 
                 let buttonMessage = {
                     image: { url: result.image[0] },
                     caption: `> Title : ${result.title}\n> Category : ${result.type}\n> Detail : ${result.source}\n> Media Url : ${result.image[2] || result.image[1] || result.image[0]}`,
-                    footer: AlphaBotInc.user.name,
+                    footer: ZimBotInc.user.name,
                     buttons: buttons,
                     headerType: 4
                 }
-                AlphaBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
             }
             break                                                                       //by drips if you copy give credits
             case 'slot': { 
@@ -4022,7 +4022,7 @@ m.reply(`\`\`\`*Success , Activating the antivirtex feature in the group*\`\`\` 
                     randIndex = Math.floor(Math.random() * jsonData.length)
                     randKey = jsonData[randIndex];
                     buffer = await getBuffer(randKey.result)
-                    AlphaBotInc.sendMessage(from, { image: buffer, caption: '*SLOT MACHINE*\n'+ dripslot }, {quoted:m})
+                    ZimBotInc.sendMessage(from, { image: buffer, caption: '*SLOT MACHINE*\n'+ dripslot }, {quoted:m})
                 }
                     
                 
@@ -4047,11 +4047,11 @@ m.reply(`\`\`\`*Success , Activating the antivirtex feature in the group*\`\`\` 
                 let buttonMessage = {
                     image: { url: result.image },
                     caption: `> Title : ${result.title}\n> Source : ${result.source}\n> Media Url : ${result.image}`,
-                    footer: AlphaBotInc.user.name,
+                    footer: ZimBotInc.user.name,
                     buttons: buttons,
                     headerType: 4
                 }
-                AlphaBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
             }
             break
             case 'kbbi': {            
@@ -4096,7 +4096,7 @@ if (isBan) throw mess.ban
                     buttons: buttons,
                     headerType: 2
                 }
-                AlphaBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
             }
             break
             case 'wp': case 'wattpad': case 'wattpadsearch': {
@@ -4119,7 +4119,7 @@ if (!text) throw 'Masukkan query'
 
 				let link = await getBuffer(result[0].thumb)
 
-                AlphaBotInc.sendMessage(m.chat, { image: link, caption: `${result[0].description}\nTitle: ${result[0].judul}\nAuthor: DRIPS\nDibaca: ${result[0].dibaca}\nDivote: ${result[0].divote}\nBab: ${result[0].bab}\nWaktu: ${result[0].waktu}\nUrl: ${result[0].url}` }, { quoted: m })                                              
+                ZimBotInc.sendMessage(m.chat, { image: link, caption: `${result[0].description}\nTitle: ${result[0].judul}\nAuthor: DRIPS\nDibaca: ${result[0].dibaca}\nDivote: ${result[0].divote}\nBab: ${result[0].bab}\nWaktu: ${result[0].waktu}\nUrl: ${result[0].url}` }, { quoted: m })                                              
 
             }).catch((err) => m.reply(`*feature error*`))
 
@@ -4140,7 +4140,7 @@ if (!isInventoryLimit){ addInventoriLimit(m.sender) }
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 peh = `https://xteam.xyz/tahta?text=${text}&APIKEY=${setting.riy}`
-AlphaBotInc.sendMessage(m.chat, {image: await getBuffer(peh)}, {quoted:m}).catch ((err) => m.reply('error'))     
+ZimBotInc.sendMessage(m.chat, {image: await getBuffer(peh)}, {quoted:m}).catch ((err) => m.reply('error'))     
 }
 break
 
@@ -4153,7 +4153,7 @@ break
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/textpro/${command}?text=${text}&apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, caption: `Text Pro ${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, caption: `Text Pro ${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
 	            }
                 break
      case 'marvel-logo2': case 'lion-logo': case 'pornhub': case 'avengers-logo': case 'ninja-logo': case 'grafity-text2' : case 'astone': case 'space': case 'logo-wolf2': case 'logo-wolf': case 'captain': {
@@ -4165,7 +4165,7 @@ break
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api-riychdwayne.herokuapp.com/api/textpro/${command}?text=${text}&text2=.&apikey=${setting.riy}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, caption: `Text Pro ${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, caption: `Text Pro ${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
 	            }
                 break
                 case 'silk':  case '3dnature': case 'bevel': case 'birthdaycake': case  'burnpaper':  case 'coffee': case 'coffee-heartcup': case 'embroiderytext': case 'flaming': case 'flowertypo': case 'funnycup': case 'fur': case 'gerbang': case 'glowrainbow': case 'gradientavatar': case 'graffititext': case 'harrypotter': case 'lovemessage': case 'luxuryroyal': case 'neonlight': case 'sweetcandy': case 'summertext': case 'woodheart': case 'woodblock': case 'yellowroses': case 'wolfmetal': case 'underwaterocean': {
@@ -4177,7 +4177,7 @@ break
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
             anu = await getBuffer(`https://violetics.pw/api/photooxy/${command}?apikey=${setting.violkey}&text=${text}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, caption: `*PHOTO OXY ${command}*` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, caption: `*PHOTO OXY ${command}*` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
 	            }
                 break
      case 'wanted': case 'ytcomment': case 'beautiful': case 'jail': case 'fotojatoh': case 'pixelate': case 'blur': case 'imagesketch': case 'triggeredwebp': case 'shit': case 'burn': case 'invert': case 'gay': case 'wanted': case 'rip': case 'delete': {
@@ -4189,10 +4189,10 @@ break
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 	        	let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
-                let media = await AlphaBotInc.downloadAndSaveMediaMessage(quoted)                
+                let media = await ZimBotInc.downloadAndSaveMediaMessage(quoted)                
                 let anu = await TelegraPh(media)
                 let buf = await getBuffer(`https://cililitan.herokuapp.com/api/${command}?url=${anu}`)
-                AlphaBotInc.sendMessage(m.chat, { image: buf, caption: `Effect ${command}` }, { quoted: m}).catch ((err) => m.reply('error'))
+                ZimBotInc.sendMessage(m.chat, { image: buf, caption: `Effect ${command}` }, { quoted: m}).catch ((err) => m.reply('error'))
                 }
                 break
                 //TRUTH OR DARE
@@ -4208,7 +4208,7 @@ if (isBan) throw mess.ban
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api.akuari.my.id/ephoto/${command}?text=${text}&text_2=${text}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, caption: `*EPHOTO ${command}*` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, caption: `*EPHOTO ${command}*` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
 	            }
                 break
 case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': case 'sandsummer-beach': case 'snow-text': case 'water-3d': case 'water-effect': case 'wet-glass': case 'status-mood2': case 'summerysand': {
@@ -4219,7 +4219,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                     kurangLimit(m.sender, 1)
                      m.reply(`*1 limit used*`)
                     anu = await getBuffer(`https://violetics.pw/api/ephoto360/${command}?apikey=${setting.violkey}&text=${text}`)
-                    AlphaBotInc.sendMessage(m.chat, { image: anu, caption: `*EPHOTO ${command}*` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
+                    ZimBotInc.sendMessage(m.chat, { image: anu, caption: `*EPHOTO ${command}*` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
                     }
                     break
                 break
@@ -4230,7 +4230,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api.lolhuman.xyz/api/fuckboy?apikey=${setting.lolkey}&name=${text}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
 	            }
                 break
                 case 'fuckgirlserti': {
@@ -4240,7 +4240,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api.lolhuman.xyz/api/fuckgirl?apikey=${setting.lolkey}&name=${text}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
 	            }
                 break
                 case 'bucinserti': {
@@ -4250,7 +4250,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api.lolhuman.xyz/api/bucinserti?apikey=${setting.lolkey}&name=${text}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
 	            }
                 break
                 case 'goodboyserti': {
@@ -4260,7 +4260,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api.lolhuman.xyz/api/goodboy?apikey=${setting.lolkey}&name=${text}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
 	            }
                 break
                 case 'goodgirlserti': {
@@ -4270,7 +4270,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api.lolhuman.xyz/api/goodgirl?apikey=${setting.lolkey}&name=${text}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
 	            }
                 break
                 case 'badboyserti': {
@@ -4280,7 +4280,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api.lolhuman.xyz/api/badboy?apikey=${setting.lolkey}&name=${text}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
 	            }
                 break
                case 'badgirlserti': {
@@ -4290,7 +4290,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 anu = await getBuffer(`https://api.lolhuman.xyz/api/badgirl?apikey=${setting.lolkey}&name=${text}`)
-                AlphaBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
+                ZimBotInc.sendMessage(m.chat, { image: anu, caption: `${command}` }, { quoted: m}).catch((err) => m.reply('*Sorry Xteam server is down*'))
 	            }
                 break
 //ZIM BOT INC
@@ -4304,7 +4304,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
             m.reply(`*1 limit used*`)
                 let anu = await primbon.nomer_hoki(Number(text))
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *NAME HP :* ${anu.message.nomer_hp}\n> *CHECK POINT :* ${anu.message.angka_shuzi}\n> *ENERGY POSITION :*\n- Riches : ${anu.message.energi_positif.kekayaan}\n- Health : ${anu.message.energi_positif.kesehatan}\n- Love : ${anu.message.energi_positif.cinta}\n- Stability : ${anu.message.energi_positif.kestabilan}\n- Percentage : ${anu.message.energi_positif.persentase}\n> *Negative Energy :*\n- Dispute : ${anu.message.energi_negatif.perselisihan}\n- Loss : ${anu.message.energi_negatif.kehilangan}\n- Disaster: ${anu.message.energi_negatif.malapetaka}\n- destruction : ${anu.message.energi_negatif.kehancuran}\n- Percentage : ${anu.message.energi_negatif.persentase}`, m)
+                ZimBotInc.sendText(m.chat, `> *NAME HP :* ${anu.message.nomer_hp}\n> *CHECK POINT :* ${anu.message.angka_shuzi}\n> *ENERGY POSITION :*\n- Riches : ${anu.message.energi_positif.kekayaan}\n- Health : ${anu.message.energi_positif.kesehatan}\n- Love : ${anu.message.energi_positif.cinta}\n- Stability : ${anu.message.energi_positif.kestabilan}\n- Percentage : ${anu.message.energi_positif.persentase}\n> *Negative Energy :*\n- Dispute : ${anu.message.energi_negatif.perselisihan}\n- Loss : ${anu.message.energi_negatif.kehilangan}\n- Disaster: ${anu.message.energi_negatif.malapetaka}\n- destruction : ${anu.message.energi_negatif.kehancuran}\n- Percentage : ${anu.message.energi_negatif.persentase}`, m)
             }
             break
             case 'artimimpi': case 'tafsirmimpi': {
@@ -4316,7 +4316,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
             m.reply(`*1 limit used*`)
                 let anu = await primbon.tafsir_mimpi(text)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Dream :* ${anu.message.mimpi}\n> *ARTI :* ${anu.message.arti}\n> *SOLUTION :* ${anu.message.solusi}`, m)
+                ZimBotInc.sendText(m.chat, `> *Dream :* ${anu.message.mimpi}\n> *ARTI :* ${anu.message.arti}\n> *SOLUTION :* ${anu.message.solusi}`, m)
             }
             break
             case 'ramalanjodoh': case 'ramaljodoh': {
@@ -4329,7 +4329,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
                 let anu = await primbon.ramalan_jodoh(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *YOUR NAME :* ${anu.message.nama_anda.nama}\n> *YOUR BIRTH :* ${anu.message.nama_anda.tgl_lahir}\n> *Spouse Name :* ${anu.message.nama_pasangan.nama}\n> *Born Couple :* ${anu.message.nama_pasangan.tgl_lahir}\n> *Results :* ${anu.message.result}\n> *Notes :* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *YOUR NAME :* ${anu.message.nama_anda.nama}\n> *YOUR BIRTH :* ${anu.message.nama_anda.tgl_lahir}\n> *Spouse Name :* ${anu.message.nama_pasangan.nama}\n> *Born Couple :* ${anu.message.nama_pasangan.tgl_lahir}\n> *Results :* ${anu.message.result}\n> *Notes :* ${anu.message.catatan}`, m)
             }
             break
             case 'ramalanjodohbali': case 'ramaljodohbali': {
@@ -4342,7 +4342,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
                 let anu = await primbon.ramalan_jodoh_bali(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *YOUR NAME :* ${anu.message.nama_anda.nama}\n> *YOUR BIRTH :* ${anu.message.nama_anda.tgl_lahir}\n> *SPOUSE NAME :* ${anu.message.nama_pasangan.nama}\n> *BORN COUPLE :* ${anu.message.nama_pasangan.tgl_lahir}\n> *RESULTS :* ${anu.message.result}\n> *NOTES :* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *YOUR NAME :* ${anu.message.nama_anda.nama}\n> *YOUR BIRTH :* ${anu.message.nama_anda.tgl_lahir}\n> *SPOUSE NAME :* ${anu.message.nama_pasangan.nama}\n> *BORN COUPLE :* ${anu.message.nama_pasangan.tgl_lahir}\n> *RESULTS :* ${anu.message.result}\n> *NOTES :* ${anu.message.catatan}`, m)
             }
             break
             case 'suamiistri': {
@@ -4355,7 +4355,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
                 let anu = await primbon.suami_istri(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *NAME :* ${anu.message.suami.nama}\n> *Husband Born :* ${anu.message.suami.tgl_lahir}\n> *Wife's name:* ${anu.message.istri.nama}\n> *Born Wife :* ${anu.message.istri.tgl_lahir}\n> *RESULTS :* ${anu.message.result}\n> *Notes :* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *NAME :* ${anu.message.suami.nama}\n> *Husband Born :* ${anu.message.suami.tgl_lahir}\n> *Wife's name:* ${anu.message.istri.nama}\n> *Born Wife :* ${anu.message.istri.tgl_lahir}\n> *RESULTS :* ${anu.message.result}\n> *Notes :* ${anu.message.catatan}`, m)
             }
             //GIVE CREDITS
             break
@@ -4369,7 +4369,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
                 let anu = await primbon.ramalan_cinta(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Your name :* ${anu.message.nama_anda.nama}\n> *Your birth :* ${anu.message.nama_anda.tgl_lahir}\n> *Spouse Name :* ${anu.message.nama_pasangan.nama}\n> *Born Couple :* ${anu.message.nama_pasangan.tgl_lahir}\n> *Positive side :* ${anu.message.sisi_positif}\n> *Negative Side :* ${anu.message.sisi_negatif}\n> *NOTES :* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *Your name :* ${anu.message.nama_anda.nama}\n> *Your birth :* ${anu.message.nama_anda.tgl_lahir}\n> *Spouse Name :* ${anu.message.nama_pasangan.nama}\n> *Born Couple :* ${anu.message.nama_pasangan.tgl_lahir}\n> *Positive side :* ${anu.message.sisi_positif}\n> *Negative Side :* ${anu.message.sisi_negatif}\n> *NOTES :* ${anu.message.catatan}`, m)
             }
             break
             case 'artinama': {            
@@ -4380,7 +4380,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
             m.reply(`*1 limit used*`)
                 let anu = await primbon.arti_nama(text)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *NAME :* ${anu.message.nama}\n> *ARTI :* ${anu.message.arti}\n> *NOTES :* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *NAME :* ${anu.message.nama}\n> *ARTI :* ${anu.message.arti}\n> *NOTES :* ${anu.message.catatan}`, m)
             }
             break
             case 'kecocokannama': case 'cocoknama': {
@@ -4393,7 +4393,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [nama, tgl, bln, thn] = text.split`,`
                 let anu = await primbon.kecocokan_nama(nama, tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *NAME :* ${anu.message.nama}\n> *Born :* ${anu.message.tgl_lahir}\n> *Life Path :* ${anu.message.life_path}\n> *Destiny :* ${anu.message.destiny}\n> *Destiny Desire :* ${anu.message.destiny_desire}\n> *Personality :* ${anu.message.personality}\n> *Percentage :* ${anu.message.persentase_kecocokan}`, m)
+                ZimBotInc.sendText(m.chat, `> *NAME :* ${anu.message.nama}\n> *Born :* ${anu.message.tgl_lahir}\n> *Life Path :* ${anu.message.life_path}\n> *Destiny :* ${anu.message.destiny}\n> *Destiny Desire :* ${anu.message.destiny_desire}\n> *Personality :* ${anu.message.personality}\n> *Percentage :* ${anu.message.persentase_kecocokan}`, m)
             }
             break
             case 'kecocokanpasangan': case 'cocokpasangan': case 'pasangan': {
@@ -4406,7 +4406,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [nama1, nama2] = text.split`|`
                 let anu = await primbon.kecocokan_nama_pasangan(nama1, nama2)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendImage(m.chat,  anu.message.gambar, `> *Your name :* ${anu.message.nama_anda}\n> *Spouse Name :* ${anu.message.nama_pasangan}\n> *Positive side :* ${anu.message.sisi_positif}\n> *Negative Side :* ${anu.message.sisi_negatif}`, m)
+                ZimBotInc.sendImage(m.chat,  anu.message.gambar, `> *Your name :* ${anu.message.nama_anda}\n> *Spouse Name :* ${anu.message.nama_pasangan}\n> *Positive side :* ${anu.message.sisi_positif}\n> *Negative Side :* ${anu.message.sisi_negatif}`, m)
             }
             break
             case 'jadianpernikahan': case 'jadiannikah': {
@@ -4415,7 +4415,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.tanggal_jadian_pernikahan(tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Tanggal Pernikahan :* ${anu.message.tanggal}\n> *characteristics:* ${anu.message.karakteristik}`, m)
+                ZimBotInc.sendText(m.chat, `> *Tanggal Pernikahan :* ${anu.message.tanggal}\n> *characteristics:* ${anu.message.karakteristik}`, m)
             }
             break
             case 'sifatusaha': {
@@ -4424,7 +4424,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.sifat_usaha_bisnis(tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Born :* ${anu.message.hari_lahir}\n> *Effort :* ${anu.message.usaha}`, m)
+                ZimBotInc.sendText(m.chat, `> *Born :* ${anu.message.hari_lahir}\n> *Effort :* ${anu.message.usaha}`, m)
             }
             break
             case 'rejeki': case 'rezeki': {
@@ -4433,7 +4433,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.rejeki_hoki_weton(tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Born :* ${anu.message.hari_lahir}\n> *Sustenance:* ${anu.message.rejeki}\n> *NOTES* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *Born :* ${anu.message.hari_lahir}\n> *Sustenance:* ${anu.message.rejeki}\n> *NOTES* ${anu.message.catatan}`, m)
             }
             break
             case 'pekerjaan': case 'kerja': {
@@ -4442,7 +4442,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.pekerjaan_weton_lahir(tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Born :* ${anu.message.hari_lahir}\n> *Work :* ${anu.message.pekerjaan}\n> *NOTES* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *Born :* ${anu.message.hari_lahir}\n> *Work :* ${anu.message.pekerjaan}\n> *NOTES* ${anu.message.catatan}`, m)
             }
             break
             case 'ramalannasib': case 'ramalnasib': case 'nasib': {
@@ -4451,7 +4451,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.ramalan_nasib(tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Analysis :* ${anu.message.analisa}\n> *Root Number :* ${anu.message.angka_akar}\n> *Properties:* ${anu.message.sifat}\n> *Elemennt :* ${anu.message.elemen}\n> *Lucky Numbers :* ${anu.message.angka_keberuntungan}`, m)
+                ZimBotInc.sendText(m.chat, `> *Analysis :* ${anu.message.analisa}\n> *Root Number :* ${anu.message.angka_akar}\n> *Properties:* ${anu.message.sifat}\n> *Elemennt :* ${anu.message.elemen}\n> *Lucky Numbers :* ${anu.message.angka_keberuntungan}`, m)
             }
             break
             case 'potensipenyakit': case 'penyakit': {
@@ -4460,7 +4460,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.cek_potensi_penyakit(tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Analysis :* ${anu.message.analisa}\n> *SECTOR :* ${anu.message.sektor}\n> *Element :* ${anu.message.elemen}\n> *NOTES* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *Analysis :* ${anu.message.analisa}\n> *SECTOR :* ${anu.message.sektor}\n> *Element :* ${anu.message.elemen}\n> *NOTES* ${anu.message.catatan}`, m)
             }
             break
             case 'artitarot': case 'tarot': {
@@ -4469,7 +4469,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.arti_kartu_tarot(tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendImage(m.chat, anu.message.image, `> *Born :* ${anu.message.tgl_lahir}\n> *Symbol tart :* ${anu.message.simbol_tarot}\n> *Arti :* ${anu.message.arti}\n> *NOTES* ${anu.message.catatan}`, m)
+                ZimBotInc.sendImage(m.chat, anu.message.image, `> *Born :* ${anu.message.tgl_lahir}\n> *Symbol tart :* ${anu.message.simbol_tarot}\n> *Arti :* ${anu.message.arti}\n> *NOTES* ${anu.message.catatan}`, m)
             }
             break
             case 'fengshui': {
@@ -4478,7 +4478,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [nama, gender, tahun] = text.split`,`
                 let anu = await primbon.perhitungan_feng_shui(nama, gender, tahun)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *NAME :* ${anu.message.nama}\n> *Born :* ${anu.message.tahun_lahir}\n> *Gender :* ${anu.message.jenis_kelamin}\n> *Kua Numbers :* ${anu.message.angka_kua}\n> *Group :* ${anu.message.kelompok}\n> *CHARACTER :* ${anu.message.karakter}\n> *Good Sector :* ${anu.message.sektor_baik}\n> *Bad Sector :* ${anu.message.sektor_buruk}`, m)
+                ZimBotInc.sendText(m.chat, `> *NAME :* ${anu.message.nama}\n> *Born :* ${anu.message.tahun_lahir}\n> *Gender :* ${anu.message.jenis_kelamin}\n> *Kua Numbers :* ${anu.message.angka_kua}\n> *Group :* ${anu.message.kelompok}\n> *CHARACTER :* ${anu.message.karakter}\n> *Good Sector :* ${anu.message.sektor_baik}\n> *Bad Sector :* ${anu.message.sektor_buruk}`, m)
             }
             break
             case 'haribaik': {
@@ -4487,7 +4487,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.petung_hari_baik(tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Born :* ${anu.message.tgl_lahir}\n> *Kala Tinantang :* ${anu.message.kala_tinantang}\n> *Info :* ${anu.message.info}\n> *NOTES* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *Born :* ${anu.message.tgl_lahir}\n> *Kala Tinantang :* ${anu.message.kala_tinantang}\n> *Info :* ${anu.message.info}\n> *NOTES* ${anu.message.catatan}`, m)
             }
             break
             case 'harisangar': case 'taliwangke': {
@@ -4496,7 +4496,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.hari_sangar_taliwangke(tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Born :* ${anu.message.tgl_lahir}\n> *Results :* ${anu.message.result}\n> *Info :* ${anu.message.info}\n> *NOTES* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *Born :* ${anu.message.tgl_lahir}\n> *Results :* ${anu.message.result}\n> *Info :* ${anu.message.info}\n> *NOTES* ${anu.message.catatan}`, m)
             }
             break
             case 'harinaas': case 'harisial': {
@@ -4505,7 +4505,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.primbon_hari_naas(tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Born Day :* ${anu.message.hari_lahir}\n> *Born Date : :* ${anu.message.tgl_lahir}\n> *fateful day :* ${anu.message.hari_naas}\n> *Info :* ${anu.message.catatan}\n> *NOTES* ${anu.message.info}`, m)
+                ZimBotInc.sendText(m.chat, `> *Born Day :* ${anu.message.hari_lahir}\n> *Born Date : :* ${anu.message.tgl_lahir}\n> *fateful day :* ${anu.message.hari_naas}\n> *Info :* ${anu.message.catatan}\n> *NOTES* ${anu.message.info}`, m)
             }
             break
             case 'nagahari': case 'harinaga': {
@@ -4514,7 +4514,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.rahasia_naga_hari(tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Born Day :* ${anu.message.hari_lahir}\n> *Born Date :* ${anu.message.tgl_lahir}\n> *Dragon Day Direction :* ${anu.message.arah_naga_hari}\n> *NOTES* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *Born Day :* ${anu.message.hari_lahir}\n> *Born Date :* ${anu.message.tgl_lahir}\n> *Dragon Day Direction :* ${anu.message.arah_naga_hari}\n> *NOTES* ${anu.message.catatan}`, m)
             }
             break
             case 'arahrejeki': case 'arahrezeki': {
@@ -4523,7 +4523,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.primbon_arah_rejeki(tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Born Day :* ${anu.message.hari_lahir}\n> *Born Date : :* ${anu.message.tgl_lahir}\n> *Sustenance Direction:* ${anu.message.arah_rejeki}\n> *NOTES* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *Born Day :* ${anu.message.hari_lahir}\n> *Born Date : :* ${anu.message.tgl_lahir}\n> *Sustenance Direction:* ${anu.message.arah_rejeki}\n> *NOTES* ${anu.message.catatan}`, m)
             }
             break
             case 'peruntungan': {
@@ -4532,7 +4532,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [nama, tgl, bln, thn, untuk] = text.split`,`
                 let anu = await primbon.ramalan_peruntungan(nama, tgl, bln, thn, untuk)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *NAME :* ${anu.message.nama}\n> *Born :* ${anu.message.tgl_lahir}\n> *Peruntungan Tahun :* ${anu.message.peruntungan_tahun}\n> *Results :* ${anu.message.result}\n> *NOTES* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *NAME :* ${anu.message.nama}\n> *Born :* ${anu.message.tgl_lahir}\n> *Peruntungan Tahun :* ${anu.message.peruntungan_tahun}\n> *Results :* ${anu.message.result}\n> *NOTES* ${anu.message.catatan}`, m)
             }
             break
             case 'weton': case 'wetonjawa': {
@@ -4541,7 +4541,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.weton_jawa(tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Date :* ${anu.message.tanggal}\n> *Number of Neptune :* ${anu.message.jumlah_neptu}\n> *Character of the Day:* ${anu.message.watak_hari}\n> *Dragon Day :* ${anu.message.naga_hari}\n> *Good Hour :* ${anu.message.jam_baik}\n> *Birth Character :* ${anu.message.watak_kelahiran}`, m)
+                ZimBotInc.sendText(m.chat, `> *Date :* ${anu.message.tanggal}\n> *Number of Neptune :* ${anu.message.jumlah_neptu}\n> *Character of the Day:* ${anu.message.watak_hari}\n> *Dragon Day :* ${anu.message.naga_hari}\n> *Good Hour :* ${anu.message.jam_baik}\n> *Birth Character :* ${anu.message.watak_kelahiran}`, m)
             }
             break
             case 'sifat': case 'karakter': {
@@ -4550,7 +4550,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [nama, tgl, bln, thn] = text.split`,`
                 let anu = await primbon.sifat_karakter_tanggal_lahir(nama, tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *NAME :* ${anu.message.nama}\n> *Born :* ${anu.message.tgl_lahir}\n> *Lifeline :* ${anu.message.garis_hidup}`, m)
+                ZimBotInc.sendText(m.chat, `> *NAME :* ${anu.message.nama}\n> *Born :* ${anu.message.tgl_lahir}\n> *Lifeline :* ${anu.message.garis_hidup}`, m)
             }
             break
             case 'keberuntungan': {
@@ -4559,7 +4559,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [nama, tgl, bln, thn] = text.split`,`
                 let anu = await primbon.potensi_keberuntungan(nama, tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *NAME :* ${anu.message.nama}\n> *Born :* ${anu.message.tgl_lahir}\n> *Results :* ${anu.message.result}`, m)
+                ZimBotInc.sendText(m.chat, `> *NAME :* ${anu.message.nama}\n> *Born :* ${anu.message.tgl_lahir}\n> *Results :* ${anu.message.result}`, m)
             }
             break
             case 'memancing': {
@@ -4568,7 +4568,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn] = text.split`,`
                 let anu = await primbon.primbon_memancing_ikan(tgl, bln, thn)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Date :* ${anu.message.tgl_memancing}\n> *Results :* ${anu.message.result}\n> *NOTES* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *Date :* ${anu.message.tgl_memancing}\n> *Results :* ${anu.message.result}\n> *NOTES* ${anu.message.catatan}`, m)
             }
             break
             case 'masasubur': {
@@ -4577,7 +4577,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 let [tgl, bln, thn, siklus] = text.split`,`
                 let anu = await primbon.masa_subur(tgl, bln, thn, siklus)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Results :* ${anu.message.result}\n> *NOTES* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *Results :* ${anu.message.result}\n> *NOTES* ${anu.message.catatan}`, m)
             }
             break
             case 'zodiak': case 'zodiac': {
@@ -4613,7 +4613,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 
                 let anu = await primbon.zodiak(zodiac)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Zodiak :* ${anu.message.zodiak}\n> *NAME:* ${anu.message.nomor_keberuntungan}\n> *Aroma :* ${anu.message.aroma_keberuntungan}\n> *Planet :* ${anu.message.planet_yang_mengitari}\n> *Flower :* ${anu.message.bunga_keberuntungan}\n> *Warn :* ${anu.message.warna_keberuntungan}\n> *Batu :* ${anu.message.batu_keberuntungan}\n> *Element :* ${anu.message.elemen_keberuntungan}\n> *Zodiac Couple :* ${anu.message.pasangan_zodiak}\n> *NOTES* ${anu.message.catatan}`, m)
+                ZimBotInc.sendText(m.chat, `> *Zodiak :* ${anu.message.zodiak}\n> *NAME:* ${anu.message.nomor_keberuntungan}\n> *Aroma :* ${anu.message.aroma_keberuntungan}\n> *Planet :* ${anu.message.planet_yang_mengitari}\n> *Flower :* ${anu.message.bunga_keberuntungan}\n> *Warn :* ${anu.message.warna_keberuntungan}\n> *Batu :* ${anu.message.batu_keberuntungan}\n> *Element :* ${anu.message.elemen_keberuntungan}\n> *Zodiac Couple :* ${anu.message.pasangan_zodiak}\n> *NOTES* ${anu.message.catatan}`, m)
             }
             break
             case 'shio': {
@@ -4621,7 +4621,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                 if (!text) throw `Example : ${prefix + command} tikus\n\nNote : For Detail https://primbon.com/shio.htm`
                 let anu = await primbon.shio(text)
                 if (anu.status == false) return m.reply(anu.message)
-                AlphaBotInc.sendText(m.chat, `> *Results :* ${anu.message}`, m)
+                ZimBotInc.sendText(m.chat, `> *Results :* ${anu.message}`, m)
             }
             break
 	    case 'stalker': case 'stalk': {
@@ -4669,7 +4669,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                     if (!id) throw `No Query username, Example : ${prefix + command} ig cak_haho`
                     let { result: anu } = await fetchJson(api('zenz', '/api/stalker/ig', { username: id }, 'apikey'))
                     if (anu.status == false) return m.reply(anu.result.message)
-                    AlphaBotInc.sendMedia(m.chat, anu.caption.profile_hd, '', `> Full Name : ${anu.caption.full_name}\n> User Name : ${anu.caption.user_name}\n> ID ${anu.caption.user_id}\n> Followers : ${anu.caption.followers}\n> Following : ${anu.caption.following}\n> Bussines : ${anu.caption.bussines}\n> Profesional : ${anu.caption.profesional}\n> Verified : ${anu.caption.verified}\n> Private : ${anu.caption.private}\n> Bio : ${anu.caption.biography}\n> Bio Url : ${anu.caption.bio_url}`, m)
+                    ZimBotInc.sendMedia(m.chat, anu.caption.profile_hd, '', `> Full Name : ${anu.caption.full_name}\n> User Name : ${anu.caption.user_name}\n> ID ${anu.caption.user_id}\n> Followers : ${anu.caption.followers}\n> Following : ${anu.caption.following}\n> Bussines : ${anu.caption.bussines}\n> Profesional : ${anu.caption.profesional}\n> Verified : ${anu.caption.verified}\n> Private : ${anu.caption.private}\n> Bio : ${anu.caption.biography}\n> Bio Url : ${anu.caption.bio_url}`, m)
 		    db.data.users[m.sender].limit -= 1
                 } else if (type.toLowerCase() == 'npm') {
                     if (!id) throw `No Query username, Example : ${prefix + command} npm scrape-primbon`
@@ -4703,7 +4703,7 @@ case '3d-wood': case 'angels-wings': case 'snake-text': case 'redhot-metal2': ca
                     buttons: buttons,
                     headerType: 5
                 }
-                AlphaBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })                
+                ZimBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })                
                 }).catch((err) => {
                     m.reply(`*Failed to download media and send videos*`)
                 })
@@ -4720,7 +4720,7 @@ anu = await fetchJson(`https://violetics.pw/api/downloader/tiktok?apikey=df7d-42
 let listmn = `*▊▊▊TIKTOK DL▊▊▊*\n\n*Title:* ${anu.result.title}\n*Author:* ${anu.result.id}\n*Url:* ${anu.result.url}`
 buf = await getBuffer(anu.result.thumb)
 buf2 = await getBuffer(anu.result.link_dl2)
-let message = await prepareWAMessageMedia({ video: buf2, gifPlayback:false, jpegThumbnail:buf }, { upload: AlphaBotInc.waUploadToServer })
+let message = await prepareWAMessageMedia({ video: buf2, gifPlayback:false, jpegThumbnail:buf }, { upload: ZimBotInc.waUploadToServer })
 const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
 templateMessage: {
 hydratedTemplate: {
@@ -4756,7 +4756,7 @@ id: 'donadi'
 }
 }
 }), { userJid: m.chat, quoted: m })
-AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
+ZimBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
 }
 break
 case 'tiktok': case 'tiktoknowm': case 'tiktokwm': case 'tt': case 'ttnowm': case 'ttwm': {
@@ -4777,8 +4777,8 @@ if (isBan) throw mess.ban
                   let caption = `
                   *▊▊▊TIKTOK DL▊▊▊*\n\n*AUTHOR* : DRIPS\n*NICKNAME* : ${video.author.nickname}\n*CAPTION* : ${video.description}\n*QUALITY* : nowatermark\n*COMMENTS* : ${memek}\n*CREATE* ${hadir} Ago\n*LIKES* : ${hadi}\n*DISLIKE* : ${hadie}\n*SOURCE* : ${text}\n\n\n*ZIM BOT INC*`
                   buf = await getBuffer(video.author.avatar)                
-                  AlphaBotInc.sendMessage(m.chat, { image: { url: video.author.avatar }, jpegThumbnail:buf, caption: `${caption}` }, { quoted: m })
-                  AlphaBotInc.sendMessage(m.chat, { video: { url: video.video.no_watermark }, jpegThumbnail:buf, mimetype: 'video/mp4', caption: `*Downloading From ${text}*` }, { quoted: m })               
+                  ZimBotInc.sendMessage(m.chat, { image: { url: video.author.avatar }, jpegThumbnail:buf, caption: `${caption}` }, { quoted: m })
+                  ZimBotInc.sendMessage(m.chat, { video: { url: video.video.no_watermark }, jpegThumbnail:buf, mimetype: 'video/mp4', caption: `*Downloading From ${text}*` }, { quoted: m })               
                 }).catch((err) => {
                     m.reply(`*Failed to download media and send videos*`)
                 })
@@ -4800,8 +4800,8 @@ case 'tiktokk': case 'ttk': {
                     var memek = randomNomor(1000)                      
                   let caption = `*▊▊▊TIKTOK DL▊▊▊*\n\n*AUTHOR* : DRIPS\n*NICKNAME* : ${video.author.nickname}\n*CAPTION* : ${video.description}\n*COMMENTS* : ${memek}\n*CREATE* ${hadir} Ago\n*LIKES* : ${hadi}\n*DISLIKES* : ${hadie}\n*SOURCE* : ${text}\n\n\n*ZIM BOT INC*`
                   buf = await getBuffer(video.author.avatar)                
-                  AlphaBotInc.sendMessage(m.chat, { image: { url: video.author.avatar }, jpegThumbnail:buf, caption: `${caption}` }, { quoted: m })
-                  AlphaBotInc.sendMessage(m.chat, { video: { url: video.video.no_watermark }, jpegThumbnail:buf, mimetype: 'video/mp4', caption: `*Downloading From ${text}*` }, { quoted: m })               
+                  ZimBotInc.sendMessage(m.chat, { image: { url: video.author.avatar }, jpegThumbnail:buf, caption: `${caption}` }, { quoted: m })
+                  ZimBotInc.sendMessage(m.chat, { video: { url: video.video.no_watermark }, jpegThumbnail:buf, mimetype: 'video/mp4', caption: `*Downloading From ${text}*` }, { quoted: m })               
                 }).catch((err) => {
                     m.reply(`*Failed to download media and send videos*`)
                 })
@@ -4823,7 +4823,7 @@ case 'tt3': case 'tiktok3': {
                     var memek = randomNomor(1000)                      
                   let caption = `**▊▊▊TIKTOK DL▊▊▊**\n\n*⬤AUTHOR* : DRIPS\n*⬤NICKNAME* : ${video.author.nickname}\n*⬤CAPTION* : ${video.description}\n*⬤COMMENTS* : ${memek}\n*⬤CREATE* ${hadir} Ago\n*⬤LIKES* : ${hadi}\n*⬤DISLIKES* : ${hadie}\n*⬤ SOURCE* : ${text}`
                   buf = await getBuffer(video.author.avatar)                
-                  let message = await prepareWAMessageMedia({ image: buf, jpegThumbnail: buf }, { upload: AlphaBotInc.waUploadToServer })
+                  let message = await prepareWAMessageMedia({ image: buf, jpegThumbnail: buf }, { upload: ZimBotInc.waUploadToServer })
 const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
 templateMessage: {
 hydratedTemplate: {
@@ -4837,8 +4837,8 @@ url: `${text}`
 }
 }, {
 urlButton: {
-displayText: 'DISCUSSION GROUP',
-url: 'https://DISCUSSION GROUP.com/zim-bot/zimbot-v3'
+displayText: 'GITHUB',
+url: 'https://github.com/zim-bot/zimbot-v3'
 }
 }, {
 quickReplyButton: {
@@ -4859,7 +4859,7 @@ id: `tiktokmp3 ${text}`
 }
 }
 }), { userJid: m.chat, quoted: m })
-AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })                
+ZimBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })                
                 }).catch((err) => {
                     m.reply(`*Failed to download media and send videos*`)
                 })
@@ -4875,7 +4875,7 @@ case 'tiktokmp3': case 'tiktokaudio': {
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 got.tiktokDown(`${text}`).then(async (data) => {
-                AlphaBotInc.sendMessage(m.chat, { audio: { url: data.result.nowatermark }, mimetype: 'audio/mp4'}, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { audio: { url: data.result.nowatermark }, mimetype: 'audio/mp4'}, { quoted: m })
                 }).catch((err) => {
                     m.reply(`*Failed to download media and send audio*`)
                 })
@@ -4891,7 +4891,7 @@ if (!text) throw `*Enter link tiktok example ${prefix + command} https://vt.tikt
             m.reply(`*1 limit used*`)                                
                 get.aiovideodl(`${text}`).then(async (res) => {        
                 var anu = await getBuffer(res.medias[2].url)         
-                AlphaBotInc.sendMessage(m.chat, { audio: anu, mimetype: 'audio/mpeg'}, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { audio: anu, mimetype: 'audio/mpeg'}, { quoted: m })
                 }).catch((err) => {
                     m.reply(`*Failed to download media and send videos*`)
                 })
@@ -4923,7 +4923,7 @@ case 'ig': case 'igdl': case 'instagram': {
 	            var halo = 0		
 
 
-	            AlphaBotInc.sendMessage(m.chat, { image: { url: result.user.profilePicUrl }, jpegThumbnail: await getBuffer(result.user.profilePicUrl), caption: `*----「 INSTAGRAM DOWNLOADER 」----*\n\n*⬤ Username :* ${result.user.username}\n*⬤ Fullname :* ${result.user.fullName}\n*⬤ Followers :* ${result.user.followers}\n*⬤ Following :* ${result.user.following}\n*⬤ ID :* ${result.user.id}\n*⬤ Filetype :* ${result.medias[0].fileType}\n*⬤ Type :* ${result.medias[0].type}\n*⬤ Jumlah Media :* ${result.medias.length}\n*⬤ Url :* ${text}\n\n*ZIM BOT INC*` }, { quoted: m })	                                  	                      	            
+	            ZimBotInc.sendMessage(m.chat, { image: { url: result.user.profilePicUrl }, jpegThumbnail: await getBuffer(result.user.profilePicUrl), caption: `*----「 INSTAGRAM DOWNLOADER 」----*\n\n*⬤ Username :* ${result.user.username}\n*⬤ Fullname :* ${result.user.fullName}\n*⬤ Followers :* ${result.user.followers}\n*⬤ Following :* ${result.user.following}\n*⬤ ID :* ${result.user.id}\n*⬤ Filetype :* ${result.medias[0].fileType}\n*⬤ Type :* ${result.medias[0].type}\n*⬤ Jumlah Media :* ${result.medias.length}\n*⬤ Url :* ${text}\n\n*ZIM BOT INC*` }, { quoted: m })	                                  	                      	            
 
 
 		        for(let i of result.medias) {		
@@ -4934,14 +4934,14 @@ case 'ig': case 'igdl': case 'instagram': {
 
 				let link = await getBuffer(i.url)
 
-                AlphaBotInc.sendMessage(m.chat, { video: link, jpegThumbnail: await getBuffer(i.preview), caption: `*Instagram ${i.type}*` }, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { video: link, jpegThumbnail: await getBuffer(i.preview), caption: `*Instagram ${i.type}*` }, { quoted: m })
 
                 } else {
 
 
                 let link = await getBuffer(i.url)
 
-                AlphaBotInc.sendMessage(m.chat, { image: link, jpegThumbnail: await getBuffer(i.preview), caption: `*Instagram ${i.type}*` }, { quoted: m })          
+                ZimBotInc.sendMessage(m.chat, { image: link, jpegThumbnail: await getBuffer(i.preview), caption: `*Instagram ${i.type}*` }, { quoted: m })          
 
 
                }
@@ -4970,10 +4970,10 @@ case 'ig': case 'igdl': case 'instagram': {
 		        for(let i of result){
 			    if(i.url.includes('mp4')){
 				let link = await getBuffer(i.url)
-                AlphaBotInc.sendMessage(m.chat, { video: link, jpegThumbnail: await getBuffer(i.thumbnail), caption: `*${botname}*` }, { quoted: m }) 
+                ZimBotInc.sendMessage(m.chat, { video: link, jpegThumbnail: await getBuffer(i.thumbnail), caption: `*${botname}*` }, { quoted: m }) 
                 } else {
                     let link = await getBuffer(i.url)
-                  AlphaBotInc.sendMessage(m.chat, { image: link, jpegThumbnail: await getBuffer(i.thumbnail), caption: `*${botname}*` }, { quoted: m })                  
+                  ZimBotInc.sendMessage(m.chat, { image: link, jpegThumbnail: await getBuffer(i.thumbnail), caption: `*${botname}*` }, { quoted: m })                  
                 }
             }
             }).catch((err) => m.reply(`*Failed When Downloading And Sending Media*`))
@@ -4991,8 +4991,8 @@ case 'ig2': case 'igdl2': case 'instagram2': {
             for(let i of anu.medias){                
                 var txt = `*▊▊▊INSTA DL▊▊▊*\n\n*Username:* ${anu.user.username}\n*Fullname:* ${anu.user.fullName}\n*Followers:* ${anu.user.followers}\n*Type:* ${anu.medias[0].type}\n*Tipe:* ${anu.medias[0].fileType}\n*ID:* ${anu.user.id}\n*Jumlah Media:* ${oi++}\n*Url:* ${text}\n\n*ZIM BOT INC*`
                 var buf = await getBuffer(anu.user.profilePicUrl)        
-                AlphaBotInc.sendMessage(m.chat, { image: { url: anu.user.profilePicUrl }, jpegThumbnail:buf, caption: `${txt}` }, { quoted: m }).catch((err) => m.reply('error'))
-                AlphaBotInc.sendMessage(m.chat, { video: { url: i.url }, jpegThumbnail:buf, caption: `${botname}`}, { quoted: m }).catch((err) => m.reply('error'))
+                ZimBotInc.sendMessage(m.chat, { image: { url: anu.user.profilePicUrl }, jpegThumbnail:buf, caption: `${txt}` }, { quoted: m }).catch((err) => m.reply('error'))
+                ZimBotInc.sendMessage(m.chat, { video: { url: i.url }, jpegThumbnail:buf, caption: `${botname}`}, { quoted: m }).catch((err) => m.reply('error'))
                }
             }
             break
@@ -5006,7 +5006,7 @@ case 'ig2': case 'igdl2': case 'instagram2': {
             m.reply(`*1 limit used*`)
                 instagramdlv3(`${text}`).then(async (data) => {
                 for (let f of data) {                                      
-                AlphaBotInc.sendMedia(m.chat, f.url, '', `Download Url Instagram From ${text}`, m)
+                ZimBotInc.sendMedia(m.chat, f.url, '', `Download Url Instagram From ${text}`, m)
                 }
                 }).catch((err) => {
                     m.reply(`*Failed to download media and send videos*`)
@@ -5035,7 +5035,7 @@ case 'ig2': case 'igdl2': case 'instagram2': {
 
 		        var halo = 0		
 
-	            AlphaBotInc.sendMessage(m.chat, { image: { url: result.user.profilePicUrl }, jpegThumbnail: await getBuffer(result.user.profilePicUrl), caption: `*----「 INSTAGRAM STORY 」----*\n\n*⬤ Username :* ${result.user.username}\n*⬤ Fullname :* ${result.user.fullName}\n*⬤ Followers :* ${result.user.followers}\n*⬤ Following :* ${result.user.following}\n*⬤ ID :* ${result.user.id}\n*⬤ Filetype :* ${result.medias[0].fileType}\n*⬤ Type :* ${result.medias[0].type}\n*⬤ Media :* ${result.medias.length}\n*⬤ Bio :* ${result.user.biography}\n\n*ZIM BOT INC*` }, { quoted: m })	                                  	                      	            
+	            ZimBotInc.sendMessage(m.chat, { image: { url: result.user.profilePicUrl }, jpegThumbnail: await getBuffer(result.user.profilePicUrl), caption: `*----「 INSTAGRAM STORY 」----*\n\n*⬤ Username :* ${result.user.username}\n*⬤ Fullname :* ${result.user.fullName}\n*⬤ Followers :* ${result.user.followers}\n*⬤ Following :* ${result.user.following}\n*⬤ ID :* ${result.user.id}\n*⬤ Filetype :* ${result.medias[0].fileType}\n*⬤ Type :* ${result.medias[0].type}\n*⬤ Media :* ${result.medias.length}\n*⬤ Bio :* ${result.user.biography}\n\n*ZIM BOT INC*` }, { quoted: m })	                                  	                      	            
 
 		        for(let i of result.medias) {
 
@@ -5043,13 +5043,13 @@ case 'ig2': case 'igdl2': case 'instagram2': {
 
 				let link = await getBuffer(i.url)
 
-                AlphaBotInc.sendMessage(m.chat, { video: link, jpegThumbnail: await getBuffer(i.preview), caption: `*Story ${i.type}*` }, { quoted: m }) 
+                ZimBotInc.sendMessage(m.chat, { video: link, jpegThumbnail: await getBuffer(i.preview), caption: `*Story ${i.type}*` }, { quoted: m }) 
 
                 } else {
 
                     let link = await getBuffer(i.url)
 
-                  AlphaBotInc.sendMessage(m.chat, { image: link, jpegThumbnail: await getBuffer(i.preview), caption: `*Story ${i.type}*` }, { quoted: m })                  
+                  ZimBotInc.sendMessage(m.chat, { image: link, jpegThumbnail: await getBuffer(i.preview), caption: `*Story ${i.type}*` }, { quoted: m })                  
 
                 }
 
@@ -5071,7 +5071,7 @@ case 'igs2': case 'igstory2': case 'instagramstory2':{
                 anu = await fetchJson(`https://api.akuari.my.id/downloader/igStory?username=${text}`)        
                 for (let i of anu) {
                 tummb = await getBuffer(i.preview)         
-                AlphaBotInc.sendMessage(m.chat, { video: { url: i.url }, jpegThumbnail:tummb, caption: `*${botname}*`}, { quoted: m }).catch((err) => m.reply('*Sorry, the feature is in error*'))
+                ZimBotInc.sendMessage(m.chat, { video: { url: i.url }, jpegThumbnail:tummb, caption: `*${botname}*`}, { quoted: m }).catch((err) => m.reply('*Sorry, the feature is in error*'))
                 }
             }
             break
@@ -5087,14 +5087,14 @@ case 'igs3': case 'igstory3': case 'instagramstory3': {
 	            bicil.instagramStoryv2(urlnya)
 	            .then(async(result) => {	  
 	            var halo = 1		
-	            AlphaBotInc.sendMessage(m.chat, { image: { url: result.user.profilePicUrl }, jpegThumbnail: await getBuffer(result.user.profilePicUrl), caption: `*----「 INSTA DOWNLOADER 」----*\n\n*⬤ Username :* ${result.user.username}\n*⬤ Fullname :* ${result.user.fullName}\n*⬤ Followers :* ${result.user.followers}\n*⬤ Following :* ${result.user.following}\n*⬤ ID :* ${result.user.id}\n*⬤ Jumlah Media :* ${halo++}\n*⬤ Bio :* ${result.user.biography}\n\n*ZIM BOT INC*` }, { quoted: m })	                                  	                      	            
+	            ZimBotInc.sendMessage(m.chat, { image: { url: result.user.profilePicUrl }, jpegThumbnail: await getBuffer(result.user.profilePicUrl), caption: `*----「 INSTA DOWNLOADER 」----*\n\n*⬤ Username :* ${result.user.username}\n*⬤ Fullname :* ${result.user.fullName}\n*⬤ Followers :* ${result.user.followers}\n*⬤ Following :* ${result.user.following}\n*⬤ ID :* ${result.user.id}\n*⬤ Jumlah Media :* ${halo++}\n*⬤ Bio :* ${result.user.biography}\n\n*ZIM BOT INC*` }, { quoted: m })	                                  	                      	            
 		        for(let i of result.results) {		
 		        if(i.url.includes('mp4')){		           			    				
 				let link = await getBuffer(i.sourceUrl)
-                AlphaBotInc.sendMessage(m.chat, { video: link, jpegThumbnail: await getBuffer(i.thumbnail), caption: `*Story ${i.type}*` }, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { video: link, jpegThumbnail: await getBuffer(i.thumbnail), caption: `*Story ${i.type}*` }, { quoted: m })
                 } else {
                 let link = await getBuffer(i.url)
-                AlphaBotInc.sendMessage(m.chat, { image: link, jpegThumbnail: await getBuffer(i.thumbnail), caption: `*Story ${i.type}*` }, { quoted: m })          
+                ZimBotInc.sendMessage(m.chat, { image: link, jpegThumbnail: await getBuffer(i.thumbnail), caption: `*Story ${i.type}*` }, { quoted: m })          
                }
               }
             }).catch((err) => m.reply(`*Sorry Story Instagram ${text} Tnot found*`))
@@ -5110,7 +5110,7 @@ case 'igs3': case 'igstory3': case 'instagramstory3': {
             m.reply(`*1 limit used*`)
                 instagramdlv3(`${text}`).then(async (data) => {            
                 var buf = await getBuffer(data[0].thumbnail)        
-                AlphaBotInc.sendMessage(m.chat, { video: { url: data[0].url }, jpegThumbnail:buf, caption: `${botname}`}, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { video: { url: data[0].url }, jpegThumbnail:buf, caption: `${botname}`}, { quoted: m })
                 }).catch((err) => {
                     m.reply(`*Failed to download media and send videos*`)
                 })
@@ -5126,8 +5126,8 @@ case 'igs3': case 'igstory3': case 'instagramstory3': {
                 let anu = await fetchJson(`https://api.lolhuman.xyz/api/jooxplay?apikey=${setting.lolkey}&query=${text}`)
                 let msg = `*▊▊▊JOOX DL▊▊▊*\n\n*Title :* ${anu.result.info.song}\n*Album :* ${anu.result.info.album}\n*Singer :* ${anu.result.info.song}\n*Publish :* ${anu.result.info.date}\n*Link :* ${anu.result.audio[0].link}\n\n*ZIM BOT INC*`
                 buf = await getBuffer(anu.result.image)
-                AlphaBotInc.sendMessage(m.chat, { image: { url: anu.result.image }, jpegThumbnail:buf, caption: `${msg}` }, { quoted: m }).catch((err) => m.reply('*Sorry An error occurred*'))
-                AlphaBotInc.sendMessage(m.chat, { audio: { url: anu.result.audio[0].link }, mimetype: 'audio/mpeg' }, { quoted: m }).catch((err) => m.reply('*Sorry An error occurred*'))
+                ZimBotInc.sendMessage(m.chat, { image: { url: anu.result.image }, jpegThumbnail:buf, caption: `${msg}` }, { quoted: m }).catch((err) => m.reply('*Sorry An error occurred*'))
+                ZimBotInc.sendMessage(m.chat, { audio: { url: anu.result.audio[0].link }, mimetype: 'audio/mpeg' }, { quoted: m }).catch((err) => m.reply('*Sorry An error occurred*'))
             }
             break
             case 'soundcloud': case 'scdl': {               
@@ -5146,8 +5146,8 @@ case 'igs3': case 'igstory3': case 'instagramstory3': {
                     txt += `*⬤Url Source :* ${data.url}\n\n`
                     txt += `*ZIM BOT INC*`
                 buf = await getBuffer(data.thumbnail)   
-                AlphaBotInc.sendMessage(m.chat, { image: { url: data.thumbnail }, jpegThumbnail:buf, caption: `${txt}` }, { quoted: m }).catch((err) => m.reply('link error'))    
-                AlphaBotInc.sendMessage(m.chat, { audio: { url: data.medias[0].url }, mimetype: 'audio/mpeg', fileName: data.title+'.m4a' }, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { image: { url: data.thumbnail }, jpegThumbnail:buf, caption: `${txt}` }, { quoted: m }).catch((err) => m.reply('link error'))    
+                ZimBotInc.sendMessage(m.chat, { audio: { url: data.medias[0].url }, mimetype: 'audio/mpeg', fileName: data.title+'.m4a' }, { quoted: m })
                 }).catch((err) => {
                     m.reply(`*Failed to download media and send audio*`)
                 })
@@ -5173,7 +5173,7 @@ _whoa wait zimbot processing..._
 
 *ZIM BOT INC*`
 m.reply(`${result4}`)
-AlphaBotInc.sendMessage(m.chat, { document : { url : baby1[0].link}, fileName : baby1[0].nama, mimetype: baby1[0].mime }, { quoted : m }).catch ((err) => m.reply('*Failed to download File*'))
+ZimBotInc.sendMessage(m.chat, { document : { url : baby1[0].link}, fileName : baby1[0].nama, mimetype: baby1[0].mime }, { quoted : m }).catch ((err) => m.reply('*Failed to download File*'))
 }
 break
 case 'savefrom': {
@@ -5213,7 +5213,7 @@ case 'savefrom': {
 
      }
 
-  const sendm =  AlphaBotInc.sendMessage(
+  const sendm =  ZimBotInc.sendMessage(
 
       m.chat, 
 
@@ -5269,7 +5269,7 @@ case 'savefrom': {
 
 				let link = await getBuffer(i.url)
 
-                AlphaBotInc.sendMessage(m.chat, { video: link, caption: `*quality ${i.subname}*` }, { quoted: m })                  
+                ZimBotInc.sendMessage(m.chat, { video: link, caption: `*quality ${i.subname}*` }, { quoted: m })                  
 
                }
 
@@ -5289,7 +5289,7 @@ if (!isInventoryLimit){ addInventoriLimit(m.sender) }
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 anu = await fetchJson(`https://xteam.xyz/dl/linkedin?url=${text}&APIKEY=${setting.riy}`)
-AlphaBotInc.sendMessage(m.chat, {video: await getBuffer(anu.result.resurl), mimetype: 'video/mp4'}, {quoted:m}).catch ((err) => m.reply('Failed to download File'))     
+ZimBotInc.sendMessage(m.chat, {video: await getBuffer(anu.result.resurl), mimetype: 'video/mp4'}, {quoted:m}).catch ((err) => m.reply('Failed to download File'))     
 }
 break
 case 'smule': {
@@ -5310,7 +5310,7 @@ if (!isInventoryLimit){ addInventoriLimit(m.sender) }
 
 anu = await fetchJson(`https://xteam.xyz/dl/smule?url=${text}&APIKEY=${setting.riy}`)
 
-AlphaBotInc.sendMessage(m.chat, {video: await getBuffer(anu.result[0]), mimetype: 'video/mp4'}, {quoted:m}).catch ((err) => m.reply('*Failed to download File*'))     
+ZimBotInc.sendMessage(m.chat, {video: await getBuffer(anu.result[0]), mimetype: 'video/mp4'}, {quoted:m}).catch ((err) => m.reply('*Failed to download File*'))     
 
 }
 
@@ -5324,7 +5324,7 @@ if (!isInventoryLimit){ addInventoriLimit(m.sender) }
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 anu = await fetchJson(`https://xteam.xyz/dl/vimeo?url=${text}&APIKEY=${setting.riy}`)
-AlphaBotInc.sendMessage(m.chat, {video: await getBuffer(anu.result.hd.url), mimetype: 'video/mp4'}, {quoted:m}).catch ((err) => m.reply('*Failed to download File*'))     
+ZimBotInc.sendMessage(m.chat, {video: await getBuffer(anu.result.hd.url), mimetype: 'video/mp4'}, {quoted:m}).catch ((err) => m.reply('*Failed to download File*'))     
 }
 break
 case 'zippyshare': {
@@ -5338,7 +5338,7 @@ if (!isInventoryLimit){ addInventoriLimit(m.sender) }
 anu = await fetchJson(`https://violetics.pw/api/downloader/zippyshare?apikey=df7d-425a-3bc8&url=${text}`)
 m.reply(`*${util.format(anu)}*`)
 linkyke = await getBuffer(anu.result.dlink)
-AlphaBotInc.sendMessage(m.chat, {document: linkyke, mimetype: 'application/zip', fileName: `${anu.result.filename}`}, {quoted:m}).catch ((err) => m.reply('*Failed to download File*'))     
+ZimBotInc.sendMessage(m.chat, {document: linkyke, mimetype: 'application/zip', fileName: `${anu.result.filename}`}, {quoted:m}).catch ((err) => m.reply('*Failed to download File*'))     
 }
 break
 case 'googledrive': {
@@ -5351,7 +5351,7 @@ if (!isInventoryLimit){ addInventoriLimit(m.sender) }
             m.reply(`*1 limit used*`)
 anu = await fetchJson(`https://xteam.xyz/dl/drive?url=${text}&APIKEY=${setting.riy}`)
 m.reply(`${util.format(anu)}`)
-AlphaBotInc.sendMessage(m.chat, {document: await getBuffer(anu.result.server2), mimetype: 'application/zip', fileName: `${anu.result.title}`}, {quoted:m}).catch ((err) => m.reply('*Failed to download File*'))     
+ZimBotInc.sendMessage(m.chat, {document: await getBuffer(anu.result.server2), mimetype: 'application/zip', fileName: `${anu.result.title}`}, {quoted:m}).catch ((err) => m.reply('*Failed to download File*'))     
 }
 break
 case 'imagetopdf': {
@@ -5362,10 +5362,10 @@ if (!isInventoryLimit){ addInventoriLimit(m.sender) }
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
 let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
-                let medi = await AlphaBotInc.downloadAndSaveMediaMessage(quoted)                
+                let medi = await ZimBotInc.downloadAndSaveMediaMessage(quoted)                
                 let anu = await TelegraPh(medi)            
 hayo = `https://xteam.xyz/imagetopdf?url=${anu}&APIKEY=${setting.riy}`
-AlphaBotInc.sendMessage(m.chat, {document: await getBuffer(hayo), mimetype: 'application/pdf', fileName: `${botname}.pdf`}, {quoted:m}).catch ((err) => m.reply('*Failed to download File*'))     
+ZimBotInc.sendMessage(m.chat, {document: await getBuffer(hayo), mimetype: 'application/pdf', fileName: `${botname}.pdf`}, {quoted:m}).catch ((err) => m.reply('*Failed to download File*'))     
 }
 break
 case 'twitter': case 'td': case 'twitterdl': {     	             
@@ -5385,9 +5385,9 @@ case 'twitter': case 'td': case 'twitterdl': {
                     txt += `*⬤URL :* ${data.url}\n\n`
                     txt += `*ZIM BOT INC*`
                 buf = await getBuffer(data.thumbnail)    
-                AlphaBotInc.sendMessage(m.chat, { image: { url: data.thumbnail }, jpegThumbnail:buf, caption: `${txt}` }, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { image: { url: data.thumbnail }, jpegThumbnail:buf, caption: `${txt}` }, { quoted: m })
                 for (let i of data.medias) {
-                AlphaBotInc.sendMessage(m.chat, { video: { url: i.url }, jpegThumbnail:buf, caption: `*Downloading From ${text}*`}, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { video: { url: i.url }, jpegThumbnail:buf, caption: `*Downloading From ${text}*`}, { quoted: m })
                 }
                 }).catch((err) => {
                     m.reply(`*Failed to download media and send videos*`)
@@ -5411,7 +5411,7 @@ case 'twitter2': case 'td2': case 'twitterdl2': {
                     txt += `*⬤URL :* ${data.url}\n\n`
                     txt += `*Hi ${pushname}The bot is doing great job dont forget to subcribe*`
                 buf = await getBuffer(data.thumbnail)    
-                AlphaBotInc.sendMessage(m.chat, { video: { url: x.url }, jpegThumbnail:buf, caption: `${txt}`}, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { video: { url: x.url }, jpegThumbnail:buf, caption: `${txt}`}, { quoted: m })
                 }
                 }).catch((err) => m.reply(`Sorry the faiture is error`))   
             }
@@ -5425,7 +5425,7 @@ case 'twittermp3': case 'twitteraudio': {
             kurangLimit(m.sender, 1)
             m.reply(`*1 limit used*`)
                 xa.Twitter(`${text}`).then(async (data) => {
-                AlphaBotInc.sendMessage(m.chat, { audio: { url: data.medias[1].url }, mimetype: 'audio/mp4'}, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { audio: { url: data.medias[1].url }, mimetype: 'audio/mp4'}, { quoted: m })
                 }).catch((err) => {
                     m.reply(`*Failed to download media and send audio*`)
                 })
@@ -5458,11 +5458,11 @@ case 'fbdl': case 'fb': case 'facebook': case 'pesbuk': {
 
                 buf = await getBuffer(data.thumbnail)    
 
-                AlphaBotInc.sendMessage(m.chat, { image: { url: data.thumbnail }, jpegThumbnail:buf, caption: `${txt}` }, { quoted: m })         
+                ZimBotInc.sendMessage(m.chat, { image: { url: data.thumbnail }, jpegThumbnail:buf, caption: `${txt}` }, { quoted: m })         
 
                 for (let i of data.result) {     
 
-                AlphaBotInc.sendMessage(m.chat, { video: { url: i.url }, jpegThumbnail:buf, caption: `*⬤ Quality :* ${i.quality}`}, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, { video: { url: i.url }, jpegThumbnail:buf, caption: `*⬤ Quality :* ${i.quality}`}, { quoted: m })
 
                 }          
 
@@ -5485,7 +5485,7 @@ case 'fbmp3': case 'facebookmp3': case 'facebookaudio': {
             m.reply(`*1 limit used*`)
   let noh = require('@bochilteam/scraper')                
   noh.savefrom(`${text}`).then(async (anu) => {  
-  AlphaBotInc.sendMessage(m.chat, { audio: { url: anu.url[0].url }, mimetype: 'audio/mp4' }, { quoted: m })      
+  ZimBotInc.sendMessage(m.chat, { audio: { url: anu.url[0].url }, mimetype: 'audio/mp4' }, { quoted: m })      
                 }).catch((err) => {
                     m.reply(`*Failed to link to audio*`)
                 })
@@ -5508,8 +5508,8 @@ case 'fb6': {
                     txt += `*⬤URL :* ${data.url}\n\n`
                     txt += `*ZIM BOT INC*`
                 buf = await getBuffer(data.thumbnail)    
-                AlphaBotInc.sendMessage(m.chat, { image: { url: data.thumbnail }, jpegThumbnail:buf, caption: `${txt}` }, { quoted: m })              
-                AlphaBotInc.sendMessage(m.chat, { video: { url: data.medias[1].url }, jpegThumbnail:buf, caption: `*⬤ Quality :* ${data.medias[1].quality}`}, { quoted: m })                
+                ZimBotInc.sendMessage(m.chat, { image: { url: data.thumbnail }, jpegThumbnail:buf, caption: `${txt}` }, { quoted: m })              
+                ZimBotInc.sendMessage(m.chat, { video: { url: data.medias[1].url }, jpegThumbnail:buf, caption: `*⬤ Quality :* ${data.medias[1].quality}`}, { quoted: m })                
                 }).catch((err) => {
                     m.reply(`*Failed When Downloading Media and Sending Files*`)
                 })
@@ -5527,8 +5527,8 @@ case 'fb6': {
                 if (anu.filesize_video >= 100000) return m.reply('*File Over Limit* '+util.format(anu))
                 tummb = await getBuffer(anu.thumb)
                 audio = await getBuffer(anu.audio)        
-                AlphaBotInc.sendMessage(m.chat, {document: audio, mimetype: 'audio/mpeg', fileName: `${anu.title}`}, { quoted : m }).catch((err) => m.reply('*Sorry, the feature is in error*'))
-                AlphaBotInc.sendMessage(m.chat, { video: { url: anu.video }, jpegThumbnail:tummb, caption: `${util.format(anu)}`}, { quoted: m }).catch((err) => m.reply('*Sorry, the feature is in error*'))
+                ZimBotInc.sendMessage(m.chat, {document: audio, mimetype: 'audio/mpeg', fileName: `${anu.title}`}, { quoted : m }).catch((err) => m.reply('*Sorry, the feature is in error*'))
+                ZimBotInc.sendMessage(m.chat, { video: { url: anu.video }, jpegThumbnail:tummb, caption: `${util.format(anu)}`}, { quoted: m }).catch((err) => m.reply('*Sorry, the feature is in error*'))
             }
             break
             case 'igreal': case 'instagramreal': {
@@ -5541,7 +5541,7 @@ case 'fb6': {
             m.reply(`*1 limit used*`)
                 anu = await fetchJson(`https://api.akuari.my.id/downloader/igdl?link=${text}`)        
                 tummb = await getBuffer(anu.medias[0].preview)         
-                AlphaBotInc.sendMessage(m.chat, { video: { url: anu.medias[0].url }, jpegThumbnail:tummb, caption: `${util.format(anu)}`}, { quoted: m }).catch((err) => m.reply('*Sorry, the feature is in error*'))
+                ZimBotInc.sendMessage(m.chat, { video: { url: anu.medias[0].url }, jpegThumbnail:tummb, caption: `${util.format(anu)}`}, { quoted: m }).catch((err) => m.reply('*Sorry, the feature is in error*'))
             }
             break
             case 'fb3': case 'facebook3': {
@@ -5554,7 +5554,7 @@ case 'fb6': {
             m.reply(`*1 limit used*`)
                 anu = await fetchJson(`https://api-riychdwayne.herokuapp.com/api/downloader/facebook?url=${text}&apikey=${setting.riy}`)        
                 tummb = await getBuffer(anu.thumbnail)         
-                AlphaBotInc.sendMessage(m.chat, { video: { url: anu.medias }, jpegThumbnail:tummb, caption: `*📽️ FACEBOOK DOWNLOADER*\n\n*Name* : ${anu.title}\n*Filesize* : ${anu.medias[1].formattedSize}\n*Quality* : ${anu.medias[1].quality}\n*Ext* : ${anu.medias[1].extension}\n`}, { quoted: m }).catch((err) => m.reply('*Sorry, the feature is in error*'))
+                ZimBotInc.sendMessage(m.chat, { video: { url: anu.medias }, jpegThumbnail:tummb, caption: `*📽️ FACEBOOK DOWNLOADER*\n\n*Name* : ${anu.title}\n*Filesize* : ${anu.medias[1].formattedSize}\n*Quality* : ${anu.medias[1].quality}\n*Ext* : ${anu.medias[1].extension}\n`}, { quoted: m }).catch((err) => m.reply('*Sorry, the feature is in error*'))
             }
             break
 case 'fb2': case 'facebook2': {
@@ -5567,7 +5567,7 @@ case 'fb2': case 'facebook2': {
             m.reply(`*1 limit used*`)
                 anu = await fetchJson(`https://violetics.pw/api/downloader/facebook?apikey=${setting.violkey}&url=${text}`)
                 tummb = await getBuffer('https://telegra.ph/file/9789a09c964cee5597a05.jpg')    
-                AlphaBotInc.sendMessage(m.chat, { video: { url: anu.result.url[0].url }, jpegThumbnail:tummb, caption: `*📽️ FACEBOOK DOWNLOADER*\n\n*Name* : ${anu.result.meta.title}\n*Quality* : ${anu.result.url[0].subname}\n*Ext* : ${anu.result.url[0].ext}\n`}, { quoted: m }).catch((err) => m.reply('*Sorry, the feature is in error*'))
+                ZimBotInc.sendMessage(m.chat, { video: { url: anu.result.url[0].url }, jpegThumbnail:tummb, caption: `*📽️ FACEBOOK DOWNLOADER*\n\n*Name* : ${anu.result.meta.title}\n*Quality* : ${anu.result.url[0].subname}\n*Ext* : ${anu.result.url[0].ext}\n`}, { quoted: m }).catch((err) => m.reply('*Sorry, the feature is in error*'))
             }
             break
 	        case 'pindl': case 'pinterestdl': {
@@ -5580,7 +5580,7 @@ case 'fb2': case 'facebook2': {
             m.reply(`*1 limit used*`)
   let noh = require('./lib/lol.js')                
   noh.pin(`${text}`).then(async (data) => {    
-  AlphaBotInc.sendMessage(m.chat, { video: { url: data.data.url }, caption: `${data.data.file}` }, { quoted: m })  
+  ZimBotInc.sendMessage(m.chat, { video: { url: data.data.url }, caption: `${data.data.file}` }, { quoted: m })  
                 }).catch((err) => {
                     m.reply(`*${text}  ZIM BOT INC*`)
                 })
@@ -5600,8 +5600,8 @@ m.reply(`🌐Translate : ${Detek}\n📘Results : ${Infoo}`)
 break
            case 'git': case 'gitclone':
            // //if (isLimit(m.sender, isPremium, isCreator, limitCount, limit)) return m.reply(mess.endLimit)                       
-            let regex1 = /(?:https|git)(?::\/\/|@)DISCUSSION GROUP\.com[\/:]([^\/:]+)\/(.+)/i
-            if (!args[0]) throw 'link DISCUSSION GROUP  EXAMPLE: https://DISCUSSION GROUP.com/zim-bot/zim-bot-md'
+            let regex1 = /(?:https|git)(?::\/\/|@)github\.com[\/:]([^\/:]+)\/(.+)/i
+            if (!args[0]) throw 'link github  EXAMPLE: https://github.com/zim-bot/zim-bot-md'
     if (!regex1.test(args[0])) throw 'link!'
     if (!isInventoryLimit){ addInventoriLimit(m.sender) }
             if (isLimit < 1) return m.reply(mess.endLimit)
@@ -5609,11 +5609,11 @@ break
             m.reply(`*1 limit used*`)
     let [, user, repo] = args[0].match(regex1) || []
     repo = repo.replace(/.git$/, '')
-    let url = `https://api.DISCUSSION GROUP.com/repos/${user}/${repo}/zipball`
+    let url = `https://api.github.com/repos/${user}/${repo}/zipball`
     let filename = (await fetch(url, {method: 'HEAD'})).headers.get('content-disposition').match(/attachment; filename=(.*)/)[1]
     // 'attachment; filenameq=ZidniGanz.zip'
     m.reply(`*Please wait, sending repository..*`)
-    AlphaBotInc.sendMessage(m.chat, { document: { url: url }, fileName: filename+'.zip', mimetype: 'application/zip' }, { quoted: m }).catch((err) => m.reply('*Sorry, the DISCUSSION GROUP link you provided is private, and cant be made into a file*'))
+    ZimBotInc.sendMessage(m.chat, { document: { url: url }, fileName: filename+'.zip', mimetype: 'application/zip' }, { quoted: m }).catch((err) => m.reply('*Sorry, the github link you provided is private, and cant be made into a file*'))
 			break    
             case 'umma': case 'ummadl': {
                // //if (isLimit(m.sender, isPremium, isCreator, limitCount, limit)) return m.reply(mess.endLimit)
@@ -5639,14 +5639,14 @@ break
 *URL :* ${anu.media[0]}
 *To download media, please click one of the buttons below or enter the ytmp3/ytmp4 command with the url above*
 `,
-			footer: AlphaBotInc.user.name,
+			footer: ZimBotInc.user.name,
 			buttons,
 			headerType: 4
 		    }
-		    AlphaBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
+		    ZimBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
 		} else if (anu.type == 'image') {
 		    anu.media.map(async (url) => {
-		        AlphaBotInc.sendMessage(m.chat, { image: { url }, caption: `> Title : ${anu.title}\n> Author : ${anu.author.name}\n> Like : ${anu.like}\n> Caption : ${anu.caption}` }, { quoted: m })
+		        ZimBotInc.sendMessage(m.chat, { image: { url }, caption: `> Title : ${anu.title}\n> Author : ${anu.author.name}\n> Like : ${anu.like}\n> Caption : ${anu.caption}` }, { quoted: m })
 		    })
 		}
 	    }
@@ -5659,7 +5659,7 @@ break
 				if (!text) throw `Example : ${prefix + command} Nasi padang`
 				    anu = await fetchJson(`https://bx-hunter.herokuapp.com/api/resepmakanan?query=${text}&apikey=${setting.HunterApi}`)
 					hasilresep = `❏ *${anu.results.title}*\n\n❏ Porsi : ${anu.results.servings}\n❏ Waktu : ${anu.results.times}\n❏ Kesulitan : ${anu.results.dificulty}\n❏ Pengguna : ${anu.results.author.user}\n❏ Tanggal Diterbitkan : ${anu.results.author.datePublished}\n❏ Deskripsi : ${anu.results.desc}\n\n━━━━━━━━━━━━━━━━━━━━\n❏ *Tutorial*\n\n❏ Bahan : ${anu.results.ingredient}\n❏ Langkah : ${anu.results.step}`										
-					AlphaBotInc.sendImage(m.chat, anu.results.thumb, `${hasilresep}`, m).catch((err) => m.reply('*Sorry, the feature is in error*'))
+					ZimBotInc.sendImage(m.chat, anu.results.thumb, `${hasilresep}`, m).catch((err) => m.reply('*Sorry, the feature is in error*'))
 					}
 		break
 case 'resep': case 'resepmasakan': {
@@ -5678,7 +5678,7 @@ case 'resep': case 'resepmasakan': {
      }
      sections.push(list)   
      }
-  const sendm =  AlphaBotInc.sendMessage(
+  const sendm =  ZimBotInc.sendMessage(
       m.chat, 
       {
        text: `*Results of*  ${text}`,
@@ -5697,7 +5697,7 @@ case 'makanan': {
             m.reply(`*1 limit used*`)
                 anu = await fetchJson(`https://mnazria.herokuapp.com/api/resep-search?text=${text}`)       
                 buf = await getBuffer(anu.results[1].thumb)  
-                AlphaBotInc.sendMessage(m.chat, { image: { url: anu.results[3].thumb }, jpegThumbnail:buf, caption: `${util.format(anu)}` }, { quoted: m }).catch((err) => m.reply('error'))
+                ZimBotInc.sendMessage(m.chat, { image: { url: anu.results[3].thumb }, jpegThumbnail:buf, caption: `${util.format(anu)}` }, { quoted: m }).catch((err) => m.reply('error'))
 }
 break
 
@@ -5733,7 +5733,7 @@ case 'apk': case 'apkmod': case 'apkdl': {
      }
      sections.push(list)   
      }
-  const sendm =  AlphaBotInc.sendMessage(
+  const sendm =  ZimBotInc.sendMessage(
       m.chat, 
       {
        text: `${ucapannya2} ${pushname} *Search Results From ${text} Click the button below to choose*`,
@@ -5760,8 +5760,8 @@ if (!isInventoryLimit){ addInventoriLimit(m.sender) }
            if (anu[0].size.split('MB')[0] >= 150) return m.reply('*File Over Limit* '+util.format(anu))
            for (let i of anu) {    
            linkye = `*▊▊▊APK DOWNLOAD▊▊▊*\n\n*TITLE:* ${i.title}\n*UPDATE:* ${i.up}\n*VERSION:* ${i.vers}\n*FILESIZE:* ${i.size}\n*URL:* \n*DESCRIPTION:* ${i.desc}\n\n*ZIM BOT INC*`         
-                AlphaBotInc.sendMessage(m.chat, { image: await getBuffer(i.thumb), jpegThumbnail: await getBuffer(i.thumb), caption: `${linkye}` }, { quoted: m })
-                AlphaBotInc.sendMessage(m.chat, {document: await getBuffer(i.link), mimetype: `application/vnd.android.package-archive`, fileName: `${i.title}`}, {quoted:m})  
+                ZimBotInc.sendMessage(m.chat, { image: await getBuffer(i.thumb), jpegThumbnail: await getBuffer(i.thumb), caption: `${linkye}` }, { quoted: m })
+                ZimBotInc.sendMessage(m.chat, {document: await getBuffer(i.link), mimetype: `application/vnd.android.package-archive`, fileName: `${i.title}`}, {quoted:m})  
                 }  
                 }).catch((err) => {
                     m.reply(`*Failed When Downloading Media and Sending Files*`)
@@ -5769,7 +5769,7 @@ if (!isInventoryLimit){ addInventoriLimit(m.sender) }
                 }                          
                 break
 case 'tagme': {
-AlphaBotInc.sendMessage(m.chat, {text:`@${m.sender.split("@")[0]}`, contextInfo:{mentionedJid:[m.sender]}}, {quoted:m})
+ZimBotInc.sendMessage(m.chat, {text:`@${m.sender.split("@")[0]}`, contextInfo:{mentionedJid:[m.sender]}}, {quoted:m})
 }
 
 break
@@ -5819,7 +5819,7 @@ break
         let { ringtone } = require('./lib/scraper3')
 		let anu = await ringtone(text)
 		let result = anu[Math.floor(Math.random() * anu.length)]
-		AlphaBotInc.sendMessage(m.chat, { audio: { url: result.audio }, fileName: result.title+'.mp3', mimetype: 'audio/mpeg' }, { quoted: m })
+		ZimBotInc.sendMessage(m.chat, { audio: { url: result.audio }, fileName: result.title+'.mp3', mimetype: 'audio/mpeg' }, { quoted: m })
 	    }
 	    break
 		case 'iqra': {
@@ -5827,23 +5827,23 @@ break
 		oh = `Example : ${prefix + command} 3\n\nIQRA Yang tersedia : 1,2,3,4,5,6`
 		if (!text) throw oh
 		yy = await getBuffer(`https://islamic-api-indonesia.herokuapp.com/api/data/pdf/iqra${text}`)
-		AlphaBotInc.sendMessage(m.chat, {document: yy, mimetype: 'application/pdf', fileName: `iqra${text}.pdf`}, {quoted:m}).catch ((err) => m.reply(oh))
+		ZimBotInc.sendMessage(m.chat, {document: yy, mimetype: 'application/pdf', fileName: `iqra${text}.pdf`}, {quoted:m}).catch ((err) => m.reply(oh))
 		}
 		break
 		case 'juzamma': {
 		//if (isLimit(m.sender, isPremium, isCreator, limitCount, limit)) return m.reply(mess.endLimit)
 		if (args[0] === 'pdf') {
 		m.reply(mess.wait)
-		AlphaBotInc.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.pdf'}, mimetype: 'application/pdf', fileName: 'juz-amma-arab-latin-indonesia.pdf'}, {quoted:m})
+		ZimBotInc.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.pdf'}, mimetype: 'application/pdf', fileName: 'juz-amma-arab-latin-indonesia.pdf'}, {quoted:m})
 		} else if (args[0] === 'docx') {
 		m.reply(mess.wait)
-		AlphaBotInc.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.docx'}, mimetype: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', fileName: 'juz-amma-arab-latin-indonesia.docx'}, {quoted:m})
+		ZimBotInc.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.docx'}, mimetype: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', fileName: 'juz-amma-arab-latin-indonesia.docx'}, {quoted:m})
 		} else if (args[0] === 'pptx') {
 		m.reply(mess.wait)
-		AlphaBotInc.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.pptx'}, mimetype: 'application/vnd.openxmlformats-officedocument.presentationml.presentation', fileName: 'juz-amma-arab-latin-indonesia.pptx'}, {quoted:m})
+		ZimBotInc.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.pptx'}, mimetype: 'application/vnd.openxmlformats-officedocument.presentationml.presentation', fileName: 'juz-amma-arab-latin-indonesia.pptx'}, {quoted:m})
 		} else if (args[0] === 'xlsx') {
 		m.reply(mess.wait)
-		AlphaBotInc.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.xlsx'}, mimetype: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', fileName: 'juz-amma-arab-latin-indonesia.xlsx'}, {quoted:m})
+		ZimBotInc.sendMessage(m.chat, {document: {url: 'https://fatiharridho.my.id/database/islam/juz-amma-arab-latin-indonesia.xlsx'}, mimetype: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', fileName: 'juz-amma-arab-latin-indonesia.xlsx'}, {quoted:m})
 		} else {
 		m.reply(`Mau format apa ? Example : ${prefix + command} pdf
 
@@ -5928,7 +5928,7 @@ case 'alquranaudio': {
 if (!text) throw `Which Surah Number You Want To Find\nExample : ${prefix + command} 18 or ${prefix + command} 18/10`
 m.reply('Sabar Sedang Proses...')
 ini_buffer = await getBuffer(`https://api.lolhuman.xyz/api/quran/audio/${text}?apikey=${setting.lolkey}`)
-AlphaBotInc.sendMessage(m.chat, { audio: ini_buffer, mimetype: 'audio/mpeg', fileName: `mp3` }, { quoted: m }).catch ((err) => m.reply('*error while sending the audio*'))
+ZimBotInc.sendMessage(m.chat, { audio: ini_buffer, mimetype: 'audio/mpeg', fileName: `mp3` }, { quoted: m }).catch ((err) => m.reply('*error while sending the audio*'))
 }
 break
 
@@ -5990,7 +5990,7 @@ break
 
 ( Q.S ${res.result.data.surah.name.transliteration.id} : ${res.result.data.number.inSurah} )`
 		m.reply(txt)
-		AlphaBotInc.sendMessage(m.chat, {audio: { url: res.result.data.audio.primary }, mimetype: 'audio/mpeg'}, { quoted : m })
+		ZimBotInc.sendMessage(m.chat, {audio: { url: res.result.data.audio.primary }, mimetype: 'audio/mpeg'}, { quoted : m })
 		}
 		break
 		case 'tafsirsurah': {
@@ -6033,13 +6033,13 @@ break
                 if (/tupai/.test(command)) set = '-filter:a "atempo=0.5,asetrate=65100"'
                 if (/audio/.test(mime)) {
                 m.reply(mess.wait)
-                let media = await AlphaBotInc.downloadAndSaveMediaMessage(quoted)
+                let media = await ZimBotInc.downloadAndSaveMediaMessage(quoted)
                 let ran = getRandom('.mp3')
                 exec(`ffmpeg -i ${media} ${set} ${ran}`, (err, stderr, stdout) => {
                 fs.unlinkSync(media)
                 if (err) return m.reply(err)
                 let buff = fs.readFileSync(ran)
-                AlphaBotInc.sendMessage(m.chat, { audio: buff, mimetype: 'audio/mpeg' }, { quoted : m })
+                ZimBotInc.sendMessage(m.chat, { audio: buff, mimetype: 'audio/mpeg' }, { quoted : m })
                 fs.unlinkSync(ran)
                 })
                 } else m.reply(`Reply to the audio you want to change with a caption *${prefix + command}*`)
@@ -6092,7 +6092,7 @@ break
 Info: *bold* hash is Locked
 ${Object.entries(global.db.data.sticker).map(([key, value], index) => `${index + 1}. ${value.locked ? `*${key}*` : key} : ${value.text}`).join('\n')}
 `.trim()
-                AlphaBotInc.sendText(m.chat, teks, m, { mentions: Object.values(global.db.data.sticker).map(x => x.mentionedJid).reduce((a,b) => [...a, ...b], []) })
+                ZimBotInc.sendText(m.chat, teks, m, { mentions: Object.values(global.db.data.sticker).map(x => x.mentionedJid).reduce((a,b) => [...a, ...b], []) })
             }
             break
             case 'lockcmd': {            
@@ -6132,7 +6132,7 @@ Access with ${prefix}getmsg ${text}
             m.reply(`*1 limit used*`)
                 let msgs = global.db.data.database
                 if (!(text.toLowerCase() in msgs)) throw `'${text}' not registered in the message list`
-                AlphaBotInc.copyNForward(m.chat, msgs[text.toLowerCase()], true)
+                ZimBotInc.copyNForward(m.chat, msgs[text.toLowerCase()], true)
             }
             break
             case 'listmsg': {
@@ -6158,7 +6158,7 @@ Access with ${prefix}getmsg ${text}
            
             case 'bitly': {
                 //if (isLimit(m.sender, isPremium, isCreator, limitCount, limit)) return m.reply(mess.endLimit)
-                if (!text) throw `Example : ${prefix + command} https://DISCUSSION GROUP.com`
+                if (!text) throw `Example : ${prefix + command} https://github.com`
                // if (isLimit(m.sender, isPremium, isCreator, limitCount, limit)) return m.reply(mess.endLimit)
                 anu = await fetchJson(`https://xteam.xyz/shorturl/bitly?url=${text}&APIKEY=${setting.riy}`)
                 m.reply(`${anu.result.link}`)
@@ -6166,21 +6166,21 @@ Access with ${prefix}getmsg ${text}
             break
             case 'gg': {
                 //if (isLimit(m.sender, isPremium, isCreator, limitCount, limit)) return m.reply(mess.endLimit)
-                if (!text) throw `Example : ${prefix + command} https://DISCUSSION GROUP.com`
+                if (!text) throw `Example : ${prefix + command} https://github.com`
                 anu = await fetchJson(`https://xteam.xyz/shorturl/gg?url=${text}&nama=drips&APIKEY=${setting.riy}`)
                 m.reply(`${anu.result}`)
             }
             break
             case 'sid': {
                 //if (isLimit(m.sender, isPremium, isCreator, limitCount, limit)) return m.reply(mess.endLimit)
-                if (!text) throw `Example : ${prefix + command} https://DISCUSSION GROUP.com`
+                if (!text) throw `Example : ${prefix + command} https://github.com`
                 anu = await fetchJson(`https://xteam.xyz/shorturl/sid?url=${text}&nama=drips&APIKEY=${setting.riy}`)
                 m.reply(`${anu.result}`)
             }
             break
             case 'cuttly': {
                 //if (isLimit(m.sender, isPremium, isCreator, limitCount, limit)) return m.reply(mess.endLimit)
-                if (!text) throw `Example : ${prefix + command} https://DISCUSSION GROUP.com`
+                if (!text) throw `Example : ${prefix + command} https://github.com`
                 anu = await fetchJson(`https://xteam.xyz/shorturl/cuttly?url=${text}&nama=drips&APIKEY=${setting.riy}`)
                 m.reply(`${anu.result}`)
             }
@@ -6195,7 +6195,7 @@ Access with ${prefix}getmsg ${text}
 				let buttons = [
                     { buttonId: 'start', buttonText: { displayText: 'START' }, type: 1 }
                 ]
-                AlphaBotInc.sendButtonText(m.chat, buttons, `\`\`\`Hi ${await AlphaBotInc.getName(m.sender)} Welcome To Anonymous Chat\n\nClick the button below to find a partner\`\`\``, AlphaBotInc.user.name, m)
+                ZimBotInc.sendButtonText(m.chat, buttons, `\`\`\`Hi ${await ZimBotInc.getName(m.sender)} Welcome To Anonymous Chat\n\nClick the button below to find a partner\`\`\``, ZimBotInc.user.name, m)
             }
 			break
             case 'keluar': case 'leave': {
@@ -6207,12 +6207,12 @@ Access with ${prefix}getmsg ${text}
                     let buttons = [
                         { buttonId: 'start', buttonText: { displayText: 'START' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(m.chat, buttons, `\`\`\`*You are not in an anonymous session, press the button to find a partner* \`\`\``)
+                    await ZimBotInc.sendButtonText(m.chat, buttons, `\`\`\`*You are not in an anonymous session, press the button to find a partner* \`\`\``)
                     throw false
                 }
                 m.reply('Ok')
                 let other = room.other(m.sender)
-                if (other) await AlphaBotInc.sendText(other, `\`\`\`*Partner Has Left Anonymous Session*\`\`\``, m)
+                if (other) await ZimBotInc.sendText(other, `\`\`\`*Partner Has Left Anonymous Session*\`\`\``, m)
                 delete this.anonymous[room.id]
                 if (command === 'leave') break
             }
@@ -6224,7 +6224,7 @@ Access with ${prefix}getmsg ${text}
                     let buttons = [
                         { buttonId: 'keluar', buttonText: { displayText: 'STOP' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(m.chat, buttons, `\`\`\`*You are still in an anonymous session, press the button below to terminate your anonymous session*\`\`\``, AlphaBotInc.user.name, m)
+                    await ZimBotInc.sendButtonText(m.chat, buttons, `\`\`\`*You are still in an anonymous session, press the button below to terminate your anonymous session*\`\`\``, ZimBotInc.user.name, m)
                     throw false
                 }
                 let room = Object.values(this.anonymous).find(room => room.state === 'WAITING' && !room.check(m.sender))
@@ -6233,10 +6233,10 @@ Access with ${prefix}getmsg ${text}
                         { buttonId: 'next', buttonText: { displayText: 'SKIP' }, type: 1 },
                         { buttonId: 'keluar', buttonText: { displayText: 'STOP' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(room.a, buttons, `\`\`\`*Successfully Found Partner, now you can send message*\`\`\``, AlphaBotInc.user.name, m)
+                    await ZimBotInc.sendButtonText(room.a, buttons, `\`\`\`*Successfully Found Partner, now you can send message*\`\`\``, ZimBotInc.user.name, m)
                     room.b = m.sender
                     room.state = 'CHATTING'
-                    await AlphaBotInc.sendButtonText(room.b, buttons, `\`\`\`Successfully Found Partner, now you can send message\`\`\``, AlphaBotInc.user.name, m)
+                    await ZimBotInc.sendButtonText(room.b, buttons, `\`\`\`Successfully Found Partner, now you can send message\`\`\``, ZimBotInc.user.name, m)
                 } else {
                     let id = + new Date
                     this.anonymous[id] = {
@@ -6254,7 +6254,7 @@ Access with ${prefix}getmsg ${text}
                     let buttons = [
                         { buttonId: 'keluar', buttonText: { displayText: 'STOP' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(m.chat, buttons, `\`\`\`*Please wait, looking for a partner*\`\`\``, AlphaBotInc.user.name, m)
+                    await ZimBotInc.sendButtonText(m.chat, buttons, `\`\`\`*Please wait, looking for a partner*\`\`\``, ZimBotInc.user.name, m)
                 }
                 break
             }
@@ -6267,11 +6267,11 @@ Access with ${prefix}getmsg ${text}
                     let buttons = [
                         { buttonId: 'start', buttonText: { displayText: 'START' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(m.chat, buttons, `\`\`\`You are not in an anonymous session, press the button to find a partner*\`\`\``)
+                    await ZimBotInc.sendButtonText(m.chat, buttons, `\`\`\`You are not in an anonymous session, press the button to find a partner*\`\`\``)
                     throw false
                 }
                 let other = romeo.other(m.sender)
-                if (other) await AlphaBotInc.sendText(other, `\`\`\`*Partner Has Left Anonymous Session*\`\`\``, m)
+                if (other) await ZimBotInc.sendText(other, `\`\`\`*Partner Has Left Anonymous Session*\`\`\``, m)
                 delete this.anonymous[romeo.id]
                 let room = Object.values(this.anonymous).find(room => room.state === 'WAITING' && !room.check(m.sender))
                 if (room) {
@@ -6279,10 +6279,10 @@ Access with ${prefix}getmsg ${text}
                         { buttonId: 'next', buttonText: { displayText: 'SKIP' }, type: 1 },
                         { buttonId: 'keluar', buttonText: { displayText: 'STOP' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(room.a, buttons, `\`\`\`*Successfully Found Partner, now you can send message*\`\`\``, AlphaBotInc.user.name, m)
+                    await ZimBotInc.sendButtonText(room.a, buttons, `\`\`\`*Successfully Found Partner, now you can send message*\`\`\``, ZimBotInc.user.name, m)
                     room.b = m.sender
                     room.state = 'CHATTING'
-                    await AlphaBotInc.sendButtonText(room.b, buttons, `\`\`\`*Successfully Found Partner, now you can send message*\`\`\``, AlphaBotInc.user.name, m)
+                    await ZimBotInc.sendButtonText(room.b, buttons, `\`\`\`*Successfully Found Partner, now you can send message*\`\`\``, ZimBotInc.user.name, m)
                 } else {
                     let id = + new Date
                     this.anonymous[id] = {
@@ -6300,19 +6300,19 @@ Access with ${prefix}getmsg ${text}
                     let buttons = [
                         { buttonId: 'keluar', buttonText: { displayText: 'STOP' }, type: 1 }
                     ]
-                    await AlphaBotInc.sendButtonText(m.chat, buttons, `\`\`\`*Please Wait Looking For Partner*\`\`\``, AlphaBotInc.user.name, m)
+                    await ZimBotInc.sendButtonText(m.chat, buttons, `\`\`\`*Please Wait Looking For Partner*\`\`\``, ZimBotInc.user.name, m)
                 }
                 break
             }
             case 'public': {
                 if (!isCreator) throw mess.owner
-                AlphaBotInc.public = true
+                ZimBotInc.public = true
                 m.reply('*Bot working as public now hope you will enjoy*')
             }
             break
             case 'self': {
                 if (!isCreator) throw mess.owner
-                AlphaBotInc.public = false
+                ZimBotInc.public = false
                 m.reply('*Bot working as private now hope you will enjoy*')
             }
             break
@@ -6381,26 +6381,26 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
             }
             break
             case 'owner': case 'creator': {
-                AlphaBotInc.sendContact(m.chat, global.owner, m)
+                ZimBotInc.sendContact(m.chat, global.owner, m)
                 const devsound = fs.readFileSync('./Zimbot/bot.mp3')
-           AlphaBotInc.sendMessage(m.chat, { audio: devsound, mimetype: 'audio/mp4', ptt: true, quoted: m })
+           ZimBotInc.sendMessage(m.chat, { audio: devsound, mimetype: 'audio/mp4', ptt: true, quoted: m })
             
             }
             
             break
             case 'developer': case 'botdev': {
-                AlphaBotInc.sendContact(m.chat, global.botdev, m)
+                ZimBotInc.sendContact(m.chat, global.botdev, m)
                 const devsound = fs.readFileSync('./Zimbot/bot.mp3')
-           AlphaBotInc.sendMessage(m.chat, { audio: devsound, mimetype: 'audio/mp4', ptt: true, quoted: m })
+           ZimBotInc.sendMessage(m.chat, { audio: devsound, mimetype: 'audio/mp4', ptt: true, quoted: m })
             }
 
             
             break
             
             case 'bothelp':  {
-                AlphaBotInc.sendContact(m.chat, global.bothelp, m)
+                ZimBotInc.sendContact(m.chat, global.bothelp, m)
                 const devsound = fs.readFileSync('./Zimbot/bot.mp3')
-           AlphaBotInc.sendMessage(m.chat, { audio: devsound, mimetype: 'audio/mp4', ptt: true, quoted: m })
+           ZimBotInc.sendMessage(m.chat, { audio: devsound, mimetype: 'audio/mp4', ptt: true, quoted: m })
             }
             
             break
@@ -6408,11 +6408,11 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
 case 'once': case 'toonce': { //by DRIPS
         if (!quoted) throw 'Reply Image'
         if (/image/.test(mime)) {
-anu = await AlphaBotInc.downloadAndSaveMediaMessage(quoted)
-AlphaBotInc.sendMessage(m.chat, {image: {url: anu},viewOnce : true},{quoted: m })
+anu = await ZimBotInc.downloadAndSaveMediaMessage(quoted)
+ZimBotInc.sendMessage(m.chat, {image: {url: anu},viewOnce : true},{quoted: m })
         } else if (/video/.test(mime)) {
-        anu = await AlphaBotInc.downloadAndSaveMediaMessage(quoted)
-        AlphaBotInc.sendMessage(m.chat, {video: {url: anu},viewOnce : true},{quoted: m })
+        anu = await ZimBotInc.downloadAndSaveMediaMessage(quoted)
+        ZimBotInc.sendMessage(m.chat, {video: {url: anu},viewOnce : true},{quoted: m })
         }
         }
         break
@@ -6438,7 +6438,7 @@ AlphaBotInc.sendMessage(m.chat, {image: {url: anu},viewOnce : true},{quoted: m }
         m.reply(res)
         });
         break
-        case 'tes': case 'test': case 'alive': case 'bot': case 'robot': case 'zimbot': case 'drips':const _0x12fbc6=_0xa830;function _0x5a3e(){const _0x1d2e27=['\x0a┃┃\x0a┃🏮𝗣𝗟𝗔𝗧𝗙𝗢𝗥𝗠\x20:\x20','ownername','Message','\x0a▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋\x0a▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋\x0a\x20+\x202\x207\x206\x20\x203\x20\x204\x20\x200\x20\x209\x20\x200\x202\x20\x200\x20\x203\x0a\x20','botname','\x0a\x0a╭▬▬❪\x20*ZIM\x20BOT\x20INC*❫▬▬▬\x0a┃🏮\x20*LIBRARY:*\x20Baileys-md\x0a┃┃\x0a┃🏮𝗕𝗢𝗧𝗡𝗔𝗠𝗘:\x20','1195460RyNtVa','\x0a┃┃\x0a┃🏮𝗢𝗪𝗡𝗘𝗥𝗡𝗔𝗠𝗘:\x20','LIST','key','6523785MZSaHJ','ZIM\x20BOT\x20IS\x20ALIVE','5878536uJnrmT','\x0a⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯\x0a\x0a*ZIMBOT\x20V3\x20WELCOMES\x20YOU*\x20','imageMessage','OWNER','owner','waUploadToServer','467946xkzyQz','uptime','2369958VHTLog','377875gbZphs','platform','ping','listmenu','chat','184vBAXES','SPEED','https://DISCUSSION GROUP.com/zim-bot/zimbot-v3','\x0a┃┃\x0a┃🏮𝗡𝗨𝗠𝗕𝗘𝗥:\x20','MAIN GROUP','3595404noXmcO','DISCUSSION GROUP','relayMessage'];_0x5a3e=function(){return _0x1d2e27;};return _0x5a3e();}(function(_0x2241bd,_0x3fade8){const _0x5e1c6a=_0xa830,_0x587e66=_0x2241bd();while(!![]){try{const _0x19d1c9=parseInt(_0x5e1c6a(0x1aa))/0x1+parseInt(_0x5e1c6a(0x1a9))/0x2+-parseInt(_0x5e1c6a(0x1a7))/0x3+parseInt(_0x5e1c6a(0x1b4))/0x4+parseInt(_0x5e1c6a(0x19f))/0x5+parseInt(_0x5e1c6a(0x1a1))/0x6+parseInt(_0x5e1c6a(0x1bd))/0x7*(-parseInt(_0x5e1c6a(0x1af))/0x8);if(_0x19d1c9===_0x3fade8)break;else _0x587e66['push'](_0x587e66['shift']());}catch(_0x5934cf){_0x587e66['push'](_0x587e66['shift']());}}}(_0x5a3e,0xa1b18));function _0xa830(_0x4b8bc2,_0x133f6d){const _0x5a3e80=_0x5a3e();return _0xa830=function(_0xa83019,_0x49a73f){_0xa83019=_0xa83019-0x19f;let _0x58eca5=_0x5a3e80[_0xa83019];return _0x58eca5;},_0xa830(_0x4b8bc2,_0x133f6d);}{anu=_0x12fbc6(0x1a2)+pushname+_0x12fbc6(0x1bc)+global[_0x12fbc6(0x1bb)]+_0x12fbc6(0x1be)+global[_0x12fbc6(0x1b8)]+_0x12fbc6(0x1b2)+global[_0x12fbc6(0x1a5)]+_0x12fbc6(0x1b7)+os[_0x12fbc6(0x1ab)]()+'\x0a▙▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a🏮\x20*UPTIME:*\x20'+runtime(process[_0x12fbc6(0x1a8)]())+_0x12fbc6(0x1ba),drips=await getBuffer(picak+_0x12fbc6(0x1a0));let message=await prepareWAMessageMedia({'image':drips,'jpegThumbnail':drips},{'upload':AlphaBotInc[_0x12fbc6(0x1a6)]});const template=generateWAMessageFromContent(m[_0x12fbc6(0x1ae)],proto[_0x12fbc6(0x1b9)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message[_0x12fbc6(0x1a3)],'hydratedContentText':anu,'hydratedFooterText':''+global['botname'],'hydratedButtons':[{'urlButton':{'displayText':_0x12fbc6(0x1b3),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x12fbc6(0x1b5),'url':_0x12fbc6(0x1b1)}},{'quickReplyButton':{'displayText':_0x12fbc6(0x1b0),'id':_0x12fbc6(0x1ac)}},{'quickReplyButton':{'displayText':_0x12fbc6(0x1a4),'id':_0x12fbc6(0x1a5)}},{'quickReplyButton':{'displayText':_0x12fbc6(0x1bf),'id':_0x12fbc6(0x1ad)}}]}}}),{'userJid':m['chat'],'quoted':m});AlphaBotInc[_0x12fbc6(0x1b6)](m[_0x12fbc6(0x1ae)],template['message'],{'messageId':template[_0x12fbc6(0x1c0)]['id']});}
+        case 'tes': case 'test': case 'alive': case 'bot': case 'robot': case 'zimbot': case 'drips':const _0x12fbc6=_0xa830;function _0x5a3e(){const _0x1d2e27=['\x0a┃┃\x0a┃🏮𝗣𝗟𝗔𝗧𝗙𝗢𝗥𝗠\x20:\x20','ownername','Message','\x0a▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋\x0a▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋▋\x0a\x20+\x202\x207\x206\x20\x203\x20\x204\x20\x200\x20\x209\x20\x200\x202\x20\x200\x20\x203\x0a\x20','botname','\x0a\x0a╭▬▬❪\x20*ZIM\x20BOT\x20INC*❫▬▬▬\x0a┃🏮\x20*LIBRARY:*\x20Baileys-md\x0a┃┃\x0a┃🏮𝗕𝗢𝗧𝗡𝗔𝗠𝗘:\x20','1195460RyNtVa','\x0a┃┃\x0a┃🏮𝗢𝗪𝗡𝗘𝗥𝗡𝗔𝗠𝗘:\x20','LIST','key','6523785MZSaHJ','ZIM\x20BOT\x20IS\x20ALIVE','5878536uJnrmT','\x0a⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯⧯\x0a\x0a*ZIMBOT\x20V3\x20WELCOMES\x20YOU*\x20','imageMessage','OWNER','owner','waUploadToServer','467946xkzyQz','uptime','2369958VHTLog','377875gbZphs','platform','ping','listmenu','chat','184vBAXES','SPEED','https://github.com/zim-bot/zimbot-v3','\x0a┃┃\x0a┃🏮𝗡𝗨𝗠𝗕𝗘𝗥:\x20','SUBSCRIBE','3595404noXmcO','GITHUB','relayMessage'];_0x5a3e=function(){return _0x1d2e27;};return _0x5a3e();}(function(_0x2241bd,_0x3fade8){const _0x5e1c6a=_0xa830,_0x587e66=_0x2241bd();while(!![]){try{const _0x19d1c9=parseInt(_0x5e1c6a(0x1aa))/0x1+parseInt(_0x5e1c6a(0x1a9))/0x2+-parseInt(_0x5e1c6a(0x1a7))/0x3+parseInt(_0x5e1c6a(0x1b4))/0x4+parseInt(_0x5e1c6a(0x19f))/0x5+parseInt(_0x5e1c6a(0x1a1))/0x6+parseInt(_0x5e1c6a(0x1bd))/0x7*(-parseInt(_0x5e1c6a(0x1af))/0x8);if(_0x19d1c9===_0x3fade8)break;else _0x587e66['push'](_0x587e66['shift']());}catch(_0x5934cf){_0x587e66['push'](_0x587e66['shift']());}}}(_0x5a3e,0xa1b18));function _0xa830(_0x4b8bc2,_0x133f6d){const _0x5a3e80=_0x5a3e();return _0xa830=function(_0xa83019,_0x49a73f){_0xa83019=_0xa83019-0x19f;let _0x58eca5=_0x5a3e80[_0xa83019];return _0x58eca5;},_0xa830(_0x4b8bc2,_0x133f6d);}{anu=_0x12fbc6(0x1a2)+pushname+_0x12fbc6(0x1bc)+global[_0x12fbc6(0x1bb)]+_0x12fbc6(0x1be)+global[_0x12fbc6(0x1b8)]+_0x12fbc6(0x1b2)+global[_0x12fbc6(0x1a5)]+_0x12fbc6(0x1b7)+os[_0x12fbc6(0x1ab)]()+'\x0a▙▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a🏮\x20*UPTIME:*\x20'+runtime(process[_0x12fbc6(0x1a8)]())+_0x12fbc6(0x1ba),drips=await getBuffer(picak+_0x12fbc6(0x1a0));let message=await prepareWAMessageMedia({'image':drips,'jpegThumbnail':drips},{'upload':ZimBotInc[_0x12fbc6(0x1a6)]});const template=generateWAMessageFromContent(m[_0x12fbc6(0x1ae)],proto[_0x12fbc6(0x1b9)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message[_0x12fbc6(0x1a3)],'hydratedContentText':anu,'hydratedFooterText':''+global['botname'],'hydratedButtons':[{'urlButton':{'displayText':_0x12fbc6(0x1b3),'url':'https://www.youtube.com/c/DRIPSOFC'}},{'urlButton':{'displayText':_0x12fbc6(0x1b5),'url':_0x12fbc6(0x1b1)}},{'quickReplyButton':{'displayText':_0x12fbc6(0x1b0),'id':_0x12fbc6(0x1ac)}},{'quickReplyButton':{'displayText':_0x12fbc6(0x1a4),'id':_0x12fbc6(0x1a5)}},{'quickReplyButton':{'displayText':_0x12fbc6(0x1bf),'id':_0x12fbc6(0x1ad)}}]}}}),{'userJid':m['chat'],'quoted':m});ZimBotInc[_0x12fbc6(0x1b6)](m[_0x12fbc6(0x1ae)],template['message'],{'messageId':template[_0x12fbc6(0x1c0)]['id']});}
         
         break
         
@@ -6468,7 +6468,7 @@ if (q.includes('--help')) return m.reply(examkosong)
   if (!isInventory){ addInventori(m.sender) }
   if (!isInventoriBuruan){ addInventoriBuruan(m.sender) }
    try {
-                    ppuser = await AlphaBotInc.profilePictureUrl(m.sender, 'image')
+                    ppuser = await ZimBotInc.profilePictureUrl(m.sender, 'image')
                 } catch {
                     ppuser = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
                 }
@@ -6476,12 +6476,12 @@ if (q.includes('--help')) return m.reply(examkosong)
               let Xp = level.getLevelingXp(m.sender, _level)
               let Xplu = 10 * Math.pow(Levele, 2) + 50 * Levele + 100         
      var profile = `*▊▊▊USER PROFILE ▊▊▊*\n\n⬤ *USERNAME:* ${pushname}\n⬤ *PREMIUM*: \n⬤ *ADMIN*: \n\n=_=_=_=_=_=_=_=_=_=_=_=_=\n\n*YOUR PROGRESS:*\n⬤ *YOUR LEVEL*: ${Levele}\n⬤ *YOUR XP*: (${Xp} / ${Xplu})\n*⬤ YOUR BLOOD* : ${getDarah(m.sender)}\n⬤ *YOUR IRON:* ${getBesi(m.sender)}\n⬤ *YOUR EMAS:* ${getEmas(m.sender)}\n⬤ *YOUR EMERALD* : ${getEmerald(m.sender)}\n⬤ *YOUR POTION* : ${getPotion(m.sender)}\n\n=_=_=_=_=_=_=_=_=_=_=_=_=\n\nHurry up:\n⬤ *YOUR FISH* : ${getIkan(m.sender)}\n⬤ *YOUR CHICKEN* : ${getAyam(m.sender)}\n⬤ *YOUR RABBIT* : ${getKelinci(m.sender)}\n⬤ *SHEEP* : ${getDomba(m.sender)}\n⬤ *YOUR COW* : ${getSapi(m.sender)}\n⬤ *YOUR ELEPHANTS* : ${getGajah(m.sender)}\n\n*ZIM BOT INC*`
-     AlphaBotInc.sendMessage(m.chat, { image: { url: ppuser }, jpegThumbnail: await getBuffer(ppuser), caption: `${profile}` }, { quoted: m }).catch((err) => m.reply('link error'))    
+     ZimBotInc.sendMessage(m.chat, { image: { url: ppuser }, jpegThumbnail: await getBuffer(ppuser), caption: `${profile}` }, { quoted: m }).catch((err) => m.reply('link error'))    
   }
   break
 
 case 'beli': case 'buy':{
-AlphaBotInc.sendButtonText(m.chat, [{ buttonId: 'wgheo', buttonText: { displayText: 'BUY LIMIT' }, type: 1 }], `🎉 ${ucapannya2} ${pushname}\n\n*Want to buy a limit??\nPlease click the button below*`, ALEXICA, m)
+ZimBotInc.sendButtonText(m.chat, [{ buttonId: 'wgheo', buttonText: { displayText: 'BUY LIMIT' }, type: 1 }], `🎉 ${ucapannya2} ${pushname}\n\n*Want to buy a limit??\nPlease click the button below*`, global.botname, m)
 }
 break
 
@@ -6517,9 +6517,9 @@ teks = `*▊▊▊REPORT FEATURE▊▊▊*`
 teks1 = `\n\nNUMBER : @${m.sender.split("@")[0]}\n*REPORT :* ${args.join(" ")}`
 teks2 = `\n\nSucces send to owner`
 for (let i of owner) {
-AlphaBotInc.sendMessage(i + "@s.whatsapp.net", {text: teks + teks1, mentions:[m.sender]}, {quoted:m})
+ZimBotInc.sendMessage(i + "@s.whatsapp.net", {text: teks + teks1, mentions:[m.sender]}, {quoted:m})
 }
-AlphaBotInc.sendMessage(m.chat, {text: teks + teks2 + teks1, mentions:[m.sender]}, {quoted:m})
+ZimBotInc.sendMessage(m.chat, {text: teks + teks2 + teks1, mentions:[m.sender]}, {quoted:m})
 }
 break
 case 'request': {
@@ -6528,9 +6528,9 @@ teks = `*▊▊▊REQUEST FEATURE▊▊▊*`
 teks1 = `\n\n*NUMBER :* @${m.sender.split("@")[0]}\n*REQUEST :* ${args.join(" ")}`
 teks2 = `\n\nSucces send to owner`
 for (let i of owner) {
-AlphaBotInc.sendMessage(i + "@s.whatsapp.net", {text: teks + teks1, mentions:[m.sender]}, {quoted:m})
+ZimBotInc.sendMessage(i + "@s.whatsapp.net", {text: teks + teks1, mentions:[m.sender]}, {quoted:m})
 }
-AlphaBotInc.sendMessage(m.chat, {text: teks + teks2 + teks1, mentions:[m.sender]}, {quoted:m})
+ZimBotInc.sendMessage(m.chat, {text: teks + teks2 + teks1, mentions:[m.sender]}, {quoted:m})
 }
 break
 case 'domain': {
@@ -6602,7 +6602,7 @@ let sections = []
 
      }
 
-  const sendm =  AlphaBotInc.sendMessage(
+  const sendm =  ZimBotInc.sendMessage(
 
       m.chat, 
 
@@ -6630,7 +6630,7 @@ if (!isInventoryLimit){ addInventoriLimit(m.sender) }
             m.reply(`*1 limit used*`)
 res = await fetchJson(`https://api.jikan.moe/v4/anime/${q}`)
 let txt = `𝗔𝗻𝗶𝗺𝗲 𝗜𝗻𝗳𝗼\n\n*TITLE:* *${res.data.title}*\n*ENGLISH:* *${res.data.title_english}*\n*JAPANESE:* *${res.data.title_japanese}*\n*TYPE ANIME:* *${res.data.type}*\n*ADAPTER:* *${res.data.source}*\n*TOTAL EPISODE:* *${res.data.episodes}*\n*STATUS:* *${res.data.status}*\n*ONGOING:* *${res.data.airing ? 'Ya' : 'DRIS'}*\n*AIRED:* *${res.data.aired.string}*\n*DURATION:* *${res.data.duration}*\n*RATING:* *${res.data.rating}*\n*SCORE:* *${res.data.score}*\n*RANK:* *${res.data.rank}*\n*STUDIO:* *${res.data.studios[0].name}* `
-AlphaBotInc.sendMessage(m.chat, { image : { url : res.data.images.jpg.image_url}, caption : txt}, {quoted :m }).catch((err) => m.reply('sorry error'))
+ZimBotInc.sendMessage(m.chat, { image : { url : res.data.images.jpg.image_url}, caption : txt}, {quoted :m }).catch((err) => m.reply('sorry error'))
 }
 break
 
@@ -6658,13 +6658,13 @@ case 'listmenu': case 'list': {
             }
             sections.push(list)   
             }
-            const sendm =  AlphaBotInc.sendMessage(
+            const sendm =  ZimBotInc.sendMessage(
             m.chat, 
            {
        text: `
 *✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -6676,9 +6676,9 @@ case 'listmenu': case 'list': {
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯`,
-       footer: AlphaBotInc.user.name,
+       footer: ZimBotInc.user.name,
        title: `${ucapannya2} ${pushname}`,
        buttonText: "CLICK HERE",
        sections
@@ -6687,11 +6687,11 @@ case 'listmenu': case 'list': {
       
      break
 
-case 'setmenu': const _0x82f741=_0x10db;function _0x10db(_0x237750,_0x385d3f){const _0x511702=_0x5117();return _0x10db=function(_0x10db44,_0x596302){_0x10db44=_0x10db44-0x7d;let _0x44663a=_0x511702[_0x10db44];return _0x44663a;},_0x10db(_0x237750,_0x385d3f);}function _0x5117(){const _0x55f57b=['4569NOCauN','3976QKgpog','𝗧𝗘𝗠𝗣𝗟𝗔𝗧𝗘\x20𝗟𝗢𝗖𝗔𝗧𝗜𝗢𝗡','success','templateGif','templateList','Change\x20menu\x20bot\x20to\x20Template\x20Image','templateLocation','setmenu\x20templateDoc','𝗧𝗘𝗠𝗣𝗟𝗔𝗧𝗘\x20𝗟𝗜𝗦𝗧','setmenu\x20templateList','414132SgZwnp','𝗧𝗘𝗠𝗣𝗟𝗔𝗧𝗘\x20𝗜𝗠𝗔𝗚𝗘','34413QPRLmc','setmenu\x20templateImage','settings','templateImage','117gNPFAM','*Hello\x20Owner\x20Cheers\x20to\x20that!*','templateMsg','Change\x20menu\x20bot\x20to\x20Template\x20Gif','916745ZKMUHO','𝗧𝗘𝗠𝗣𝗟𝗔𝗧𝗘\x20𝗠𝗘𝗦𝗦𝗔𝗚𝗘','408710BbeqRt','setmenu\x20templateMessage','templateDoc','reply','162Qmmgsv','name','owner','*Please\x20choose\x20the\x20menu\x20you\x20want\x20to\x20change!\x20I\x20hope\x20you\x20will\x20enjoy🔥*','575736LhEXlv','T𝗘𝗠𝗣𝗟𝗔𝗧𝗘\x20𝗚𝗜𝗙','©️𝗭𝗜𝗠\x20𝗕𝗢𝗧\x20𝗜𝗡𝗖','sendListMsg','setmenu\x20templateLocation','CLICK\x20HERE','data','setmenu\x20templateGif','𝗧𝗘𝗠𝗣𝗟𝗔𝗧𝗘\x20𝗗𝗢𝗖𝗨𝗠𝗘𝗡𝗧','Change\x20menu\x20bot\x20to\x20Template\x20List','3504dkmSbr'];_0x5117=function(){return _0x55f57b;};return _0x5117();}(function(_0x1c5d29,_0x2a099d){const _0x52c262=_0x10db,_0x4d87c1=_0x1c5d29();while(!![]){try{const _0x4ea884=parseInt(_0x52c262(0x91))/0x1+-parseInt(_0x52c262(0x9f))/0x2*(-parseInt(_0x52c262(0x84))/0x3)+parseInt(_0x52c262(0xa3))/0x4+parseInt(_0x52c262(0x99))/0x5+-parseInt(_0x52c262(0x8f))/0x6+-parseInt(_0x52c262(0x85))/0x7*(-parseInt(_0x52c262(0x83))/0x8)+parseInt(_0x52c262(0x95))/0x9*(-parseInt(_0x52c262(0x9b))/0xa);if(_0x4ea884===_0x2a099d)break;else _0x4d87c1['push'](_0x4d87c1['shift']());}catch(_0x4f1045){_0x4d87c1['push'](_0x4d87c1['shift']());}}}(_0x5117,0x2097a));{if(!isCreator)throw mess[_0x82f741(0xa1)];let setbot=db[_0x82f741(0x7f)][_0x82f741(0x93)][botNumber];if(args[0x0]==='templateImage')setbot[_0x82f741(0x94)]=!![],setbot[_0x82f741(0x8b)]=![],setbot['templateGif']=![],setbot[_0x82f741(0x97)]=![],setbot[_0x82f741(0x89)]=![],setbot[_0x82f741(0x9d)]=![],m[_0x82f741(0x9e)](mess['success']);else{if(args[0x0]==='templateLocation')setbot['templateImage']=![],setbot[_0x82f741(0x8b)]=!![],setbot[_0x82f741(0x88)]=![],setbot[_0x82f741(0x97)]=![],setbot[_0x82f741(0x89)]=![],setbot['templateDoc']=![],m[_0x82f741(0x9e)](mess['success']);else{if(args[0x0]==='templateGif')setbot[_0x82f741(0x94)]=![],setbot[_0x82f741(0x8b)]=![],setbot[_0x82f741(0x88)]=!![],setbot[_0x82f741(0x97)]=![],setbot[_0x82f741(0x89)]=![],setbot['templateDoc']=![],m[_0x82f741(0x9e)](mess[_0x82f741(0x87)]);else{if(args[0x0]==='templateMessage')setbot[_0x82f741(0x94)]=![],setbot[_0x82f741(0x8b)]=![],setbot[_0x82f741(0x88)]=![],setbot[_0x82f741(0x97)]=!![],setbot[_0x82f741(0x89)]=![],setbot['templateDoc']=![],m[_0x82f741(0x9e)](mess[_0x82f741(0x87)]);else{if(args[0x0]===_0x82f741(0x89))setbot['templateImage']=![],setbot['templateLocation']=![],setbot[_0x82f741(0x88)]=![],setbot['templateMsg']=![],setbot[_0x82f741(0x89)]=!![],setbot['templateDoc']=![],m[_0x82f741(0x9e)](mess[_0x82f741(0x87)]);else{if(args[0x0]===_0x82f741(0x9d))setbot[_0x82f741(0x94)]=![],setbot[_0x82f741(0x8b)]=![],setbot[_0x82f741(0x88)]=![],setbot[_0x82f741(0x97)]=![],setbot['templateList']=![],setbot[_0x82f741(0x9d)]=!![],m['reply'](mess['success']);else{let sections=[{'title':_0x82f741(0xa5),'rows':[{'title':_0x82f741(0x90),'rowId':_0x82f741(0x92),'description':_0x82f741(0x8a)},{'title':_0x82f741(0x86),'rowId':_0x82f741(0x7d),'description':'Change\x20menu\x20bot\x20to\x20Template\x20Location'},{'title':_0x82f741(0xa4),'rowId':_0x82f741(0x80),'description':_0x82f741(0x98)},{'title':_0x82f741(0x9a),'rowId':_0x82f741(0x9c),'description':'Change\x20menu\x20bot\x20to\x20Template\x20Message'},{'title':_0x82f741(0x8d),'rowId':_0x82f741(0x8e),'description':_0x82f741(0x82)},{'title':_0x82f741(0x81),'rowId':_0x82f741(0x8c),'description':'Change\x20menu\x20bot\x20to\x20Template\x20Document'}]}];AlphaBotInc[_0x82f741(0xa6)](m['chat'],_0x82f741(0xa2),AlphaBotInc['user'][_0x82f741(0xa0)],_0x82f741(0x96),_0x82f741(0x7e),sections,m);}}}}}}}
+case 'setmenu': const _0x82f741=_0x10db;function _0x10db(_0x237750,_0x385d3f){const _0x511702=_0x5117();return _0x10db=function(_0x10db44,_0x596302){_0x10db44=_0x10db44-0x7d;let _0x44663a=_0x511702[_0x10db44];return _0x44663a;},_0x10db(_0x237750,_0x385d3f);}function _0x5117(){const _0x55f57b=['4569NOCauN','3976QKgpog','𝗧𝗘𝗠𝗣𝗟𝗔𝗧𝗘\x20𝗟𝗢𝗖𝗔𝗧𝗜𝗢𝗡','success','templateGif','templateList','Change\x20menu\x20bot\x20to\x20Template\x20Image','templateLocation','setmenu\x20templateDoc','𝗧𝗘𝗠𝗣𝗟𝗔𝗧𝗘\x20𝗟𝗜𝗦𝗧','setmenu\x20templateList','414132SgZwnp','𝗧𝗘𝗠𝗣𝗟𝗔𝗧𝗘\x20𝗜𝗠𝗔𝗚𝗘','34413QPRLmc','setmenu\x20templateImage','settings','templateImage','117gNPFAM','*Hello\x20Owner\x20Cheers\x20to\x20that!*','templateMsg','Change\x20menu\x20bot\x20to\x20Template\x20Gif','916745ZKMUHO','𝗧𝗘𝗠𝗣𝗟𝗔𝗧𝗘\x20𝗠𝗘𝗦𝗦𝗔𝗚𝗘','408710BbeqRt','setmenu\x20templateMessage','templateDoc','reply','162Qmmgsv','name','owner','*Please\x20choose\x20the\x20menu\x20you\x20want\x20to\x20change!\x20I\x20hope\x20you\x20will\x20enjoy🔥*','575736LhEXlv','T𝗘𝗠𝗣𝗟𝗔𝗧𝗘\x20𝗚𝗜𝗙','©️𝗭𝗜𝗠\x20𝗕𝗢𝗧\x20𝗜𝗡𝗖','sendListMsg','setmenu\x20templateLocation','CLICK\x20HERE','data','setmenu\x20templateGif','𝗧𝗘𝗠𝗣𝗟𝗔𝗧𝗘\x20𝗗𝗢𝗖𝗨𝗠𝗘𝗡𝗧','Change\x20menu\x20bot\x20to\x20Template\x20List','3504dkmSbr'];_0x5117=function(){return _0x55f57b;};return _0x5117();}(function(_0x1c5d29,_0x2a099d){const _0x52c262=_0x10db,_0x4d87c1=_0x1c5d29();while(!![]){try{const _0x4ea884=parseInt(_0x52c262(0x91))/0x1+-parseInt(_0x52c262(0x9f))/0x2*(-parseInt(_0x52c262(0x84))/0x3)+parseInt(_0x52c262(0xa3))/0x4+parseInt(_0x52c262(0x99))/0x5+-parseInt(_0x52c262(0x8f))/0x6+-parseInt(_0x52c262(0x85))/0x7*(-parseInt(_0x52c262(0x83))/0x8)+parseInt(_0x52c262(0x95))/0x9*(-parseInt(_0x52c262(0x9b))/0xa);if(_0x4ea884===_0x2a099d)break;else _0x4d87c1['push'](_0x4d87c1['shift']());}catch(_0x4f1045){_0x4d87c1['push'](_0x4d87c1['shift']());}}}(_0x5117,0x2097a));{if(!isCreator)throw mess[_0x82f741(0xa1)];let setbot=db[_0x82f741(0x7f)][_0x82f741(0x93)][botNumber];if(args[0x0]==='templateImage')setbot[_0x82f741(0x94)]=!![],setbot[_0x82f741(0x8b)]=![],setbot['templateGif']=![],setbot[_0x82f741(0x97)]=![],setbot[_0x82f741(0x89)]=![],setbot[_0x82f741(0x9d)]=![],m[_0x82f741(0x9e)](mess['success']);else{if(args[0x0]==='templateLocation')setbot['templateImage']=![],setbot[_0x82f741(0x8b)]=!![],setbot[_0x82f741(0x88)]=![],setbot[_0x82f741(0x97)]=![],setbot[_0x82f741(0x89)]=![],setbot['templateDoc']=![],m[_0x82f741(0x9e)](mess['success']);else{if(args[0x0]==='templateGif')setbot[_0x82f741(0x94)]=![],setbot[_0x82f741(0x8b)]=![],setbot[_0x82f741(0x88)]=!![],setbot[_0x82f741(0x97)]=![],setbot[_0x82f741(0x89)]=![],setbot['templateDoc']=![],m[_0x82f741(0x9e)](mess[_0x82f741(0x87)]);else{if(args[0x0]==='templateMessage')setbot[_0x82f741(0x94)]=![],setbot[_0x82f741(0x8b)]=![],setbot[_0x82f741(0x88)]=![],setbot[_0x82f741(0x97)]=!![],setbot[_0x82f741(0x89)]=![],setbot['templateDoc']=![],m[_0x82f741(0x9e)](mess[_0x82f741(0x87)]);else{if(args[0x0]===_0x82f741(0x89))setbot['templateImage']=![],setbot['templateLocation']=![],setbot[_0x82f741(0x88)]=![],setbot['templateMsg']=![],setbot[_0x82f741(0x89)]=!![],setbot['templateDoc']=![],m[_0x82f741(0x9e)](mess[_0x82f741(0x87)]);else{if(args[0x0]===_0x82f741(0x9d))setbot[_0x82f741(0x94)]=![],setbot[_0x82f741(0x8b)]=![],setbot[_0x82f741(0x88)]=![],setbot[_0x82f741(0x97)]=![],setbot['templateList']=![],setbot[_0x82f741(0x9d)]=!![],m['reply'](mess['success']);else{let sections=[{'title':_0x82f741(0xa5),'rows':[{'title':_0x82f741(0x90),'rowId':_0x82f741(0x92),'description':_0x82f741(0x8a)},{'title':_0x82f741(0x86),'rowId':_0x82f741(0x7d),'description':'Change\x20menu\x20bot\x20to\x20Template\x20Location'},{'title':_0x82f741(0xa4),'rowId':_0x82f741(0x80),'description':_0x82f741(0x98)},{'title':_0x82f741(0x9a),'rowId':_0x82f741(0x9c),'description':'Change\x20menu\x20bot\x20to\x20Template\x20Message'},{'title':_0x82f741(0x8d),'rowId':_0x82f741(0x8e),'description':_0x82f741(0x82)},{'title':_0x82f741(0x81),'rowId':_0x82f741(0x8c),'description':'Change\x20menu\x20bot\x20to\x20Template\x20Document'}]}];ZimBotInc[_0x82f741(0xa6)](m['chat'],_0x82f741(0xa2),ZimBotInc['user'][_0x82f741(0xa0)],_0x82f741(0x96),_0x82f741(0x7e),sections,m);}}}}}}}
             break
 
             case 'allmenu': case 'menu': case 'help': {
-AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
 let Levelnye = level.getLevelingLevel(m.sender, _level)
 let datane = fs.readFileSync('./lib/random.js')
 jsonData = JSON.parse(datane)
@@ -6704,7 +6704,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -6716,7 +6716,7 @@ anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
     
@@ -7084,7 +7084,7 @@ anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ┃⬤${prefix}stickersearch
 ┃⬤${prefix}animesearch
 ┃⬤${prefix}tiktokstalk
-┃⬤${prefix}DISCUSSION GROUPstalk
+┃⬤${prefix}githubstalk
 ┃⬤${prefix}twitterstalk
 ┗━━━━━━━━━━⦿
 
@@ -7270,17 +7270,17 @@ anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ┃⬤${prefix}ramaljodohbali
 ┗━━━━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 let btn = [{
                                 urlButton: {
-                                    displayText: 'MAIN GROUP',
-                                    url: 'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'
+                                    displayText: 'SUBSCRIBE',
+                                    url: 'https://www.youtube.com/c/DRIPSOFC'
                                 }
                             }, {
                                 urlButton: {
-                                    displayText: 'DISCUSSION GROUP',
-                                    url: 'https://DISCUSSION GROUP.com/zim-bot/zimbot-v3'
+                                    displayText: 'GITHUB',
+                                    url: 'https://github.com/zim-bot/zimbot-v3'
                                 }
                             }, {
                                 quickReplyButton: {
@@ -7300,13 +7300,13 @@ let btn = [{
                             }]
                         let setbot = db.data.settings[botNumber]
                         if (setbot.templateImage) {
-                        let message = await prepareWAMessageMedia({ image: buffer, jpegThumbnail:buffer }, { upload: AlphaBotInc.waUploadToServer })
+                        let message = await prepareWAMessageMedia({ image: buffer, jpegThumbnail:buffer }, { upload: ZimBotInc.waUploadToServer })
 const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
 templateMessage: {
 hydratedTemplate: {
 imageMessage: message.imageMessage,
 hydratedContentText: anu,
-hydratedFooterText: `${ALEXICA}`,
+hydratedFooterText: `${global.botname}`,
 hydratedButtons: [{
 urlButton: {
 displayText: 'MAIN GROUP',
@@ -7336,9 +7336,9 @@ id: 'listmenu'
 }
 }
 }), { userJid: m.chat, quoted: m })
-AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
+ZimBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
                         } else if (setbot.templateGif) {
-                        let message = await prepareWAMessageMedia({ video: global.visoka, gifPlayback:true, jpegThumbnail:buffer }, { upload: AlphaBotInc.waUploadToServer })
+                        let message = await prepareWAMessageMedia({ video: global.visoka, gifPlayback:true, jpegThumbnail:buffer }, { upload: ZimBotInc.waUploadToServer })
 const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
 templateMessage: {
 hydratedTemplate: {
@@ -7374,7 +7374,7 @@ id: 'listmenu'
 }
 }
 }), { userJid: m.chat, quoted: m })
-AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
+ZimBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
                         } else if (setbot.templateLocation) {
                         const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
                     templateMessage: {
@@ -7412,9 +7412,9 @@ id: 'listmenu'
 }
 }
 }), { userJid: m.chat, quoted: m })
-AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
+ZimBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
                         } else if (setbot.templateMsg) {
-                        AlphaBotInc.send5ButMsg(m.chat, anu, ALEXICA, btn)
+                        ZimBotInc.send5ButMsg(m.chat, anu, global.botname, btn)
                         } else if (setbot.templateList) {                       
             let sections = []   
             let listmenu = [`allmenu`,`mainmenu`,`groupmenu`,`expmenu`,`downloadmenu`,`searchingmenu`,`randommenu`,`textpromenu`,`photooxymenu`,`funmenu`,`imageeffectmenu`,`ephotomenu`,`primbonmenu`,`convertmenu`,`databasemenu`,`photofiltermenu`,`anonymousmenu`,`islammenu`,`voicemenu`,`toolsmenu`,`internetmenu`,`shortmenu`,`ownermenu`,`nsfwmenu`,`donasi`]
@@ -7435,13 +7435,13 @@ AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id 
             }
             sections.push(list)   
             }
-            const sendm =  AlphaBotInc.sendMessage(
+            const sendm =  ZimBotInc.sendMessage(
             m.chat, 
            {
        text: `
 *✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7453,7 +7453,7 @@ AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id 
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯`,
        footer: `ZIM BOT INC`,
        title: `*LIST MENU*`,
@@ -7462,7 +7462,7 @@ AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id 
        sections
       }, { quoted : m })
       } else if (setbot.templateDoc) {
-      const buttonsDefault = [{ urlButton: { displayText: `MAIN GROUP`, url : `https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s` } }, { urlButton: { displayText: `DISCUSSION GROUP`, url : `https://DISCUSSION GROUP.com/zim-bot/zimbot-v3` } },
+      const buttonsDefault = [{ urlButton: { displayText: `SUBSCRIBE`, url : `https://www.youtube.com/c/DRIPSOFC` } }, { urlButton: { displayText: `GITHUB`, url : `https://github.com/zim-bot/zimbot-v3` } },
    {					
 					quickReplyButton: {
 						displayText: 'SPEED',
@@ -7481,7 +7481,7 @@ AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id 
 						id: 'listmenu'
 					}},]
 	
-			AlphaBotInc.sendMessage(m.chat,{
+			ZimBotInc.sendMessage(m.chat,{
 	caption: anu,
 
 	document:fs.readFileSync('./lib/tes.xlsx'), 
@@ -7493,22 +7493,22 @@ AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id 
       }
       }
      break
-//let message = await prepareWAMessageMedia({ image: buffer, jpegThumbnail:buffer }, { upload: AlphaBotInc.waUploadToServer })
+//let message = await prepareWAMessageMedia({ image: buffer, jpegThumbnail:buffer }, { upload: ZimBotInc.waUploadToServer })
 //const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
 //templateMessage: {
 //hydratedTemplate: {
 //imageMessage: message.imageMessage,
 //hydratedContentText: anu,
-//hydratedFooterText: `${ALEXICA}`,
+//hydratedFooterText: `${global.botname}`,
 //hydratedButtons: [{
 //urlButton: {
-//displayText: 'MAIN GROUP',
-//url: 'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'
+//displayText: 'SUBSCRIBE',
+//url: 'https://www.youtube.com/c/DRIPSOFC'
 //}
 //}, {
 //urlButton: {
-//displayText: 'DISCUSSION GROUP',
-//url: 'https://DISCUSSION GROUP.com/zim-bot/zimbot-v3'
+//displayText: 'GITHUB',
+//url: 'https://github.com/zim-bot/zimbot-v3'
 //}
 //}, {
 //quickReplyButton: {
@@ -7529,14 +7529,14 @@ AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id 
 //}
 //}
 //}), { userJid: m.chat, quoted: m })
-//AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
+//ZimBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
 //}
 //break
 
 
 
 case 'mainmenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'MAIN MENU')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -7545,7 +7545,7 @@ let hao = randomNomor(200)
 
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7557,7 +7557,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -7575,13 +7575,13 @@ let hao = randomNomor(200)
 ┃⬤${prefix}menu
 ┗━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
-const _0x5c8923=_0x3878;(function(_0x4cbfbe,_0xacef25){const _0x8ea93=_0x3878,_0xf7c2ca=_0x4cbfbe();while(!![]){try{const _0x36f3fe=-parseInt(_0x8ea93(0x187))/0x1+parseInt(_0x8ea93(0x186))/0x2+-parseInt(_0x8ea93(0x193))/0x3+-parseInt(_0x8ea93(0x191))/0x4*(-parseInt(_0x8ea93(0x18e))/0x5)+parseInt(_0x8ea93(0x18a))/0x6+parseInt(_0x8ea93(0x190))/0x7*(-parseInt(_0x8ea93(0x18b))/0x8)+parseInt(_0x8ea93(0x189))/0x9*(-parseInt(_0x8ea93(0x192))/0xa);if(_0x36f3fe===_0xacef25)break;else _0xf7c2ca['push'](_0xf7c2ca['shift']());}catch(_0x414c20){_0xf7c2ca['push'](_0xf7c2ca['shift']());}}}(_0x123b,0x2f5d7));function _0x123b(){const _0x2f0f04=['fromObject','Message','key','727336srpvwq','384852AXndYJ','DISCUSSION GROUP','2250gziVnA','1729008psFOlG','16LNJOyb','MAIN GROUP','imageMessage','10KCnDsr','chat','177163ETUuAR','532052VAkVia','9250iOSaTj','171405WytGWt','message'];_0x123b=function(){return _0x2f0f04;};return _0x123b();}let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc['waUploadToServer']});const template=generateWAMessageFromContent(m[_0x5c8923(0x18f)],proto[_0x5c8923(0x184)][_0x5c8923(0x183)]({'templateMessage':{'hydratedTemplate':{'imageMessage':message[_0x5c8923(0x18d)],'hydratedContentText':anu,'hydratedFooterText':''+global['botname'],'hydratedButtons':[{'urlButton':{'displayText':_0x5c8923(0x18c),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x5c8923(0x188),'url':'https://DISCUSSION GROUP.com/zim-bot/zimbot-v3'}}]}}}),{'userJid':m[_0x5c8923(0x18f)]});function _0x3878(_0x2496c4,_0xe8d08e){const _0x123b1e=_0x123b();return _0x3878=function(_0x387861,_0x2d31c4){_0x387861=_0x387861-0x183;let _0x8acd87=_0x123b1e[_0x387861];return _0x8acd87;},_0x3878(_0x2496c4,_0xe8d08e);}AlphaBotInc['relayMessage'](m[_0x5c8923(0x18f)],template[_0x5c8923(0x194)],{'messageId':template[_0x5c8923(0x185)]['id']});
+const _0x5c8923=_0x3878;(function(_0x4cbfbe,_0xacef25){const _0x8ea93=_0x3878,_0xf7c2ca=_0x4cbfbe();while(!![]){try{const _0x36f3fe=-parseInt(_0x8ea93(0x187))/0x1+parseInt(_0x8ea93(0x186))/0x2+-parseInt(_0x8ea93(0x193))/0x3+-parseInt(_0x8ea93(0x191))/0x4*(-parseInt(_0x8ea93(0x18e))/0x5)+parseInt(_0x8ea93(0x18a))/0x6+parseInt(_0x8ea93(0x190))/0x7*(-parseInt(_0x8ea93(0x18b))/0x8)+parseInt(_0x8ea93(0x189))/0x9*(-parseInt(_0x8ea93(0x192))/0xa);if(_0x36f3fe===_0xacef25)break;else _0xf7c2ca['push'](_0xf7c2ca['shift']());}catch(_0x414c20){_0xf7c2ca['push'](_0xf7c2ca['shift']());}}}(_0x123b,0x2f5d7));function _0x123b(){const _0x2f0f04=['fromObject','Message','key','727336srpvwq','384852AXndYJ','GITHUB','2250gziVnA','1729008psFOlG','16LNJOyb','SUBSCRIBE','imageMessage','10KCnDsr','chat','177163ETUuAR','532052VAkVia','9250iOSaTj','171405WytGWt','message'];_0x123b=function(){return _0x2f0f04;};return _0x123b();}let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':ZimBotInc['waUploadToServer']});const template=generateWAMessageFromContent(m[_0x5c8923(0x18f)],proto[_0x5c8923(0x184)][_0x5c8923(0x183)]({'templateMessage':{'hydratedTemplate':{'imageMessage':message[_0x5c8923(0x18d)],'hydratedContentText':anu,'hydratedFooterText':''+global['botname'],'hydratedButtons':[{'urlButton':{'displayText':_0x5c8923(0x18c),'url':'https://www.youtube.com/c/DRIPSOFC'}},{'urlButton':{'displayText':_0x5c8923(0x188),'url':'https://github.com/zim-bot/zimbot-v3'}}]}}}),{'userJid':m[_0x5c8923(0x18f)]});function _0x3878(_0x2496c4,_0xe8d08e){const _0x123b1e=_0x123b();return _0x3878=function(_0x387861,_0x2d31c4){_0x387861=_0x387861-0x183;let _0x8acd87=_0x123b1e[_0x387861];return _0x8acd87;},_0x3878(_0x2496c4,_0xe8d08e);}ZimBotInc['relayMessage'](m[_0x5c8923(0x18f)],template[_0x5c8923(0x194)],{'messageId':template[_0x5c8923(0x185)]['id']});
                 }
             break
 case 'nsfwmenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'HORNY MENU')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -7590,7 +7590,7 @@ let hao = randomNomor(200)
 
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7602,7 +7602,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -7629,13 +7629,13 @@ let hao = randomNomor(200)
 ┃⬤ ${prefix}ahegao
 ┗━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
-function _0x3217(_0x37715e,_0x2f6592){const _0xa94637=_0xa946();return _0x3217=function(_0x32173c,_0x1faa3c){_0x32173c=_0x32173c-0x123;let _0x3b0d30=_0xa94637[_0x32173c];return _0x3b0d30;},_0x3217(_0x37715e,_0x2f6592);}const _0x3ea3f4=_0x3217;(function(_0x329815,_0x3187af){const _0x1742ff=_0x3217,_0x11de18=_0x329815();while(!![]){try{const _0x2af702=parseInt(_0x1742ff(0x12e))/0x1*(-parseInt(_0x1742ff(0x133))/0x2)+-parseInt(_0x1742ff(0x132))/0x3*(parseInt(_0x1742ff(0x138))/0x4)+-parseInt(_0x1742ff(0x134))/0x5*(parseInt(_0x1742ff(0x127))/0x6)+parseInt(_0x1742ff(0x12f))/0x7*(parseInt(_0x1742ff(0x136))/0x8)+-parseInt(_0x1742ff(0x128))/0x9+-parseInt(_0x1742ff(0x129))/0xa+-parseInt(_0x1742ff(0x12b))/0xb*(-parseInt(_0x1742ff(0x131))/0xc);if(_0x2af702===_0x3187af)break;else _0x11de18['push'](_0x11de18['shift']());}catch(_0x573d7e){_0x11de18['push'](_0x11de18['shift']());}}}(_0xa946,0x26ed7));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x3ea3f4(0x130)]});function _0xa946(){const _0x2a0735=['imageMessage','127KwzpDy','7qrwpSX','waUploadToServer','12123564BOwpfZ','784317yPMltC','4158aFgTZO','97980uRbCpG','relayMessage','424624qYNVeq','https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s','4SXNURK','chat','MAIN GROUP','key','Message','84npVzAw','485649YpjWQW','501510MVGWCT','botname','11WGaHFz','https://DISCUSSION GROUP.com/zim-bot/zimbot-v3'];_0xa946=function(){return _0x2a0735;};return _0xa946();}const template=generateWAMessageFromContent(m[_0x3ea3f4(0x123)],proto[_0x3ea3f4(0x126)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message[_0x3ea3f4(0x12d)],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x3ea3f4(0x12a)],'hydratedButtons':[{'urlButton':{'displayText':_0x3ea3f4(0x124),'url':_0x3ea3f4(0x137)}},{'urlButton':{'displayText':'DISCUSSION GROUP','url':_0x3ea3f4(0x12c)}}]}}}),{'userJid':m['chat']});AlphaBotInc[_0x3ea3f4(0x135)](m['chat'],template['message'],{'messageId':template[_0x3ea3f4(0x125)]['id']});
+function _0x3217(_0x37715e,_0x2f6592){const _0xa94637=_0xa946();return _0x3217=function(_0x32173c,_0x1faa3c){_0x32173c=_0x32173c-0x123;let _0x3b0d30=_0xa94637[_0x32173c];return _0x3b0d30;},_0x3217(_0x37715e,_0x2f6592);}const _0x3ea3f4=_0x3217;(function(_0x329815,_0x3187af){const _0x1742ff=_0x3217,_0x11de18=_0x329815();while(!![]){try{const _0x2af702=parseInt(_0x1742ff(0x12e))/0x1*(-parseInt(_0x1742ff(0x133))/0x2)+-parseInt(_0x1742ff(0x132))/0x3*(parseInt(_0x1742ff(0x138))/0x4)+-parseInt(_0x1742ff(0x134))/0x5*(parseInt(_0x1742ff(0x127))/0x6)+parseInt(_0x1742ff(0x12f))/0x7*(parseInt(_0x1742ff(0x136))/0x8)+-parseInt(_0x1742ff(0x128))/0x9+-parseInt(_0x1742ff(0x129))/0xa+-parseInt(_0x1742ff(0x12b))/0xb*(-parseInt(_0x1742ff(0x131))/0xc);if(_0x2af702===_0x3187af)break;else _0x11de18['push'](_0x11de18['shift']());}catch(_0x573d7e){_0x11de18['push'](_0x11de18['shift']());}}}(_0xa946,0x26ed7));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':ZimBotInc[_0x3ea3f4(0x130)]});function _0xa946(){const _0x2a0735=['imageMessage','127KwzpDy','7qrwpSX','waUploadToServer','12123564BOwpfZ','784317yPMltC','4158aFgTZO','97980uRbCpG','relayMessage','424624qYNVeq','https://www.youtube.com/c/DRIPSOFC','4SXNURK','chat','SUBSCRIBE','key','Message','84npVzAw','485649YpjWQW','501510MVGWCT','botname','11WGaHFz','https://github.com/zim-bot/zimbot-v3'];_0xa946=function(){return _0x2a0735;};return _0xa946();}const template=generateWAMessageFromContent(m[_0x3ea3f4(0x123)],proto[_0x3ea3f4(0x126)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message[_0x3ea3f4(0x12d)],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x3ea3f4(0x12a)],'hydratedButtons':[{'urlButton':{'displayText':_0x3ea3f4(0x124),'url':_0x3ea3f4(0x137)}},{'urlButton':{'displayText':'GITHUB','url':_0x3ea3f4(0x12c)}}]}}}),{'userJid':m['chat']});ZimBotInc[_0x3ea3f4(0x135)](m['chat'],template['message'],{'messageId':template[_0x3ea3f4(0x125)]['id']});
                 }
                 break
                 case 'expmenu': {
-                    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+                    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                                 buffer = await getBuffer(picak+'EXP MENU')
                                 let Levele2 = level.getLevelingLevel(m.sender, _level)
                 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -7644,7 +7644,7 @@ function _0x3217(_0x37715e,_0x2f6592){const _0xa94637=_0xa946();return _0x3217=f
                 
                                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
                 ╭━━━━━━━━━━━━━━━━━━╮
-                ┃         ${ALEXICA}
+                ┃         ${global.botname}
                 ┃━━━━━━━━━━━━━━━━━━┃
                 ┃
                 ┃ *${ucapannya2}*, *${pushname}*
@@ -7659,7 +7659,7 @@ function _0x3217(_0x37715e,_0x2f6592){const _0xa94637=_0xa946();return _0x3217=f
                 ┃https://tinyurl.com/2bghgjfx
                 ┃
                 ┃━━━━━━━━━━━━━━━━━━┃
-                ┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+                ┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
                 ╰━━━━━━━━━━━━━━━━━━╯
                 
                      
@@ -7675,13 +7675,13 @@ function _0x3217(_0x37715e,_0x2f6592){const _0xa94637=_0xa946();return _0x3217=f
                 ┃⬤${prefix}leaderboard
                 ┗━━━━━━━━━━⦿
                 
-                ©️ALPHA BOT INC
+                ©️ALPHA 𝗜𝗡𝗖
                 `
-                function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
+                function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','GITHUB','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','SUBSCRIBE'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':ZimBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://www.youtube.com/c/DRIPSOFC'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://github.com/zim-bot/zimbot-v3'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}ZimBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                                 }
             break
 case 'groupmenu': case 'grupmenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'GROUP MENU')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -7689,7 +7689,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7701,7 +7701,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -7744,14 +7744,14 @@ let hao = randomNomor(200)
 ┃⬤${prefix}ephemeral
 ┗━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'downloadmenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'DOWNLOAD')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -7759,7 +7759,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7771,7 +7771,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -7820,14 +7820,14 @@ let hao = randomNomor(200)
 ┃⬤${prefix}instagramreal
 ┗━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'searchingmenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'SEARCH')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -7835,7 +7835,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7847,7 +7847,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -7882,18 +7882,18 @@ let hao = randomNomor(200)
 ┃⬤${prefix}stickersearch
 ┃⬤${prefix}animesearch
 ┃⬤${prefix}tiktokstalk
-┃⬤${prefix}DISCUSSION GROUPstalk
+┃⬤${prefix}githubstalk
 ┃⬤${prefix}twitterstalk
 ┗━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'randommenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'RANDOM')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -7901,7 +7901,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7913,7 +7913,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -7960,14 +7960,14 @@ let hao = randomNomor(200)
 ┃ ${prefix}quotesanime
 ┗━━━━
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'textpromenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'TEXTPRO')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -7975,7 +7975,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -7987,7 +7987,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8063,14 +8063,14 @@ let hao = randomNomor(200)
 ┃⬤${prefix}summerysand
 ┗━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'photooxymenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'PHOTOOXY')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8078,7 +8078,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8090,7 +8090,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8109,14 +8109,14 @@ let hao = randomNomor(200)
 ┃⬤${prefix}sky-text
 ┗━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'ephotomenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'EPHOTO')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8124,7 +8124,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8136,7 +8136,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8151,14 +8151,14 @@ let hao = randomNomor(200)
 ┃⬤${prefix}water-effect
 ┗━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'sertimenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'CERTIFICATE')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8166,7 +8166,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8178,7 +8178,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8196,14 +8196,14 @@ let hao = randomNomor(200)
 ┃⬤${prefix}goodgirlserti
 ┗━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'imageeffectmenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'IMAGE EF')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8211,7 +8211,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8223,7 +8223,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8244,14 +8244,14 @@ let hao = randomNomor(200)
 ┃⬤${prefix}triggeredwebp
 ┗━━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'funmenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'FUN MENU')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8259,7 +8259,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8271,7 +8271,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8294,14 +8294,14 @@ let hao = randomNomor(200)
 ┃⬤${prefix}tebak
 ┗━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'primbonmenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'PRIMBON')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8309,7 +8309,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8321,7 +8321,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8358,14 +8358,14 @@ let hao = randomNomor(200)
 ┃⬤${prefix}ramaljodohbali
 ┗━━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'convertmenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'CONVERT')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8373,7 +8373,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8385,7 +8385,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8415,14 +8415,14 @@ let hao = randomNomor(200)
 ┃⬤${prefix}imagetopdf 
 ┗━━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'databasemenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'DATABASE')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8430,7 +8430,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8442,7 +8442,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8457,14 +8457,14 @@ let hao = randomNomor(200)
 ┃⬤${prefix}lockcmd 
 ┗━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'photofiltermenu': case 'photofilter': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'PHOTO FILTER')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8472,7 +8472,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8484,7 +8484,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8530,7 +8530,7 @@ let hao = randomNomor(200)
 ┃⬤${prefix}constrastbandw  
 ┗━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
@@ -8539,7 +8539,7 @@ function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP',
 
 
 case 'anonymousmenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'ANONYMOUS')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8547,7 +8547,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8559,7 +8559,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8571,14 +8571,14 @@ let hao = randomNomor(200)
 ┃⬤${prefix}anonymous
 ┗━━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'islammenu': case 'islamicmenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'ISLAM')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8586,7 +8586,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8598,7 +8598,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8615,13 +8615,13 @@ let hao = randomNomor(200)
 ┃⬤${prefix}alquranaudio
 ┗━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 case 'voicemenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'VOICE CHANGER')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8629,7 +8629,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8641,7 +8641,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8659,36 +8659,36 @@ let hao = randomNomor(200)
 ┃⬤${prefix}nightcore 
 ┗━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
-let message = await prepareWAMessageMedia({ image: buffer, jpegThumbnail:buffer }, { upload: AlphaBotInc.waUploadToServer })
+let message = await prepareWAMessageMedia({ image: buffer, jpegThumbnail:buffer }, { upload: ZimBotInc.waUploadToServer })
 const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
 templateMessage: {
 hydratedTemplate: {
 imageMessage: message.imageMessage,
 hydratedContentText: anu,
-hydratedFooterText: `${ALEXICA}`,
+hydratedFooterText: `${global.botname}`,
 hydratedButtons: [{        
     "urlButton": {
-      "displayText": "MAIN GROUP",
-      "url": "https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s"
-    }
-}, {
-urlButton: {
-    displayText: 'DISCUSSION GROUP',
-    url: 'https://DISCUSSION GROUP.com/zim-bot/zimbot-v3'
+        "displayText": "MAIN GROUP",
+        "url": "https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s"
+      }
+  }, {
+  urlButton: {
+      displayText: 'DISCUSSION GROUP',
+      url: 'https://DISCUSSION GROUP.com/zim-bot/zimbot-v3'
 }
 }
 ]
 }
 }
                }), { userJid: m.chat })
-                AlphaBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
+                ZimBotInc.relayMessage(m.chat, template.message, { messageId: template.key.id })
                 }
             break
 
 case 'toolsmenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'TOOLS')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8696,7 +8696,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8708,7 +8708,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8728,13 +8728,13 @@ let hao = randomNomor(200)
 ┃⬤${prefix}magernulis6
 ┗━━━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 case 'internetmenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'INTERNET')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8742,7 +8742,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8754,7 +8754,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8778,14 +8778,14 @@ let hao = randomNomor(200)
 ┃⬤${prefix}resepmasakan
 ┗━━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'shortmenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'SHORTLINK')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8793,7 +8793,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8805,7 +8805,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8814,14 +8814,14 @@ let hao = randomNomor(200)
 ┃⬤${prefix}tinyurl
 ┗━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA 𝗜𝗡𝗖
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
             break
 
 case 'ownermenu': {
-    AlphaBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
+    ZimBotInc.sendMessage(m.chat, { react: { text: `${global.reactmoji}`, key: m.key }})
                 buffer = await getBuffer(picak+'OWNER MENU')
                 let Levele2 = level.getLevelingLevel(m.sender, _level)
 let Xp1 = level.getLevelingXp(m.sender, _level)
@@ -8829,7 +8829,7 @@ let Xp2 = randomNomor(2000)
 let hao = randomNomor(200)  
                 anu = `*✧ᴜᴘᴛɪᴍᴇ: ${runtime(process.uptime())}*
 ╭━━━━━━━━━━━━━━━━━━╮
-┃         ${ALEXICA}
+┃         ${global.botname}
 ┃━━━━━━━━━━━━━━━━━━┃
 ┃
 ┃ *${ucapannya2}*, *${pushname}*
@@ -8841,7 +8841,7 @@ let hao = randomNomor(200)
 ┃ *✧ᴛɪᴍᴇ:* *${moment.tz('Asia/Colombo').format('HH:mm:ss')}*
 ┃ 
 ┃━━━━━━━━━━━━━━━━━━┃
-┃                  ᴀʟᴘ𝟺ᴀ ʙᴏᴛ
+┃                  ᴀʟᴇxɪᴄᴀʙᴏᴛ
 ╰━━━━━━━━━━━━━━━━━━╯
 
      
@@ -8867,7 +8867,7 @@ let hao = randomNomor(200)
 ┃⬤${prefix}setppbot
 ┗━━━━━━━━━━⦿
 
-©️ALPHA BOT INC
+©️ALPHA INC
 `
 function _0x186b(){const _0x16c1b5=['135080AGrzDU','Message','DISCUSSION GROUP','10mzHMwO','chat','21bZsKRC','552424zUneQH','1429756BqfDSd','key','240mbdKBv','relayMessage','844052JLGZth','146104dkkfWS','1857480tcaVPE','595awiboR','16150698mclKJV','botname','waUploadToServer','MAIN GROUP'];_0x186b=function(){return _0x16c1b5;};return _0x186b();}const _0x36f452=_0x131e;(function(_0x25c54b,_0x526416){const _0x54eaa5=_0x131e,_0x24b40d=_0x25c54b();while(!![]){try{const _0x437851=-parseInt(_0x54eaa5(0x193))/0x1+-parseInt(_0x54eaa5(0x1a0))/0x2+parseInt(_0x54eaa5(0x19e))/0x3*(-parseInt(_0x54eaa5(0x19f))/0x4)+parseInt(_0x54eaa5(0x199))/0x5*(parseInt(_0x54eaa5(0x1a2))/0x6)+-parseInt(_0x54eaa5(0x194))/0x7*(-parseInt(_0x54eaa5(0x1a5))/0x8)+parseInt(_0x54eaa5(0x195))/0x9*(parseInt(_0x54eaa5(0x19c))/0xa)+parseInt(_0x54eaa5(0x1a4))/0xb;if(_0x437851===_0x526416)break;else _0x24b40d['push'](_0x24b40d['shift']());}catch(_0x459222){_0x24b40d['push'](_0x24b40d['shift']());}}}(_0x186b,0xeba1d));let message=await prepareWAMessageMedia({'image':buffer,'jpegThumbnail':buffer},{'upload':AlphaBotInc[_0x36f452(0x197)]});const template=generateWAMessageFromContent(m['chat'],proto[_0x36f452(0x19a)]['fromObject']({'templateMessage':{'hydratedTemplate':{'imageMessage':message['imageMessage'],'hydratedContentText':anu,'hydratedFooterText':''+global[_0x36f452(0x196)],'hydratedButtons':[{'urlButton':{'displayText':_0x36f452(0x198),'url':'https://chat.whatsapp.com/BW5EZNrlJJJA1sNWcIlz6s'}},{'urlButton':{'displayText':_0x36f452(0x19b),'url':'https://chat.whatsapp.com/HHUCz5crWym7YNMlDz3t8W'}}]}}}),{'userJid':m[_0x36f452(0x19d)]});function _0x131e(_0xb57061,_0x1d708f){const _0x186b37=_0x186b();return _0x131e=function(_0x131e55,_0x4245fa){_0x131e55=_0x131e55-0x193;let _0x47b1da=_0x186b37[_0x131e55];return _0x47b1da;},_0x131e(_0xb57061,_0x1d708f);}AlphaBotInc[_0x36f452(0x1a3)](m[_0x36f452(0x19d)],template['message'],{'messageId':template[_0x36f452(0x1a1)]['id']});
                 }
@@ -8877,7 +8877,7 @@ case 'sond': {
 
             hey = fs.readFileSync('./media/tes.mp3')
 
-            AlphaBotInc.sendMessage(m.chat, {audio: hey, mimetype: 'audio/mpeg', ptt:true }, {quoted:m})
+            ZimBotInc.sendMessage(m.chat, {audio: hey, mimetype: 'audio/mpeg', ptt:true }, {quoted:m})
 
             }
 
@@ -8901,15 +8901,15 @@ case 'sond': {
                     }
                 }
                 if (antiToxic)
-                if (bad.includes(AlphaBotIncv3)) {
+                if (bad.includes(zimbotincv3)) {
                 if (m.text) {
                 zimbotv3 = `*▊▊▊ANTIBAD WORDS▊▊▊*\n\n*Lucky you, you are admin*`
                 if (isAdmins) return m.reply(zimbotv3)
                 if (m.key.fromMe) return m.reply(zimbotv3)
                 if (isCreator) return m.reply(zimbotv3)
                 kice = m.sender
-                await AlphaBotInc.groupParticipantsUpdate(m.chat, [kice], 'remove')
-                AlphaBotInc.sendMessage(from, {text:`*▊▊▊ANTIBAD WORDS▊▊▊*\n\n@${kice.split("@")[0]} *was kicked because of being rude to others in this group*`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})}
+                await ZimBotInc.groupParticipantsUpdate(m.chat, [kice], 'remove')
+                ZimBotInc.sendMessage(from, {text:`*▊▊▊ANTIBAD WORDS▊▊▊*\n\n@${kice.split("@")[0]} *was kicked because of being rude to others in this group*`, contextInfo:{mentionedJid:[kice]}}, {quoted:m})}
                 }
                 
                 if (budy.startsWith('>')) {
@@ -8959,7 +8959,7 @@ case 'sond': {
 		    if (m.isBaileys) return
 		    let msgs = global.db.data.database
 		    if (!(budy.toLowerCase() in msgs)) return
-		    AlphaBotInc.copyNForward(m.chat, msgs[budy.toLowerCase()], true)
+		    ZimBotInc.copyNForward(m.chat, msgs[budy.toLowerCase()], true)
 		}
         }
         // SCRIPT BY ZIM-BOT ORIGINAL BASE DIKARNDT 
